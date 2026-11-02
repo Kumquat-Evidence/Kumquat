@@ -1077,9 +1077,10 @@ function show(v){
 }
 window.addEventListener("hashchange",()=>show(location.hash.slice(1)));
 document.addEventListener("click",e=>{const b=e.target.closest("[data-start]");if(!b)return;const s=b.dataset.start;if(s.startsWith("topic:"))startQuiz("topic",s.slice(6));else startQuiz(s)});
-let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>DRAW[current]&&DRAW[current](),120)});
-try{window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>DRAW[current]&&DRAW[current]())}catch(e){}
-new MutationObserver(()=>DRAW[current]&&DRAW[current]()).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+const REDRAW_ON_RESIZE=new Set(["dx","bayes","risk","power","ci","cutoff","mathgym","outbreak","confound","funnel"]);
+let rt,lastW=window.innerWidth;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{const ae=document.activeElement;const typing=ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName);const w=window.innerWidth;if(typing||!REDRAW_ON_RESIZE.has(current)||w===lastW)return;lastW=w;DRAW[current]&&DRAW[current]()},120)});
+try{window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>REDRAW_ON_RESIZE.has(current)&&DRAW[current]&&DRAW[current]())}catch(e){}
+new MutationObserver(()=>REDRAW_ON_RESIZE.has(current)&&DRAW[current]&&DRAW[current]()).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
 
 function prep(c){const r=c.getBoundingClientRect();const dpr=window.devicePixelRatio||1;c.width=Math.max(1,Math.round(r.width*dpr));c.height=Math.max(1,Math.round(r.height*dpr));const g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,r.width,r.height);return{g,w:r.width,h:r.height}}
 
