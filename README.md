@@ -16,3 +16,6 @@ Biostatistics, epidemiology and critical appraisal trainer. Static PWA, no backe
 - `My Apps/hub/kumquat/status.json` (hub-contract status)
 - `Citrus Maxima/Apps/Kumquat.status.json` (simple shape Citrus Maxima reads today)
 - Reads `My Apps/hub/scheduler/plan.json` for today's Kumquat block.
+
+## Updates
+The app checks for a new version whenever it comes to the foreground. When one is ready, a bar says "New version ready" with an Update button; nothing reloads on its own.
