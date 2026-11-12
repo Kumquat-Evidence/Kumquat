@@ -523,6 +523,25 @@ select{border:2px solid var(--line);background:var(--raise);color:var(--ink);pad
 .figwrap{background:var(--surface-2);border:2px solid var(--line);padding:8px;margin:4px 0 10px}
 .qfig{display:block;width:100%;max-width:420px;height:auto;margin:0 auto}
 .fam-cognitive{background:var(--accent-tint);color:var(--accent-ink);border:1px solid var(--accent-soft)}
+/* ===== v8 ===== */
+.hint-code{display:block;white-space:normal;line-height:1.6;margin-top:6px}.hint-note{display:block;margin-top:4px;opacity:.8}
+.rc-card{display:flex;flex-direction:column;gap:10px}.rc-row{display:flex;gap:10px;align-items:flex-start}.rc-row p{margin:0;line-height:1.9}.rc-n{min-width:1.4em;opacity:.6}
+.rc-in{font:inherit;border:0;border-bottom:2px solid var(--line);background:transparent;color:inherit;padding:0 4px;max-width:100%}.rc-in:focus{outline:none;border-color:#FF6A13}
+.rc-g{cursor:pointer;padding:6px;border:2px solid transparent}.rc-g.on{border-color:rgba(46,157,91,.5);background:rgba(46,157,91,.08)}.rc-g mark{background:rgba(255,106,19,.22);color:inherit;padding:0 3px}
+.rc-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.lk-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}.lk-node{border:2px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:4px}.lk-node small{opacity:.75;font-size:.8rem}.lk-arrow{font-family:var(--px,monospace);color:#FF6A13}
+@media(max-width:480px){.lk-pair{grid-template-columns:1fr}.lk-arrow{text-align:center}}
+.lk-card{display:flex;flex-direction:column;gap:12px}.lk-opts{display:flex;flex-direction:column;gap:8px}
+.xr-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}.xr-t{text-align:left;width:100%;font:inherit;color:inherit;cursor:pointer}
+.xr-abs summary{cursor:pointer}.xr-abs p{line-height:1.6;margin:.6em 0 0}.xr-step{display:flex;flex-direction:column;gap:10px}.xr-step h3{margin:0}
+.xr-spin{display:flex;flex-direction:column;gap:6px}.xr-sp.right{outline:2px solid #2e9d5b}
+
+.ptype{border:2px dashed var(--line,#d8c9b0);padding:12px;margin:10px 0;display:flex;flex-direction:column;gap:8px}
+.ptype p{margin:0}.pt-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:480px){.pt-opts{grid-template-columns:1fr}}
+.ptopt{text-align:left;padding:10px 12px;min-height:44px;border:2px solid var(--line,#d8c9b0);background:var(--surface);color:inherit;font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.ptopt small{opacity:.75;font-size:.8rem}.ptopt.right{border-color:#2e9d5b;background:rgba(46,157,91,.12)}.ptopt.wrong{border-color:#d23c3c;background:rgba(210,60,60,.1)}
+.ptopt:disabled{cursor:default}
 /* ===== v7 ===== */
 .tile b,.mode b{font-size:15px;line-height:1.3}.casecard h3{font-size:17px}
 .pl-role span,.tag{font-size:11px}
@@ -667,6 +686,7 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
     <a class="tile big" href="#cases"><span class="mono-mark" id="cases-prog">0/10</span><div><b>Casebook</b><span>Snow, Semmelweis, Doll & Hill, RECOVERY, MERS. You make the calls.</span></div></a>
     <a class="tile big" href="#rounds"><span class="mono-mark" id="rounds-prog">0/6</span><div><b>Clinic calls</b><span>Branching decisions in your OH clinic, ER and FM. Wrong turns teach.</span></div></a>
     <a class="tile big" href="#papers"><span class="mono-mark" id="papers-prog">0/10</span><div><b>Read the paper</b><span>Journal-style abstracts and tables, an expert walk-through, then questions.</span></div></a>
+    <a class="tile big" href="#xray"><span class="mono-mark" id="xray-prog">0/8</span><div><b>Abstract X-ray</b><span>Design, primary result, significance, your patient’s NNT, spin, bottom line. Eight abstracts.</span></div></a>
     <a class="tile big" href="#web"><span class="mono-mark">⌬</span><div><b>Concept web</b><span>Every idea and how it pulls on the others.</span></div></a>
   </div>
   <div class="shelf"><h2>Labs <small>move it, watch what changes</small></h2>
@@ -723,6 +743,8 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
     <button class="mode" data-start="daily"><b>Daily drill</b><span>10 mixed questions, weighted to your weak spots.</span></button>
     <button class="mode" data-start="myths"><b>Myth-busters</b><span>The beliefs about p values, CIs and odds that trip doctors up.</span></button>
     <a class="mode" href="#teach"><b>Teach it back</b><span>Explain a concept in writing, compare with a model, grade yourself.</span></a>
+    <a class="mode" href="#recall"><b>Takeaways recall <span class="mono-mark" id="recall-due"></span></b><span>Each lesson’s key lines as gaps, 3, 10 and 31 days later.</span></a>
+    <a class="mode" href="#links"><b>Name the link</b><span>How does LR connect to specificity? Retrieval on the concept web.</span></a>
   </div></div>
   <div class="shelf"><h2>Exam blocks</h2><div class="modes">
     <button class="mode" data-start="step1"><b>Step 1 block</b><span>20 vignettes, paced at 90 seconds each.</span></button>
@@ -804,6 +826,18 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 </section>
 <section id="v-round" hidden><div id="round-root" class="player"></div></section>
 <!-- TEACH BACK -->
+<section id="v-recall" hidden>
+  <div class="view-head"><span class="eyebrow">Drill · spaced recall</span><h1>Takeaways recall</h1><p>Each lesson’s key lines come back as gaps 3, 10 and 31 days after you finish it. Recalling the frame keeps the whole lesson alive.</p></div>
+  <div id="recall-root" class="player"></div>
+</section>
+<section id="v-links" hidden>
+  <div class="view-head"><span class="eyebrow">Drill · connections</span><h1>Name the link</h1><p>Two linked ideas from the concept web, the label hidden. Say how they connect, then pick. Knowing the links is what lets you rebuild a formula you’ve forgotten.</p></div>
+  <div id="links-root" class="player"></div>
+</section>
+<section id="v-xray" hidden>
+  <div class="view-head"><span class="eyebrow">Study · reading research</span><h1>Abstract X-ray</h1><p>The six questions an examiner (or a sceptical consultant) asks of every abstract, practised until they’re automatic.</p></div>
+  <div id="xray-root" class="player"></div>
+</section>
 <section id="v-teach" hidden>
   <div class="view-head"><span class="eyebrow">Drill · Feynman</span><h1>Teach it back</h1><p>If you can’t explain it to a nurse in four sentences, you don’t own it yet. Write, then grade yourself against the key points.</p></div>
   <div id="teach-root" class="player"></div>
@@ -1217,7 +1251,7 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
 let st=load()||{xp:0,streak:0,last:null,best:0,topics:{},ck:{}};
 if(typeof st!=="object"||st===null)st={xp:0,streak:0,last:null,best:0,topics:{},ck:{}};
 function sanitize(o){if(!o||typeof o!=="object"||Array.isArray(o))o={};
-  ["topics","ck","srs","lessons","cases","bp","recent","visited","miss","flash","rounds","teach","badges","why","whyKey","papers"].forEach(k=>{if(!o[k]||typeof o[k]!=="object"||Array.isArray(o[k]))o[k]={}});
+  ["topics","ck","srs","lessons","cases","bp","recent","visited","miss","flash","rounds","teach","badges","why","whyKey","papers","recall","ldone","links","xray","fade"].forEach(k=>{if(!o[k]||typeof o[k]!=="object"||Array.isArray(o[k]))o[k]={}});
   if(!Array.isArray(o.log))o.log=[];o.log=o.log.filter(l=>l&&typeof l==="object"&&isFinite(l.d)&&isFinite(l.n));
   ["xp","streak","best"].forEach(k=>{if(typeof o[k]!=="number"||!isFinite(o[k])||o[k]<0)o[k]=0});
   for(const k in o.topics){const t=o.topics[k];if(!t||!isFinite(t.c)||!isFinite(t.n))delete o.topics[k]}
@@ -1276,7 +1310,7 @@ $("#reset-progress").onclick=()=>{$("#reset-confirm").hidden=false};
 $("#reset-yes").onclick=()=>{st={xp:0,streak:0,last:null,best:0,topics:{},ck:{},srs:{},lessons:{},cases:{},bp:{},plan:null,log:[],recent:{},visited:{},miss:{},cal:{sure:{c:0,n:0},guess:{c:0,n:0}},flash:{},lastView:null,rounds:{},teach:{},badges:{},why:{},whyKey:{},papers:{}};save();$("#reset-confirm").hidden=true;location.hash="home";renderToday();toast("Progress wiped. Fresh start.")};
 
 /* ---------- router ---------- */
-const VIEWS=["home","papers","paper","decoder","toolkit","learn","labs","practice","progress","settings","web","rounds","round","teach","estimate","tree","flash","path","plan","blueprint","mastery","lesson","case","cases","outbreak","confound","funnel","dx","cutoff","bayes","risk","power","ci","mathgym","designs","bias","twins","tests","appraise","vault","quiz"];
+const VIEWS=["home","papers","paper","decoder","toolkit","learn","labs","practice","progress","settings","web","rounds","round","teach","recall","links","xray","estimate","tree","flash","path","plan","blueprint","mastery","lesson","case","cases","outbreak","confound","funnel","dx","cutoff","bayes","risk","power","ci","mathgym","designs","bias","twins","tests","appraise","vault","quiz"];
 const DRAW={};
 let current="home";
 let ARG=null;
@@ -2076,19 +2110,39 @@ function nextQ(){
   Q.cur=q;Q.answered=false;Q.qStart=Date.now();if(Q.mode==="mock")(Q.all=Q.all||[]).push(q);renderQ();
 }
 function numOf(s){const m=/-?\d+(?:\.\d+)?/.exec(String(s).replace(/<[^>]+>/g,"").replace(/,/g,""));return m?+m[0]:NaN}
+/* ===== v8: name the method before solving (discrimination training) ===== */
+const PT_M={sens:["Sensitivity","TP ÷ (TP + FN): down the disease column"],spec:["Specificity","TN ÷ (TN + FP): down the no-disease column"],ppv:["PPV","TP ÷ (TP + FP): across the test-positive row"],npv:["NPV","TN ÷ (TN + FN): across the test-negative row"],
+ lrp:["LR+","sens ÷ (1 − spec)"],lrn:["LR−","(1 − sens) ÷ spec"],post:["Post-test probability","probability → odds, × LR, back to probability"],
+ nnt:["NNT","1 ÷ ARR"],nnh:["NNH","1 ÷ absolute risk increase"],arr:["ARR","CER − EER"],rrr:["RRR","(CER − EER) ÷ CER"],rr:["Risk ratio","risk in exposed ÷ risk in unexposed (cohort/trial)"],or:["Odds ratio","ad ÷ bc (case-control)"],
+ ir:["Incidence rate","new cases ÷ person-time"],ci:["Cumulative incidence","new cases ÷ people at risk (existing cases removed)"],prev:["Prevalence","all existing cases ÷ population"],herd:["Herd immunity threshold","1 − 1/R₀"],
+ se:["Standard error","SD ÷ √n"],z:["z-score + 68–95–99.7","(x − mean) ÷ SD, then the normal curve"],odds:["Odds from probability","p ÷ (1 − p)"],prob:["Probability from odds","odds ÷ (1 + odds)"],sd:["Standard deviation","spread of individuals (not of the mean)"],ci95:["95% CI","mean ± 1.96 × SE"]};
+const PT_G=[["sens","spec","ppv","npv","lrp"],["lrp","lrn","post","ppv","sens"],["nnt","nnh","arr","rrr","rr","or"],["rr","or","arr","rrr","nnt"],["ir","ci","prev","herd"],["se","sd","z","ci95"],["odds","prob","rr","or"]];
+const PT_RX=[[/sensitivity\s*\??$/i,"sens"],[/specificity\s*\??$/i,"spec"],[/\bPPV\b|positive predictive/i,"ppv"],[/\bNPV\b|negative predictive/i,"npv"],[/LR\+|positive likelihood ratio/i,"lrp"],[/LR−|LR-|negative likelihood ratio/i,"lrn"],[/post-?test probability/i,"post"],[/needed to harm/i,"nnh"],[/needed to treat|\bNNT\b/i,"nnt"],[/relative risk reduction/i,"rrr"],[/absolute risk reduction/i,"arr"],[/risk ratio|relative risk/i,"rr"],[/odds ratio/i,"or"],[/incidence rate/i,"ir"],[/incidence/i,"ci"],[/prevalence\s*\??$/i,"prev"],[/herd immunity/i,"herd"],[/standard error/i,"se"],[/what are the odds/i,"odds"],[/what is the probability/i,"prob"],[/proportion of people have a value/i,"z"]];
+let PT_RATE=.34;
+function ptypeFor(q){if(!q||q.kind!=="calc"||!["daily","topic","retry","review"].includes(Q.mode))return null;if(Q.ptFor===q)return Q.pt;Q.ptFor=q;Q.pt=null;
+  if(Math.random()>=PT_RATE)return null;const t=String(q.prompt).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();const m=/([^.?]*\?)\s*$/.exec(t);const qs=m?m[1]:t.slice(-120);
+  const hit=PT_RX.find(([rx])=>rx.test(qs));if(!hit)return null;const id=hit[1];
+  const grp=PT_G.find(g=>g.includes(id))||PT_G[0];let pool=shuffle(grp.filter(x=>x!==id));if(pool.length<3)pool=pool.concat(shuffle(Object.keys(PT_M).filter(x=>x!==id&&!pool.includes(x))));
+  Q.pt={id,opts:shuffle([id,...pool.slice(0,3)])};return Q.pt}
+function ptHTML(pt){return `<div class="ptype" id="q-pt"><span class="eyebrow">Step 1 · name the method</span><p>Before you touch the numbers: what does this question need?</p><div class="pt-opts">${pt.opts.map(k=>`<button class="ptopt" data-pt="${k}"><b>${PT_M[k][0]}</b><small>${PT_M[k][1]}</small></button>`).join("")}</div><div id="q-pt-fb" class="muted"></div></div>`}
+function ptBind(q,pt,reveal){$$(".ptopt").forEach(b=>b.onclick=()=>{if(b.closest(".ptype").dataset.done)return;b.closest(".ptype").dataset.done=1;const ok=b.dataset.pt===pt.id;
+  $$(".ptopt").forEach(x=>{x.disabled=true;if(x.dataset.pt===pt.id)x.classList.add("right")});if(!ok)b.classList.add("wrong");
+  st.ptype=st.ptype||{c:0,n:0,miss:{}};st.ptype.n++;if(ok){st.ptype.c++;st.xp+=3}else{st.ptype.miss[pt.id]=(st.ptype.miss[pt.id]||0)+1}save();renderHeader();
+  $("#q-pt-fb").innerHTML=ok?`Right method. +3 XP. Now solve it.`:`It needs <b>${PT_M[pt.id][0]}</b>: ${PT_M[pt.id][1]}. Now solve it with that.`;reveal()})}
 function typeFirst(q){return q&&q.kind==="calc"&&["daily","topic","retry","review","boss"].includes(Q.mode)&&isFinite(numOf(q.opts[q.ans]))}
 function renderQ(){
-  const q=Q.cur,r=$("#quiz-root");
+  const q=Q.cur,r=$("#quiz-root");const pt=ptypeFor(q);
   const title=Q.mode==="topic"?TOPICS[Q.topic].label:Q.mode==="boss"?"Boss fight · "+TOPICS[Q.topic].label:MODE_NAME[Q.mode];
   const pips=Q.mode==="boss"?`<span class="timer" id="q-timer">${fmtT(Q.timeLeft)}</span><div class="pips">${Array.from({length:Q.total},(_,i)=>`<i class="${i<Q.hist.length?(Q.hist[i]?"ok":"no"):i===Q.i?"cur":""}"></i>`).join("")}</div>`:Q.mode==="mock"?`<span class="timer" id="q-timer">${fmtT(Q.timeLeft)}</span><div class="pips">${Array.from({length:Q.total},(_,i)=>`<i class="${i<Q.i?"ok":i===Q.i?"cur":""}"></i>`).join("")}</div>`:Q.total===Infinity?`<span class="timer" id="q-timer">${fmtT(Q.timeLeft)}</span><span class="muted num">${Q.score} correct</span>`:`<div class="pips">${Array.from({length:Q.total},(_,i)=>`<i class="${i<Q.hist.length?(Q.hist[i]?"ok":"no"):i===Q.i?"cur":""}"></i>`).join("")}</div>`;
   r.innerHTML=`<div class="qbar"><span class="eyebrow">${title}</span>${pips}${Q.mode==="step1"||Q.mode==="step2"?`<span class="timer pace" id="q-pace">0:00 / 1:30</span>`:""}<span class="combo" id="q-combo">${Q.combo>=2?"×"+Q.combo+" combo":""}</span><button class="btn small" id="q-quit">End</button></div>
   <div class="card qcard" id="q-card">
     <div class="qtopic"><span class="chip">${TOPICS[q.topic].label}</span>${Q.total!==Infinity?`<span class="muted num">${Q.i+1} / ${Q.total}</span>`:""}</div>
     <div class="qprompt">${q.prompt}</div>
-    ${q.table||""}
-    ${Q.mode!=="mock"?`<div class="row qtools"><button class="chip tog" id="q-guess" aria-pressed="false">🤷 I’m guessing</button>${hintFor(q)?`<button class="chip tog" id="q-hint">💡 Hint (half XP)</button>`:""}<span id="q-hint-out" class="muted" style="font-size:.9rem"></span></div>`:""}
-    ${typeFirst(q)?`<form class="typed" id="q-type"><label for="q-num">Work it out and type your answer first</label><div class="row"><input id="q-num" inputmode="decimal" autocomplete="off" placeholder="your number"><button class="btn primary" type="submit">Check</button><button class="btn small ghost" type="button" id="q-show">Show options</button></div><small class="muted">Typing it earns +4 XP. Options appear only if you ask.</small></form>`:""}
-    <div class="opts ${q.opts.length===2?"two-opt":""}" ${typeFirst(q)?"hidden":""}>${q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="L">${"ABCD"[i]}</span><span>${o}</span></button>`).join("")}</div>
+    <div id="q-tbl" ${pt?"hidden":""}>${q.table||""}</div>
+    ${pt?ptHTML(pt):""}
+    ${Q.mode!=="mock"?`<div class="row qtools"><button class="chip tog" id="q-guess" aria-pressed="false">🤷 I’m guessing</button>${hintFor(q)?`<button class="chip tog" id="q-hint">${hintBtn(q)}</button>`:""}<span id="q-hint-out" class="muted" style="font-size:.9rem"></span></div>`:""}
+    ${typeFirst(q)?`<form class="typed" id="q-type" ${pt?"hidden":""}><label for="q-num">Work it out and type your answer first</label><div class="row"><input id="q-num" inputmode="decimal" autocomplete="off" placeholder="your number"><button class="btn primary" type="submit">Check</button><button class="btn small ghost" type="button" id="q-show">Show options</button></div><small class="muted">Typing it earns +4 XP. Options appear only if you ask.</small></form>`:""}
+    <div class="opts ${q.opts.length===2?"two-opt":""}" ${(typeFirst(q)||pt)?"hidden":""}>${q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="L">${"ABCD"[i]}</span><span>${o}</span></button>`).join("")}</div>
     <div id="q-fb"></div>
   </div>`;
   if(typeFirst(q)){const showOpts=note=>{const f=$("#q-type");if(f)f.remove();$(".opts").hidden=false;if(note)$("#q-hint-out").innerHTML=note};
@@ -2097,9 +2151,10 @@ function renderQ(){
       const near=x=>Math.abs(x-c)<=Math.max(Math.abs(c)*.03,c<1?.006:.5);const ok=near(v)||(pct&&near(v*100));
       if(ok){Q.typed=true;showOpts("");answer(q.ans)}else showOpts(`You typed <b>${v}</b>. Not quite; pick from the options.`)}}
   $$(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.i));
+  if(pt)ptBind(q,pt,()=>{$("#q-tbl").hidden=false;const f=$("#q-type");if(f)f.hidden=false;else $(".opts").hidden=false;const n=$("#q-num");if(n)n.focus({preventScroll:true})});
   Q.guess=false;Q.hinted=false;Q.typed=false;
   const gb=$("#q-guess");if(gb)gb.onclick=()=>{Q.guess=!Q.guess;gb.classList.toggle("on",Q.guess);gb.setAttribute("aria-pressed",Q.guess)};
-  const hb=$("#q-hint");if(hb)hb.onclick=()=>{Q.hinted=true;hb.disabled=true;$("#q-hint-out").innerHTML=`<code>${hintFor(q)}</code>`};
+  const hb=$("#q-hint");if(hb)hb.onclick=()=>{Q.hinted=fadeLv(q);hb.disabled=true;$("#q-hint-out").innerHTML=hintShow(q)};
   $("#q-quit").onclick=()=>{stopTimer();if(Q.hist.length)endQuiz();else{Q=null;location.hash="practice"}};
 }
 function answer(i){
@@ -2113,9 +2168,9 @@ function answer(i){
   if(Q.mode==="mock"){if(ok){Q.score++;t.c++}else Q.missed.push(q);Q.picks.push(i);srsUpdate(q.key,ok);Q.hist.push(ok);save();btns[i].classList.add("picked");setTimeout(()=>{if(Q&&!Q.done&&Q.cur===q)advance()},320);return}
   btns[q.ans].classList.add("right");if(!ok)btns[i].classList.add("wrong");
   let gain=0;
-  if(ok){Q.score++;Q.combo++;Q.maxCombo=Math.max(Q.maxCombo,Q.combo);gain=(q.s1?14:10)+Math.min(Q.combo-1,5)*2+(Q.typed?4:0);if(Q.hinted)gain=Math.ceil(gain/2);t.c++}
+  if(ok){Q.score++;Q.combo++;Q.maxCombo=Math.max(Q.maxCombo,Q.combo);gain=(q.s1?14:10)+Math.min(Q.combo-1,5)*2+(Q.typed?4:0);if(Q.hinted)gain=Q.hinted===1?Math.ceil(gain/4):Math.ceil(gain/2);t.c++}
   else{Q.combo=0;Q.missed.push(q);$("#q-card").classList.add("shake")}
-  srsUpdate(q.key,ok&&!Q.guess&&!Q.hinted);
+  srsUpdate(q.key,ok&&!Q.guess&&!Q.hinted);fadeNote(q,ok);
   Q.xp+=gain;st.xp+=gain;Q.hist.push(ok);save();renderHeader();
   const cb=$("#q-combo");cb.textContent=Q.combo>=2?"×"+Q.combo+" combo":"";if(ok&&Q.combo>=2){cb.classList.remove("pop");void cb.offsetWidth;cb.classList.add("pop")}
   const lv=levelOf(st.xp);if(lv>Q.startLv){Q.startLv=lv;toast("Level up · "+LEVELS[lv][1]);confetti()}
@@ -2692,7 +2747,7 @@ function renderPlayer(){
 function finishPlayer(root,D){
   const isL=PL.kind==="lesson",key=isL?PL.idx:CASES[PL.idx].id,first=isL?!st.lessons[key]:st.cases[key]==null;
   const bonus=first?(isL?30:40):5;st.xp+=bonus;
-  if(isL)st.lessons[key]=true;else st.cases[key]=Math.max(st.cases[key]||0,PL.asked?Math.round(PL.score/PL.asked*100):100);
+  if(isL){st.lessons[key]=true;st.ldone=st.ldone||{};if(st.ldone[key]==null)st.ldone[key]=dayNum()}else st.cases[key]=Math.max(st.cases[key]||0,PL.asked?Math.round(PL.score/PL.asked*100):100);
   if(st.last!==today()){st.streak=st.last===yesterday()?st.streak+1:1;st.last=today()}
   save();renderHeader();if(!reduce)confetti();
   const C=isL?null:CASES[PL.idx];
@@ -2943,15 +2998,15 @@ st.miss=st.miss||{};st.cal=st.cal||{sure:{c:0,n:0},guess:{c:0,n:0}};st.flash=st.
 const HUB_OF={home:"home",learn:"learn",labs:"learn",practice:"practice",progress:"progress",toolkit:"toolkit",
   path:"learn",lesson:"learn",case:"learn",cases:"learn",designs:"toolkit",bias:"toolkit",twins:"toolkit",tests:"toolkit",appraise:"toolkit",vault:"toolkit",blueprint:"toolkit",
   tree:"learn",dx:"learn",cutoff:"learn",bayes:"learn",risk:"learn",outbreak:"learn",confound:"learn",power:"learn",ci:"learn",funnel:"learn",mathgym:"learn",
-  quiz:"practice",flash:"practice",plan:"progress",mastery:"progress",settings:"progress",web:"learn",rounds:"learn",round:"learn",papers:"learn",paper:"learn",decoder:"toolkit",teach:"practice",estimate:"practice"};
+  quiz:"practice",flash:"practice",plan:"progress",mastery:"progress",settings:"progress",web:"learn",rounds:"learn",round:"learn",papers:"learn",paper:"learn",decoder:"toolkit",teach:"practice",estimate:"practice",recall:"practice",links:"practice",xray:"learn"};
 const HUBS=["home","learn","labs","practice","toolkit","progress"];
 function paintNav(v){const h=HUB_OF[v]||"home";$$("[data-tab]").forEach(a=>a.classList.toggle("on",a.dataset.tab===h));
   const back=$("#back");back.hidden=HUBS.includes(v);back.dataset.to=h;}
 $("#back").onclick=()=>{location.hash=$("#back").dataset.to||"home"};
-const VIEW_NAMES={dx:"2×2 Lab",cutoff:"Cut-off dial",bayes:"Fagan nomogram",risk:"Risk Lab",power:"Power playground",ci:"CI dance",outbreak:"Outbreak simulator",confound:"Confounding lab",funnel:"Funnel lab",mathgym:"Math gym",tree:"Tree drill",designs:"Study designs",bias:"Bias bestiary",twins:"Twins",tests:"Test picker",appraise:"Appraisal kit",vault:"Formula vault",blueprint:"Blueprint",path:"The Path",cases:"Casebook",flash:"Formula flash",plan:"Mastery month",settings:"Settings",web:"Concept web",rounds:"Clinic calls",papers:"Read the paper",decoder:"Paper decoder",teach:"Teach it back",estimate:"Estimate"};
+const VIEW_NAMES={recall:"Takeaways recall",links:"Name the link",xray:"Abstract X-ray",dx:"2×2 Lab",cutoff:"Cut-off dial",bayes:"Fagan nomogram",risk:"Risk Lab",power:"Power playground",ci:"CI dance",outbreak:"Outbreak simulator",confound:"Confounding lab",funnel:"Funnel lab",mathgym:"Math gym",tree:"Tree drill",designs:"Study designs",bias:"Bias bestiary",twins:"Twins",tests:"Test picker",appraise:"Appraisal kit",vault:"Formula vault",blueprint:"Blueprint",path:"The Path",cases:"Casebook",flash:"Formula flash",plan:"Mastery month",settings:"Settings",web:"Concept web",rounds:"Clinic calls",papers:"Read the paper",decoder:"Paper decoder",teach:"Teach it back",estimate:"Estimate"};
 
-DRAW.learn=()=>{$("#path-prog").textContent=Object.keys(st.lessons).length+"/10";$("#cases-prog").textContent=Object.keys(st.cases).length+"/10";$("#rounds-prog").textContent=Object.keys(st.rounds||{}).length+"/"+ROUNDS.length;if($("#papers-prog"))$("#papers-prog").textContent=Object.keys(st.papers||{}).length+"/"+PAPERS.length};
-DRAW.practice=()=>{const due=dueKeys().length,deck=Object.keys(st.srs).length;$("#pm-review").textContent=due?`${due} due now · ${deck} in the deck · clear these first`:deck?`Nothing due today · ${deck} waiting`:"Empty for now. Misses land here.";$("#pm-review-btn").classList.toggle("due",due>0);
+DRAW.learn=()=>{$("#path-prog").textContent=Object.keys(st.lessons).length+"/10";$("#cases-prog").textContent=Object.keys(st.cases).length+"/10";$("#rounds-prog").textContent=Object.keys(st.rounds||{}).length+"/"+ROUNDS.length;if($("#papers-prog"))$("#papers-prog").textContent=Object.keys(st.papers||{}).length+"/"+PAPERS.length;if($("#xray-prog"))$("#xray-prog").textContent=Object.keys(st.xray||{}).length+"/"+XR.length};
+DRAW.practice=()=>{{const e=$("#recall-due");if(e){const c=recallCount();e.textContent=c?c+" due":""}}const due=dueKeys().length,deck=Object.keys(st.srs).length;$("#pm-review").textContent=due?`${due} due now · ${deck} in the deck · clear these first`:deck?`Nothing due today · ${deck} waiting`:"Empty for now. Misses land here.";$("#pm-review-btn").classList.toggle("due",due>0);
   $("#topic-chips").innerHTML=Object.entries(TOPICS).map(([k,t])=>{const r=topicRecent(k);return `<button class="tchip ${topicMastered(k)?"gold":""}" data-start="topic:${k}">${t.label}<small class="num">${r.n?Math.round(r.acc*100)+"%":"new"}</small></button>`}).join("")};
 DRAW.progress=()=>{renderWeek();renderTraps();DRAW.mastery();renderCal();renderMonthCta()};
 function renderMonthCta(){if(st.plan){const d=planDay(),p=PLAN[d-1],done=p.tasks.filter(t=>taskDone(t,d)).length;$("#mc-day").textContent="Day "+d;$("#mc-text").textContent=`${done} of ${p.tasks.length} missions done today · ${p.w} · mastery ${masteryScore().total}%`}}
@@ -2986,7 +3041,7 @@ function renderToday(){
   $("#continue-card").innerHTML=lv?`<span class="eyebrow">Continue</span><h3>${VIEW_NAMES[lv]}</h3><p class="muted">Where you left off.</p><a class="btn small" href="#${lv}">Open</a>`:nl>=0?`<span class="eyebrow">Next lesson</span><h3>${PATH[nl].n}</h3><p class="muted">${PATH[nl].hook}</p><a class="btn small" href="#lesson-${nl+1}">Start lesson ${nl+1}</a>`:`<span class="eyebrow">Five minutes?</span><h3>A blitz beats nothing</h3><p class="muted">Streaks are built on small days.</p><button class="btn small" data-start="blitz">Blitz</button>`;
   const answered=Object.values(st.topics).reduce((a,t)=>a+t.n,0),wc=$("#weak-card");wc.hidden=answered<10;
   if(answered>=10){const w=weakest(1)[0],r=topicRecent(w);wc.innerHTML=`<span class="eyebrow">Weak spot</span><h3>${TOPICS[w].label}</h3><p class="muted">${r.n?`${Math.round(r.acc*100)}% over your last ${r.n} answers.`:"Not tried yet."}</p><button class="btn small" data-start="topic:${w}">Drill it · 10 Q</button>`}
-  $("#citrus-line").hidden=!(signedIn()||st.google.clientId);renderCitrusLine();
+  $("#citrus-line").hidden=!(signedIn()||gLinked());renderCitrusLine();
   renderHeader();
 }
 /* ---- Trap tracker & calibration ---- */
@@ -3128,7 +3183,7 @@ TWINCUES.length=0;TWINS.forEach((p,pi)=>p.c.forEach(c=>TWINCUES.push({p:pi,txt:c
 POOLS.W.arr=TWINCUES;
 
 /* ================= CITRUS HUB + GOOGLE DRIVE (per hub-contract.md / google-cloud-setup.md) ================= */
-const APP_VERSION="7.0.0";
+const APP_VERSION="8.0.0";
 const HUB_ROOT="My Apps",HUB_DIR="hub",APP_SLUG="kumquat",CITRUS_ROOT="Citrus Maxima",CITRUS_APPS="Apps";
 const G={tok:null,exp:0,email:null,ids:{},busy:false,line:"",plan:null};
 st.google=st.google||{clientId:"",syncState:true,publish:true};
@@ -3139,10 +3194,13 @@ gLoad();
 const hubCan=()=>{try{return window.isSecureContext&&!/claude\.ai$/.test(location.hostname)&&!/^blob:|^data:/.test(location.href)}catch(e){return false}};
 const signedIn=()=>!!G.tok&&G.exp>Date.now();
 function gsi(){return new Promise((res,rej)=>{if(window.google&&google.accounts)return res();const s=document.createElement("script");s.src="https://accounts.google.com/gsi/client";s.onload=()=>res();s.onerror=()=>rej(new Error("Google script blocked"));document.head.appendChild(s)})}
+const DEF_CID="753489712404-ra7ahu34gjl305b4ss1765idmqg7am5s.apps.googleusercontent.com";
+const gcid=()=>((st.google&&st.google.clientId)||"").trim()||DEF_CID;
+const gLinked=()=>!!(st.google&&(st.google.linked||st.google.clientId));
 async function connectGoogle(silent){
-  const cid=(st.google.clientId||"").trim();if(!cid)throw new Error("Paste the Citrus client ID first.");
+  const cid=gcid();
   await gsi();
-  return new Promise((res,rej)=>{const c=google.accounts.oauth2.initTokenClient({client_id:cid,scope:"openid email https://www.googleapis.com/auth/drive",prompt:silent?"":"consent",callback:async r=>{if(r.error)return rej(new Error(r.error));G.tok=r.access_token;G.exp=Date.now()+(r.expires_in||3600)*1000-60000;try{const u=await (await fetch("https://www.googleapis.com/oauth2/v3/userinfo",{headers:{Authorization:"Bearer "+G.tok}})).json();G.email=u.email||null}catch(e){}gSave();res()},error_callback:e=>{const t=e&&e.type||"";rej(new Error(t==="popup_failed_to_open"?"Your browser blocked the Google window. Allow pop-ups for this site, or open Kumquat in Chrome/Safari (not the home-screen icon) to connect once.":t==="popup_closed"?"The Google window closed before finishing. If it showed an error, the usual cause is this site’s address missing from the Citrus web client’s authorised JavaScript origins.":t||"Sign-in cancelled"))}});c.requestAccessToken(silent?{prompt:""}:{})})}
+  return new Promise((res,rej)=>{const c=google.accounts.oauth2.initTokenClient({client_id:cid,scope:"openid email https://www.googleapis.com/auth/drive",prompt:(silent||gLinked())?"":"consent",callback:async r=>{if(r.error)return rej(new Error(r.error));st.google.linked=true;_save();G.tok=r.access_token;G.exp=Date.now()+(r.expires_in||3600)*1000-60000;try{const u=await (await fetch("https://www.googleapis.com/oauth2/v3/userinfo",{headers:{Authorization:"Bearer "+G.tok}})).json();G.email=u.email||null}catch(e){}gSave();res()},error_callback:e=>{const t=e&&e.type||"";rej(new Error(t==="popup_failed_to_open"?"Your browser blocked the Google window. Allow pop-ups for this site, or open Kumquat in Chrome/Safari (not the home-screen icon) to connect once.":t==="popup_closed"?"The Google window closed before finishing. If it showed an error, the usual cause is this site’s address missing from the Citrus web client’s authorised JavaScript origins.":t||"Sign-in cancelled"))}});c.requestAccessToken(silent?{prompt:""}:{})})}
 function signOut(){G.tok=null;G.exp=0;G.email=null;gSave();G.line="Signed out";renderGoogle()}
 async function gfetch(url,opt={}){if(!signedIn())throw new Error("Sign in needed");const r=await fetch(url,{...opt,headers:{...(opt.headers||{}),Authorization:"Bearer "+G.tok}});if(r.status===401){G.tok=null;gSave();throw new Error("Google needs a tap to reconnect")}if(!r.ok){const t=await r.text().catch(()=>"");throw new Error("Drive "+r.status+(t?": "+t.slice(0,80):""))}const ct=r.headers.get("content-type")||"";return ct.includes("json")?r.json():r.text()}
 const DRIVE="https://www.googleapis.com/drive/v3",UP="https://www.googleapis.com/upload/drive/v3";
@@ -3201,27 +3259,26 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden&&signedIn()
 window.addEventListener("pagehide",()=>{if(signedIn())syncAll(true)});
 /* ---- UI ---- */
 function renderCitrusLine(){const el=$("#citrus-line");if(!el)return;if(!hubCan()){el.innerHTML=`<span class="eyebrow">Citrus</span><p class="muted">Google sign-in works in the phone-app copy of Kumquat (GitHub Pages). Progress here stays in this browser; use Export in Settings to move it.</p>`;return}
-  if(!signedIn()){el.innerHTML=`<span class="eyebrow">Citrus & Drive</span><p class="muted">${st.google.clientId?"Signed out. One tap reconnects.":"Not connected yet."}</p><div class="row"><button class="btn small primary" id="cl-connect">${st.google.clientId?"Reconnect Google":"Connect Google"}</button></div>`;$("#cl-connect").onclick=async()=>{if(!st.google.clientId){location.hash="settings";return}try{await connectGoogle(false);await syncAll(true);toast("Connected. Progress now lives on your Drive.")}catch(e){toast(e.message)}};return}
+  if(!signedIn()){el.innerHTML=`<span class="eyebrow">Citrus & Drive</span><p class="muted">${gLinked()?"Signed out. One tap reconnects.":"One tap: progress on Drive, today's plan in Citrus."}</p><div class="row"><button class="btn small primary" id="cl-connect">${gLinked()?"Reconnect Google":"Connect Google"}</button></div>`;$("#cl-connect").onclick=async()=>{if(!hubCan()){location.hash="settings";return}try{await connectGoogle(false);await syncAll(true);toast("Connected. Progress now lives on your Drive.")}catch(e){toast(e.message)}};return}
   el.innerHTML=`<span class="eyebrow">Citrus</span><p>${G.plan?`Citrus planned <b>${G.plan.start||G.plan.time||"today"} · ${G.plan.minutes||G.plan.min||45} min</b>${G.plan.title?" · "+G.plan.title:""}.`:"No block from Citrus yet today."} <span class="muted">${G.line||""}</span></p>`}
 function renderGoogle(){const r=$("#google-root");if(!r)return;const g=st.google;const ok=signedIn();
   const status=!hubCan()?`<p class="muted">You’re viewing the claude.ai copy. Google can’t sign in here; the phone app at <b>kumquat-evidence.github.io/kumquat</b> syncs to Drive and talks to Citrus. Move progress with the backup box below.</p>`
     :ok?`<div class="g-status on"><span class="g-dot"></span><div><b>Connected${G.email?" · "+G.email:""}</b><small>${G.line||"Progress lives on your Drive. Citrus can see today’s plan."}</small></div></div>`
-    :g.clientId?`<div class="g-status"><span class="g-dot"></span><div><b>Signed out</b><small>One tap reconnects. ${G.line||""}</small></div></div>`
-    :`<p>Kumquat joins the Citrus family with one paste: the shared <b>Citrus web</b> client ID (the same one your other apps use).</p>`;
+    :gLinked()?`<div class="g-status"><span class="g-dot"></span><div><b>Signed out</b><small>One tap reconnects. ${G.line||""}</small></div></div>`
+    :`<p>One tap on <b>Connect Google</b> keeps your progress on Drive (so every device has it) and shows today's plan to Citrus. Uses the shared Citrus sign-in your other apps use.</p>${G.line?`<p class="muted">${G.line}</p>`:""}`;
   r.innerHTML=`<div class="card" style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">Google & Citrus</span>${status}
-    ${!g.clientId||!ok?`<label class="pico-l">Citrus web client ID<input id="g-cid" value="${(g.clientId||"").replace(/"/g,"&quot;")}" placeholder="…apps.googleusercontent.com" autocomplete="off"></label>`:""}
-    <div class="row"><button class="btn primary" id="g-connect" ${hubCan()?"":"disabled"}>${ok?"Reconnect":"Connect Google"}</button>${ok?`<button class="btn" id="g-sync">Sync now</button><button class="btn small" id="g-out">Sign out</button>`:""}</div>
+        <div class="row"><button class="btn primary" id="g-connect" ${hubCan()?"":"disabled"}>${ok?"Reconnect":"Connect Google"}</button>${ok?`<button class="btn" id="g-sync">Sync now</button><button class="btn small" id="g-out">Sign out</button>`:""}</div>
     ${G.conflict?`<div class="fb no"><h3>Two saves disagree</h3><div class="ex">Drive has a save from ${G.conflict.device||"another device"} (${(G.conflict.savedAt||"").replace("T"," ").slice(0,16)}) and this device has unsynced work.</div><div class="row" style="margin-top:8px"><button class="btn primary" id="g-take">Use Drive’s save</button><button class="btn" id="g-keep">Keep this device</button></div></div>`:""}
     <details class="adv"><summary>Advanced</summary><div class="ck" style="margin-top:10px"><label class="ck-item"><p>Keep progress on Drive <span class="sec">My Apps/hub/kumquat/state.json · master copy</span></p><input type="checkbox" id="g-state" ${g.syncState?"checked":""}></label>
       <label class="ck-item"><p>Publish status for Citrus <span class="sec">hub/kumquat/status.json + Citrus Maxima/Apps</span></p><input type="checkbox" id="g-pub" ${g.publish?"checked":""}></label></div>
-      ${ok?`<label class="pico-l" style="margin-top:10px">Client ID<input id="g-cid" value="${(g.clientId||"").replace(/"/g,"&quot;")}" autocomplete="off"></label>`:""}
+      <label class="pico-l" style="margin-top:10px">Client ID (leave empty for the shared Citrus one)<input id="g-cid" value="${(g.clientId||"").replace(/"/g,"&quot;")}" placeholder="shared Citrus client" autocomplete="off"></label>
       ${hubCan()?`<p class="muted" style="font-size:.85rem;margin-top:10px">This app’s origin: <code id="g-origin">${location.origin}</code> <button class="btn small" id="g-copy-origin" aria-label="Copy origin">Copy</button> · must be in the client’s authorised JavaScript origins · Google script ${window.google&&google.accounts?"loaded":"not loaded yet"} · ${matchMedia("(display-mode: standalone)").matches?"installed app":"browser tab"}</p>`:""}</details>
   </div>
   <div class="card" style="display:flex;flex-direction:column;gap:10px"><span class="eyebrow">Backup</span><div class="row"><button class="btn" id="g-export">Copy progress as text</button><button class="btn" id="g-import">Paste progress</button></div><textarea id="g-io" class="search" rows="3" placeholder="Paste a progress backup here, then tap Paste progress" style="font-family:var(--f-mono);font-size:.8rem"></textarea></div>`;
   $$("#g-cid").forEach(i=>i.onchange=e=>{st.google.clientId=e.target.value.trim();_save()});
-  if($("#g-copy-origin"))$("#g-copy-origin").onclick=()=>{try{navigator.clipboard.writeText(location.origin).then(()=>toast("Origin copied"))}catch(e){}};
+  if($("#g-copy-origin"))$("#g-copy-origin").onclick=()=>{try{navigator.clipboard.writeText(location.origin).then(()=>toast("Origin copied"),()=>toast("Copy blocked: select the address and copy it"))}catch(e){}};
   $("#g-state").onchange=e=>{st.google.syncState=e.target.checked;_save()};$("#g-pub").onchange=e=>{st.google.publish=e.target.checked;_save()};
-  $("#g-connect").onclick=async()=>{const f=$("#g-cid");if(f)st.google.clientId=f.value.trim();_save();if(!st.google.clientId){G.line="Paste the Citrus client ID first.";renderGoogle();return}if(!/apps\.googleusercontent\.com$/.test(st.google.clientId)){G.line="That doesn’t look like a client ID (it should end in apps.googleusercontent.com).";renderGoogle();return}try{G.line="Opening Google…";await connectGoogle(false);G.line="Connected";await syncAll(true)}catch(e){G.line=e.message;renderGoogle()}};
+  $("#g-connect").onclick=async()=>{const f=$("#g-cid");if(f)st.google.clientId=f.value.trim();_save();if(st.google.clientId&&!/apps\.googleusercontent\.com$/.test(st.google.clientId)){G.line="That doesn’t look like a client ID (it should end in apps.googleusercontent.com).";renderGoogle();return}try{G.line="Opening Google…";await connectGoogle(false);G.line="Connected";await syncAll(true)}catch(e){G.line=e.message;renderGoogle()}};
   if($("#g-sync"))$("#g-sync").onclick=()=>syncAll(true);if($("#g-out"))$("#g-out").onclick=signOut;
   if($("#g-take"))$("#g-take").onclick=async()=>{const c=G.conflict;G.conflict=null;try{localStorage.setItem(gk("before_drive"),JSON.stringify(st))}catch(e){}const g=st.google;st=sanitize(Object.assign({},c,{google:g}));localStorage.setItem(gk("synced_at"),c.savedAt);_save();G.line="Drive’s save applied";renderHeader();renderGoogle()};
   if($("#g-keep"))$("#g-keep").onclick=async()=>{G.conflict=null;await pullOrPush({force:true,take:true}).catch(e=>G.line=e.message);renderGoogle()};
@@ -3231,7 +3288,7 @@ function renderGoogle(){const r=$("#google-root");if(!r)return;const g=st.google
 DRAW.settings=renderGoogle;
 if(hubCan()){setTimeout(()=>gsi().catch(()=>{}),800)}
 /* quiet renewal once a day */
-(async()=>{if(!hubCan()||!st.google.clientId)return;const k=gk("renew");const last=+localStorage.getItem(k)||0;if(Date.now()-last<864e5&&signedIn()){syncAll(false);return}try{await connectGoogle(true);localStorage.setItem(k,String(Date.now()));syncAll(false)}catch(e){G.line="Sign in needed"}})();
+(async()=>{if(!hubCan()||!gLinked())return;const k=gk("renew");const last=+localStorage.getItem(k)||0;if(Date.now()-last<864e5&&signedIn()){syncAll(false);return}try{await connectGoogle(true);localStorage.setItem(k,String(Date.now()));syncAll(false)}catch(e){G.line="Sign in needed"}})();
 
 /* ================= HAND KIT: hold to explain · hold menus · swipe cards (per ui-kit.md) ================= */
 (function(){
@@ -3544,16 +3601,20 @@ function roundPlan(){const due=dueKeys().length,budget=st.budget||25,legs=[];
   let ln=-1;if(st.plan){const t=PLAN[planDay()-1].tasks.find(t=>t.t==="lesson"&&!st.lessons[t.n]);if(t)ln=t.n}
   if(ln<0){const nl=LESSONS.findIndex((_,i)=>!st.lessons[i]);if(nl>=0&&st.lastLessonDay!==dayNum())ln=nl}
   if(ln>=0)legs.push({t:"lesson",n:ln,label:`Lesson ${ln+1}: ${PATH[ln].n}`,min:9,p:9});
+  const rc=recallDue();if(rc>=0)legs.push({t:"recall",n:rc,label:`Recall: Lesson ${rc+1} takeaways`,min:2,p:7});
   const c=conceptOfDay();legs.push({t:"concept",label:"Concept of the day: "+c[1],min:2,c:c[0],p:3});
   legs.push({t:"tree",n:2,label:"Two tree problems",min:4,p:5});
   legs.push({t:"estimate",n:3,label:"Three estimates",min:3,p:2});
   let dt=null;if(st.plan){const t=PLAN[planDay()-1].tasks.find(t=>t.t==="drill");if(t)dt=t.topic}
   legs.push({t:"drill",n:8,topic:dt,label:dt?`Eight questions: ${TOPICS[dt].label}`:"Eight mixed questions",min:8,p:8});
   const odd=dayNum()%2;const freshPaper=typeof PAPERS!=="undefined"&&PAPERS.find(P=>st.papers[P.id]==null);
+  const freshX=XR.find(x=>!(st.xray||{})[x.id]&&(st.xray||{})[x.id]!==0);
   if(odd&&freshPaper)legs.push({t:"paper",id:freshPaper.id,label:"Read the paper: "+freshPaper.title,min:9,p:6});
+  else if(!odd&&freshX&&Object.keys(st.lessons).length>=5)legs.push({t:"xray",id:freshX.id,label:"Abstract X-ray: "+freshX.title,min:6,p:6});
   else{const rd=ROUNDS.find(r=>st.rounds[r.id]==null)||ROUNDS[dayNum()%ROUNDS.length];legs.push({t:"round",id:rd.id,label:"Clinic call: "+rd.title,min:6,p:6})}
   legs.push({t:"teach",label:"Teach one concept back",min:3,p:4});
-  const rot=["concept","teach","estimate"][dayNum()%3];legs.forEach(l=>{if(l.t===rot)l.p+=4});
+  legs.push({t:"links",n:4,label:"Name four links",min:2,p:2});
+  const rot=["concept","teach","estimate","links"][dayNum()%4];legs.forEach(l=>{if(l.t===rot)l.p+=4});
   return trimLegs(legs,budget)}
 function trimLegs(legs,budget){const out=legs.slice();while(out.reduce((a,l)=>a+l.min,0)>budget+3&&out.length>2){let lo=null;out.forEach(l=>{if(l.p<10&&(!lo||l.p<lo.p))lo=l});if(!lo)break;out.splice(out.indexOf(lo),1)}return out}
 function startRound(){ROUND={legs:roundPlan(),i:0,cnt:0,started:Date.now(),xp0:st.xp,ans0:st.log.reduce((a,l)=>a+l.n,0),ok0:st.log.reduce((a,l)=>a+l.score,0)};save();roundGo()}
@@ -3562,7 +3623,7 @@ function roundGo(){const L=ROUND.legs[ROUND.i];if(!L){roundFinish();return}ROUND
    case"lesson":PL=null;location.hash="lesson-"+(L.n+1);break;
    case"concept":WEBSEL=L.c;location.hash="web";break;case"tree":TR=null;location.hash="tree";break;case"estimate":ES=null;location.hash="estimate";break;
    case"drill":if(L.topic)startQuiz("topic",L.topic);else startQuiz("daily");Q.total=L.n||8;renderQ();break;
-   case"round":RD=null;location.hash="round-"+L.id;break;case"paper":PR=null;location.hash="paper-"+L.id;break;case"teach":TB=null;location.hash="teach";break}
+   case"round":RD=null;location.hash="round-"+L.id;break;case"paper":PR=null;location.hash="paper-"+L.id;break;case"teach":TB=null;location.hash="teach";break;case"recall":RC=null;RC_PICK=L.n;location.hash="recall";break;case"links":LK={n:0,score:0,total:L.n||4,cur:linkPick()};location.hash="links";break;case"xray":XS={x:XR.find(y=>y.id===L.id)||XR[0],i:0,pts:0,ans:null,sel:{}};location.hash="xray";break}
   renderRoundBar()}
 function roundTick(kind){if(!ROUND)return;const L=ROUND.legs[ROUND.i];if(!L||L.t!==kind)return;ROUND.cnt++;renderRoundBar();if(ROUND.cnt>=(L.n||1))setTimeout(()=>{if(ROUND&&ROUND.legs[ROUND.i]===L)roundLegDone()},900)}
 function roundLegDone(){if(!ROUND)return;const L=ROUND.legs[ROUND.i];if(L&&L.t==="lesson")st.lastLessonDay=dayNum();ROUND.i++;if(ROUND.i>=ROUND.legs.length){roundFinish();return}renderRoundBar();setTimeout(roundGo,450)}
@@ -3571,10 +3632,170 @@ function roundFinish(){const mins=Math.max(1,Math.round((Date.now()-ROUND.starte
   st.roundsDone=(st.roundsDone||0)+1;st.lastRound=dayNum();st.xp+=40;if(st.last!==today()){st.streak=st.last===yesterday()?st.streak+1:1;st.last=today()}save();ROUND=null;renderRoundBar();if(!reduce)confetti();location.hash="home";
   setTimeout(()=>{const nl=LESSONS.findIndex((_,i)=>!st.lessons[i]);$("#round-summary").innerHTML=`<div class="card summary"><span class="eyebrow">Round complete</span><h2>${mins} min · +${xp+40} XP · 🔥 ${liveStreak()}</h2><ul class="sum-legs">${legs.map(l=>`<li>✓ ${l.label}</li>`).join("")}</ul>${ans?`<p>${ok} of ${ans} questions right (${Math.round(ok/ans*100)}%).</p>`:""}<p class="muted">Tomorrow: ${Object.keys(st.srs).filter(k=>st.srs[k].due<=dayNum()+1).length} cards due${nl>=0?` · Lesson ${nl+1}: ${PATH[nl].n}`:""}.</p><div class="row"><button class="btn small" id="sum-x">Close</button></div></div>`;$("#sum-x").onclick=()=>{$("#round-summary").innerHTML=""};renderToday()},60)}
 function renderRoundBar(){let bar=$("#roundbar");document.body.classList.toggle("in-round",!!ROUND&&current!=="home");if(!ROUND||current==="home"){if(bar)bar.remove();return}if(!bar){bar=document.createElement("div");bar.id="roundbar";document.body.appendChild(bar)}
-  const L=ROUND.legs[ROUND.i],cnt=L&&L.n&&["tree","estimate"].includes(L.t)?` <span class="num">(${Math.min(ROUND.cnt,L.n)}/${L.n})</span>`:"";
+  const L=ROUND.legs[ROUND.i],cnt=L&&L.n&&["tree","estimate","links"].includes(L.t)?` <span class="num">(${Math.min(ROUND.cnt,L.n)}/${L.n})</span>`:"";
   bar.innerHTML=`<div class="rb-in"><span class="eyebrow">Round · ${ROUND.i+1}/${ROUND.legs.length}</span><div class="pips">${ROUND.legs.map((_,i)=>`<i class="${i<ROUND.i?"ok":i===ROUND.i?"cur":""}"></i>`).join("")}</div><b>${L?L.label:""}${cnt}</b><button class="btn small" id="rb-next">Next leg →</button><button class="btn small ghost" id="rb-pause">Pause</button></div>`;
   $("#rb-next").onclick=()=>{stopTimer();if(Q&&!Q.done)Q={done:true};roundLegDone()};$("#rb-pause").onclick=roundPause}
 function roundNextBtn(){return ROUND?`<button class="btn primary" onclick="roundLegDone()">Next leg →</button>`:""}
+
+/* ================= v8: fading hints · takeaways recall · name the link · abstract X-ray ================= */
+/* ---- three-level fading hints (worked example → half-done → formula) ---- */
+function hintParts(q){const m=/<code>([\s\S]*?)<\/code>/.exec(q.explain||"");if(!m)return null;const lines=m[1].split(/<br>/);
+  const fOf=l=>{const s=l.split(" = ");if(s.length<2)return l;return s.length>2&&/[A-Za-z√]/.test(s[1])?s[0]+" = "+s[1]:s[0]+" = ?"};
+  const blank=l=>{const f=fOf(l);return /= \?$/.test(f)?f.replace(/= \?$/,"= ___"):f+" = ___"};
+  let half;if(lines.length===1){const s=lines[0].split(" = ");half=s.length>1?s.slice(0,-1).join(" = ")+" = ___":"___"}else half=[lines[0]].concat(lines.slice(1).map(blank)).join("<br>");
+  return {full:m[1],half,formula:lines.map(fOf).join("<br>")}}
+function fadeLv(q){const h=hintFor(q);const f=h&&st.fade&&st.fade[h];return f?f.lv:1}
+function hintBtn(q){return ["","💡 Worked example (¼ XP)","💡 Half-done hint (½ XP)","💡 Formula hint (½ XP)"][fadeLv(q)]}
+function hintShow(q){const p=hintParts(q);if(!p)return `<code>${hintFor(q)}</code>`;const lv=fadeLv(q);
+  return `<code class="hint-code">${lv===1?p.full:lv===2?p.half:p.formula}</code>${lv===1?`<small class="hint-note">Study the working, then answer. Two right with this hint and it gets lighter.</small>`:lv===2?`<small class="hint-note">First line done for you. Finish it.</small>`:""}`}
+function fadeNote(q,ok){const h=hintFor(q);if(!h)return;st.fade=st.fade||{};let f=st.fade[h];
+  if(Q.hinted){f=f||(st.fade[h]={lv:1,ok:0});if(ok){f.ok++;if(f.ok>=2&&f.lv<3){f.lv++;f.ok=0}}else{f.lv=Math.max(1,f.lv-1);f.ok=0}}
+  else if(!ok&&f&&f.lv>1){f.lv--;f.ok=0}}
+
+/* ---- spaced takeaways recall: +3, +10 and +31 days after a lesson ---- */
+const RC_GAP=[3,7,21];let RC=null,RC_PICK=null;
+function recallState(n){st.recall=st.recall||{};st.ldone=st.ldone||{};const r=st.recall[n];if(r)return r;const d=st.ldone[n];return {s:0,due:(d==null?dayNum():d)+RC_GAP[0]}}
+function recallDue(){st.ldone=st.ldone||{};let best=-1,bd=1e9;for(const k in st.lessons){if(!st.lessons[k]||!LESSONS[k])continue;const r=recallState(+k);if(r.s>=3)continue;if(r.due<=dayNum()&&r.due<bd){bd=r.due;best=+k}}return best}
+function recallCount(){let c=0;for(const k in st.lessons){if(!st.lessons[k]||!LESSONS[k])continue;const r=recallState(+k);if(r.s<3&&r.due<=dayNum())c++}return c}
+const RC_STOP=new Set("the and with from that this then than when your have into only over under they them what which there their about after before each more most less between among those these where while being other".split(" "));
+function clozeOf(t){const txt=String(t).replace(/<[^>]+>/g,"");
+  const m=/^(.{3,}?)\s(=|→|:)\s(.+)$/.exec(txt);
+  if(m){let ans=m[3].split(/;\s/)[0].replace(/[.]$/,"");if(ans.length<=40&&ans.length>=2){const i=txt.indexOf(ans,m[1].length);return {pre:txt.slice(0,i),ans,post:txt.slice(i+ans.length)}}}
+  const words=txt.match(/[A-Za-z][A-Za-z’'\-]{4,}/g)||[];let w=null;words.forEach(x=>{if(RC_STOP.has(x.toLowerCase()))return;if(!w||x.length>w.length)w=x});
+  if(!w)return {pre:"",ans:txt,post:""};const i=txt.indexOf(w);return {pre:txt.slice(0,i),ans:w,post:txt.slice(i+w.length)}}
+const rcNorm=s=>String(s).toLowerCase().replace(/[^a-z0-9%+−\-÷×\/\.]/g,"");
+DRAW.recall=function(){const root=$("#recall-root");if(!root)return;
+  if(!RC){let n=RC_PICK!=null?RC_PICK:recallDue();RC_PICK=null;
+    if(n<0){const done=Object.keys(st.lessons).filter(k=>st.lessons[k]&&LESSONS[k]).map(Number).sort((a,b)=>a-b);
+      root.innerHTML=done.length?`<div class="card"><span class="eyebrow">Nothing due today</span><p>Your next recall is due ${(()=>{const ds=done.map(k=>recallState(k)).filter(r=>r.s<3).map(r=>r.due);if(!ds.length)return "never again: every recall is finished";const d=Math.max(1,Math.min(...ds)-dayNum());return d===1?"tomorrow":"in "+d+" days"})()}. Practise one now anyway:</p><div class="rc-list">${done.map(k=>`<button class="btn" data-rc="${k}">Lesson ${k+1}: ${PATH[k].n}</button>`).join("")}</div></div>`
+        :`<div class="card"><span class="eyebrow">Nothing to recall yet</span><p>Finish a lesson first. Its takeaways come back here after 3, 10 and 31 days.</p><a class="btn primary" href="#path">Go to the Path</a></div>`;
+      $$("[data-rc]").forEach(b=>b.onclick=()=>{RC_PICK=+b.dataset.rc;RC=null;DRAW.recall()});return}
+    RC={n,items:(LESSONS[n].take||[]).map(clozeOf),typed:{},stage:"fill",got:{}}}
+  const L=LESSONS[RC.n];
+  if(RC.stage==="fill"){root.innerHTML=`<div class="pl-top"><span class="eyebrow">Recall · Lesson ${RC.n+1}: ${PATH[RC.n].n}</span></div>
+    <div class="card rc-card"><p class="muted">Fill each gap from memory. Typing is optional; saying it in your head counts. Then reveal.</p>
+    ${RC.items.map((c,i)=>`<div class="rc-row"><span class="rc-n num">${i+1}</span><p>${c.pre}<input class="rc-in" data-i="${i}" autocomplete="off" aria-label="gap ${i+1}" value="${(RC.typed[i]||"").replace(/"/g,"&quot;")}" style="width:${Math.min(16,Math.max(5,c.ans.length*.6))}em">${c.post}</p></div>`).join("")}
+    <div class="row"><button class="btn primary" id="rc-reveal">Reveal</button></div></div>`;
+    $$(".rc-in").forEach(i=>i.oninput=e=>RC.typed[i.dataset.i]=e.target.value);
+    $("#rc-reveal").onclick=()=>{RC.items.forEach((c,i)=>{const t=rcNorm(RC.typed[i]||""),a=rcNorm(c.ans);RC.got[i]=!!t&&(t===a||(t.length>=3&&(a.includes(t)&&t.length>=a.length*.5||t.includes(a))))});RC.stage="grade";DRAW.recall()};return}
+  let n=RC.items.filter((_,i)=>RC.got[i]).length;
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">Recall · Lesson ${RC.n+1}: ${PATH[RC.n].n}</span></div>
+   <div class="card rc-card"><p class="muted">Tick the gaps you really had. Be strict: a half-remembered idea isn’t yours yet.</p>
+   ${RC.items.map((c,i)=>`<label class="rc-row rc-g ${RC.got[i]?"on":""}"><input type="checkbox" data-i="${i}" ${RC.got[i]?"checked":""}><p>${c.pre}<mark>${c.ans}</mark>${c.post}${RC.typed[i]?`<small class="muted"> · you wrote “${String(RC.typed[i]).replace(/</g,"&lt;")}”</small>`:""}</p></label>`).join("")}
+   <div class="row" style="justify-content:space-between"><span class="num" id="rc-n" style="font-size:1.3rem">${n} / ${RC.items.length}</span><button class="btn primary" id="rc-save">Save</button></div></div>`;
+  $$(".rc-g input").forEach(cb=>cb.onchange=()=>{RC.got[cb.dataset.i]=cb.checked;cb.closest("label").classList.toggle("on",cb.checked);n=RC.items.filter((_,i)=>RC.got[i]).length;$("#rc-n").textContent=n+" / "+RC.items.length});
+  $("#rc-save").onclick=()=>{const sc=RC.items.length?n/RC.items.length:1;const r=recallState(RC.n);let nr;
+    if(sc>=.8){const s=r.s+1;nr={s,due:dayNum()+(RC_GAP[s]||999),last:sc}}else nr={s:r.s,due:dayNum()+1,last:sc};
+    st.recall[RC.n]=nr;st.xp+=n*2;const tp=PATH[RC.n]&&PATH[RC.n].t;if(tp&&TOPICS[tp]){const tt=st.topics[tp]=st.topics[tp]||{c:0,n:0};tt.n++;if(sc>=.8)tt.c++}save();renderHeader();
+    toast(sc>=.8?(nr.s>=3?"Locked in. This lesson’s recall is finished.":`Solid. Next recall in ${RC_GAP[nr.s]} days.`):"Some gaps. It comes back tomorrow.");
+    const wasRound=ROUND&&ROUND.legs[ROUND.i]&&ROUND.legs[ROUND.i].t==="recall";RC=null;if(wasRound)roundLegDone();else DRAW.recall()}};
+
+/* ---- name the link: retrieval on the concept web's edges ---- */
+let LK=null;
+function linkPool(){return WEB_EDGES.map((e,i)=>({e,i})).filter(({e})=>e[2]&&String(e[2]).length>=3&&WEB_NODES.find(n=>n[0]===e[0])&&WEB_NODES.find(n=>n[0]===e[1]))}
+function linkPick(){const pool=linkPool();st.links=st.links||{};const w=({i})=>{const r=st.links[i];return !r?3:r.c<r.n?4:1};
+  const bag=[];pool.forEach(x=>{for(let k=0;k<w(x);k++)bag.push(x)});const x=pick(bag);
+  const tp=id=>(WEB_NODES.find(n=>n[0]===id)||[])[2];const T=new Set([tp(x.e[0]),tp(x.e[1])]);const near=pool.filter(y=>y.e[2]!==x.e[2]&&(y.e[0]===x.e[0]||y.e[1]===x.e[1]||y.e[0]===x.e[1]||y.e[1]===x.e[0]||T.has(tp(y.e[0]))||T.has(tp(y.e[1]))));const labs=shuffle(near.map(y=>y.e[2])).concat(shuffle(pool.filter(y=>y.e[2]!==x.e[2]).map(y=>y.e[2])));const opts=[x.e[2]];for(const l of labs){if(opts.length>=4)break;if(!opts.includes(l))opts.push(l)}
+  return {x,opts:shuffle(opts),done:false}}
+DRAW.links=function(){const root=$("#links-root");if(!root)return;if(!LK)LK={n:0,score:0,total:6,cur:linkPick()};
+  if(LK.n>=LK.total){root.innerHTML=`<div class="card summary"><span class="eyebrow">Links done</span><h2>${LK.score} / ${LK.total}</h2><p class="muted">Missed links come back more often.</p><div class="row"><button class="btn primary" id="lk-again">Six more</button><a class="btn" href="#web">Open the concept web</a></div></div>`;$("#lk-again").onclick=()=>{LK=null;DRAW.links()};return}
+  const c=LK.cur,[a,b,lab]=c.x.e,A=WEB_NODES.find(n=>n[0]===a),B=WEB_NODES.find(n=>n[0]===b);
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">Name the link · ${LK.n+1} / ${LK.total}</span><span class="muted num">${LK.score} right</span></div>
+   <div class="card lk-card"><div class="lk-pair"><div class="lk-node"><b>${A[1]}</b><small>${A[3]}</small></div><div class="lk-arrow" aria-hidden="true">→ ? →</div><div class="lk-node"><b>${B[1]}</b><small>${B[3]}</small></div></div>
+   <p>How does <b>${A[1]}</b> connect to <b>${B[1]}</b>? Say it to yourself first, then pick.</p>
+   <div class="lk-opts">${c.opts.map((o,i)=>`<button class="ptopt lkopt" data-i="${i}">${o}</button>`).join("")}</div><div id="lk-fb"></div></div>`;
+  $$(".lkopt").forEach(btn=>btn.onclick=()=>{if(c.done)return;c.done=true;const ok=c.opts[+btn.dataset.i]===lab;$$(".lkopt").forEach(x=>{x.disabled=true;if(c.opts[+x.dataset.i]===lab)x.classList.add("right")});if(!ok)btn.classList.add("wrong");
+    const r=st.links[c.x.i]=st.links[c.x.i]||{c:0,n:0};r.n++;if(ok){r.c++;LK.score++;st.xp+=3}save();renderHeader();roundTick("links");
+    $("#lk-fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><h3>${ok?"Right.":"Not quite."}</h3><div class="ex"><b>${A[1]}</b> → ${lab} → <b>${B[1]}</b></div></div><div class="qnext"><button class="btn primary" id="lk-next">${LK.n+1>=LK.total?"Finish":"Next link"} →</button> <button class="btn small ghost" id="lk-web">See it on the web</button></div>`;
+    $("#lk-next").onclick=()=>{LK.n++;LK.cur=linkPick();DRAW.links();window.scrollTo(0,0)};$("#lk-web").onclick=()=>{WEBSEL=a;location.hash="web"}})};
+
+/* ---- Abstract X-ray: read an abstract the way an examiner does ---- */
+const XR_SPIN={rel:"Relative numbers only",nonsig:"Non-significant primary result sold as a win",causal:"Causal language from an observational study",composite:"Composite driven by its softest part",subgroup:"Post-hoc subgroup promoted",hetero:"Heterogeneity or small-study bias ignored",pp:"Per-protocol result in place of ITT",none:"No major spin"};
+const XR=[
+{id:"hfno-copd",title:"High-flow nasal oxygen in COPD exacerbations",set:"ER",text:"<b>Background:</b> Intubation in COPD exacerbations carries high mortality. <b>Methods:</b> Open-label randomised trial in three Saudi EDs. Adults with a moderate COPD exacerbation (pH 7.25–7.35) were randomised to high-flow nasal oxygen (HFNO) or conventional oxygen. Primary outcome: intubation within 7 days. <b>Results:</b> 400 patients were randomised (200 per arm). Intubation occurred in 18 (9.0%) with HFNO and 30 (15.0%) with conventional oxygen (RR 0.60, 95% CI 0.35 to 1.04; p = 0.07). Patients rated HFNO as more comfortable (p < 0.001). <b>Conclusions:</b> HFNO reduced intubation by 40% and was preferred by patients. HFNO should be considered first-line in COPD exacerbations.",
+ steps:[{k:"mcq",h:"Design",q:"What design is this?",o:["Randomised controlled trial","Prospective cohort","Non-inferiority trial","Case-control study"],a:0,e:"Patients were randomised to HFNO or conventional oxygen: a parallel-group superiority RCT (open-label)."},
+ {k:"mcq",h:"Primary result",q:"Which is the primary result?",o:["Intubation 9.0% vs 15.0%, RR 0.60 (0.35 to 1.04)","Comfort scores, p < 0.001","A 40% reduction in intubation","400 patients randomised"],a:0,e:"The primary outcome is intubation within 7 days. Comfort is secondary; “a 40% reduction” is the authors’ framing of the point estimate."},
+ {k:"mcq",h:"Significance",q:"Is the primary result statistically significant?",o:["No: the 95% CI for the RR includes 1","Yes: the RR is well below 1","Yes: p < 0.001","Can’t tell without the full paper"],a:0,e:"0.35 to 1.04 crosses 1 (p = 0.07). The data fit anything from a 65% reduction to a 4% increase."},
+ {k:"num",h:"For my patient",q:"If the point estimate were true, what is the NNT for a patient with a 15% baseline risk of intubation?",a:17,tol:1,e:"ARR = 15% × 0.40 = 6% → NNT = 1 / 0.06 = 16.7 → 17. But the trial didn’t show a real effect, so this NNT is a hypothesis, not a result."},
+ {k:"multi",h:"Spin",q:"Which kinds of spin do you see? Tick all that apply.",a:["rel","nonsig"],e:"“Reduced intubation by 40%” is relative-only and treats a non-significant result as a finding. The first-line recommendation leans on a secondary outcome (comfort)."},
+ {k:"mcq",h:"Bottom line",q:"Your one-line bottom line?",o:["Promising but unproven: no significant effect on intubation; a bigger trial is needed","HFNO prevents 40% of intubations; use it first-line","HFNO is harmful because the CI reaches 1.04"],a:0,e:"Absence of a significant effect isn’t proof of no effect either. Underpowered, not negative."}]},
+{id:"sleep-injury",title:"Short sleep and lost-time injuries on a construction site",set:"OH",text:"<b>Background:</b> Fatigue is a suspected cause of work injury. <b>Methods:</b> Prospective cohort of 3,000 construction workers at a Saudi giga-project. Sleep was self-reported at enrolment (short sleep: under 6 h a night). Lost-time injuries were taken from site records over 12 months. Cox models adjusted for age, trade, nationality and overtime. <b>Results:</b> 900 workers reported short sleep. Injuries occurred in 72/900 (8.0%) short sleepers and 84/2,100 (4.0%) others; adjusted HR 1.9 (95% CI 1.4 to 2.6). <b>Conclusions:</b> Short sleep doubles injury risk. Mandatory sleep screening at pre-placement medicals would prevent half of all site injuries.",
+ steps:[{k:"mcq",h:"Design",q:"What design is this?",o:["Prospective cohort","Randomised controlled trial","Case-control study","Cross-sectional survey"],a:0,e:"Workers were grouped by exposure (sleep) and followed forward for injuries: a prospective cohort. Nobody assigned the exposure."},
+ {k:"mcq",h:"Primary result",q:"Which is the primary estimate?",o:["Adjusted HR 1.9 (1.4 to 2.6)","A 2.0 risk ratio, so the effect is proven","3,000 workers followed for 12 months","Half of all injuries prevented"],a:0,e:"The adjusted HR is the headline estimate. Crude risks are 8.0% vs 4.0% (RR 2.0); adjustment trims it a little."},
+ {k:"mcq",h:"Significance",q:"What does the CI tell you?",o:["Chance is an unlikely explanation, but significant isn’t causal","Nothing, because the HR is under 2","Short sleep is proven to cause injury","Can’t tell: no p value is given"],a:0,e:"1.4 to 2.6 excludes 1. Confounding (second jobs, housing, commuting) and reverse causation (pain from old injuries disturbing sleep) are still open."},
+ {k:"num",h:"Absolute numbers",q:"What is the absolute risk difference, in percentage points?",a:4,tol:.3,e:"8.0% − 4.0% = 4 percentage points: about 1 extra lost-time injury per 25 short sleepers a year."},
+ {k:"multi",h:"Spin",q:"Which kinds of spin do you see?",a:["causal"],e:"“Doubles injury risk” and “would prevent half of all injuries” are causal claims from an observational cohort. The arithmetic is wrong too: even if fully causal, the excess is 36 of 156 injuries (23%), not half."},
+ {k:"mcq",h:"Bottom line",q:"Your one-line bottom line?",o:["Short sleep is linked to more injuries; worth trialling an intervention, not mandating screening","Short sleep doubles injury risk, so screen everyone","No link can be drawn because it’s observational"],a:0,e:"Observational studies can show associations well. They just can’t, alone, justify a causal policy."}]},
+{id:"composite-hfpef",title:"Drug Q in heart failure with preserved ejection fraction",set:"FM",text:"<b>Background:</b> Heart failure with preserved ejection fraction (HFpEF) has few proven treatments. <b>Methods:</b> Double-blind RCT; 2,000 outpatients randomised to drug Q or placebo and followed for 2 years. Primary outcome: composite of cardiovascular death, heart-failure hospitalisation or urgent ED visit for heart failure (first event), by intention to treat. <b>Results:</b> The primary outcome occurred in 120/1,000 (12.0%) on drug Q and 160/1,000 (16.0%) on placebo (HR 0.74, 95% CI 0.58 to 0.94; p = 0.01). First events: cardiovascular death 30 vs 31; hospitalisation 40 vs 44; urgent ED visit 50 vs 85. <b>Conclusions:</b> Drug Q reduces cardiovascular death and hospitalisation in HFpEF and should be offered to all eligible patients.",
+ steps:[{k:"mcq",h:"Design",q:"What design is this?",o:["Randomised controlled trial","Prospective cohort","Non-inferiority trial","Meta-analysis"],a:0,e:"Double-blind, placebo-controlled and randomised: a superiority RCT analysed by intention to treat."},
+ {k:"mcq",h:"Primary result",q:"Which is the primary result?",o:["Composite 12.0% vs 16.0%, HR 0.74 (0.58 to 0.94)","Cardiovascular death 30 vs 31","Urgent ED visits 50 vs 85","p = 0.01"],a:0,e:"The composite is the primary outcome. Its parts are secondary, and the trial wasn’t powered for them one by one."},
+ {k:"mcq",h:"Significance",q:"What is significant here?",o:["The composite only; look at which part drives it","Every component of the composite","Nothing: the CI is wide","Death, so it saves lives"],a:0,e:"0.58 to 0.94 excludes 1 for the composite. But deaths (30 vs 31) and hospitalisations (40 vs 44) barely differ; almost all the effect is urgent ED visits (50 vs 85)."},
+ {k:"num",h:"For my patient",q:"Over 2 years, what is the NNT to prevent one composite event?",a:25,tol:1,e:"ARR = 16% − 12% = 4% → NNT = 1 / 0.04 = 25 over 2 years. Always attach the time frame."},
+ {k:"multi",h:"Spin",q:"Which kinds of spin do you see?",a:["composite"],e:"The conclusion claims fewer deaths and hospitalisations, but the composite is driven by its softest component."},
+ {k:"mcq",h:"Bottom line",q:"Your one-line bottom line?",o:["Drug Q reduces urgent heart-failure visits; no evidence yet that it reduces death","Drug Q reduces cardiovascular death","Drug Q is useless because death didn’t fall"],a:0,e:"Fewer urgent visits can still matter to patients. Just say what was actually shown."}]},
+{id:"hs-trop",title:"Single-sample troponin rule-out in ED chest pain",set:"ER",text:"<b>Background:</b> Ruling out myocardial infarction (MI) with one blood test could shorten ED stays. <b>Methods:</b> Prospective diagnostic accuracy study of 1,000 consecutive adults with chest pain in two EDs. The index test was a high-sensitivity troponin below 5 ng/L on arrival. The reference standard was adjudicated MI (serial troponins and imaging), decided by cardiologists blinded to the index result. <b>Results:</b> MI was diagnosed in 120 patients (12%). Of these, 118 had troponin ≥5 ng/L (sensitivity 98.3%, 95% CI 94.1 to 99.8). Of 880 without MI, 528 had troponin below 5 ng/L (specificity 60.0%). <b>Conclusions:</b> A single troponin below 5 ng/L safely rules out MI in 53% of ED chest-pain patients at a prevalence of 12%.",
+ steps:[{k:"mcq",h:"Design",q:"What design is this?",o:["Diagnostic accuracy study in a consecutive cohort","Diagnostic case-control (two-gate) study","Randomised controlled trial","Cross-sectional prevalence survey"],a:0,e:"Consecutive patients all had both the index test and the reference standard, read blind. That avoids the spectrum bias of a two-gate design."},
+ {k:"mcq",h:"Primary result",q:"Which result matters most for a rule-out test?",o:["Sensitivity 98.3% (94.1 to 99.8)","Specificity 60.0%","Prevalence 12%","1,000 patients enrolled"],a:0,e:"A rule-out test must almost never call an MI negative: sensitivity (and NPV) carry the decision. SnNOut."},
+ {k:"mcq",h:"Precision",q:"What does the lower CI bound for sensitivity tell you?",o:["The test could miss up to about 6% of MIs","It misses exactly 1.7% of MIs","Specificity is too low to use it","Nothing: CIs don’t apply to sensitivity"],a:0,e:"The truth could be as low as 94.1%: up to about 6 missed MIs per 100. That’s the number to quote to a cautious cardiologist."},
+ {k:"num",h:"For my patient",q:"What is the NPV of a troponin below 5 ng/L here (%)?",a:99.6,tol:.2,e:"TN = 528, FN = 2. NPV = 528 / (528 + 2) = 99.6%. It holds at 12% prevalence; where MI is commoner, the NPV falls."},
+ {k:"multi",h:"Spin",q:"Which kinds of spin do you see?",a:["none"],e:"Fair reporting: blinded reference standard, consecutive patients, a CI, and the prevalence stated in the conclusion."},
+ {k:"mcq",h:"Bottom line",q:"Your one-line bottom line?",o:["A safe single-sample rule-out at 12% prevalence, missing about 2 in 120 MIs","Troponin below 5 rules out MI everywhere, including high-risk wards","Not useful, because specificity is only 60%"],a:0,e:"Low specificity is fine for a rule-out step; positives simply get the usual serial testing."}]},
+{id:"solvent-pd",title:"Occupational solvents and Parkinson’s disease",set:"OH",text:"<b>Background:</b> Organic solvents are suspected neurotoxins. <b>Methods:</b> Case-control study. Cases were 200 adults newly diagnosed with Parkinson’s disease at a neurology clinic; controls were 400 age- and sex-frequency-matched patients from the same hospital’s orthopaedic clinic. Lifetime occupational solvent exposure was assessed by interview. <b>Results:</b> 50 cases (25%) and 60 controls (15%) reported regular solvent exposure (OR 1.89, 95% CI 1.24 to 2.88). <b>Conclusions:</b> Solvent exposure increases the risk of Parkinson’s disease by 89%. Workers handling solvents should be screened for parkinsonism.",
+ steps:[{k:"mcq",h:"Design",q:"What design is this?",o:["Case-control study","Prospective cohort","Cross-sectional survey","Randomised controlled trial"],a:0,e:"It starts from the outcome (Parkinson’s or not) and looks back at exposure: case-control. So the measure is an odds ratio."},
+ {k:"mcq",h:"Primary result",q:"Which is the primary result?",o:["OR 1.89 (1.24 to 2.88)","A 25% vs 15% risk of Parkinson’s","RR 1.67","600 participants"],a:0,e:"25% and 15% are the proportions exposed among cases and controls, not risks of disease. Case-control studies give odds ratios."},
+ {k:"mcq",h:"Significance",q:"How do you read the CI?",o:["It excludes 1, but recall bias could manufacture it","ORs can’t be significant","Solvents are proven to cause Parkinson’s","Can’t tell"],a:0,e:"1.24 to 2.88 excludes 1. But exposure came from interviews after diagnosis, and people with a new serious illness search their memories harder (recall bias)."},
+ {k:"num",h:"Check their maths",q:"Compute the OR yourself: cases 50 exposed / 150 not; controls 60 exposed / 340 not.",a:1.89,tol:.03,e:"OR = ad / bc = (50 × 340) / (150 × 60) = 17,000 / 9,000 = 1.89."},
+ {k:"multi",h:"Spin",q:"Which kinds of spin do you see?",a:["causal"],e:"“Increases the risk by 89%” is causal language (and treats the OR as a risk ratio) from an observational study open to recall bias. Screening workers is a big leap."},
+ {k:"mcq",h:"Bottom line",q:"Your one-line bottom line?",o:["An association worth a cohort study using exposure records; recall bias may inflate it","Solvents raise Parkinson’s risk by 89%","No link, because case-control studies can’t show associations"],a:0,e:"Case-control is the right first design for a rare disease. The next step is exposure measured before the outcome."}]},
+{id:"ni-cellulitis",title:"Oral vs IV antibiotics for moderate cellulitis",set:"FM",text:"<b>Background:</b> IV antibiotics for moderate cellulitis need a bed or a daily clinic visit. <b>Methods:</b> Non-inferiority RCT in five Saudi primary-care centres. Adults with moderate lower-limb cellulitis were randomised to oral or IV therapy. Primary outcome: clinical cure at day 10. Non-inferiority margin: 10 percentage points. <b>Results:</b> 500 patients randomised. ITT cure: oral 85.0%, IV 87.0%; difference −2.0 points (95% CI −7.5 to 3.5). Per protocol: −1.6 points (−7.2 to 4.0). <b>Conclusions:</b> Oral therapy was non-inferior to IV therapy for moderate cellulitis.",
+ steps:[{k:"mcq",h:"Design",q:"What design is this?",o:["Non-inferiority randomised trial","Superiority randomised trial","Prospective cohort","Equivalence trial"],a:0,e:"The aim is to show oral is not worse by more than a pre-set margin (10 points): non-inferiority. Equivalence would test both directions."},
+ {k:"mcq",h:"Primary result",q:"Which is the primary result?",o:["Cure difference −2.0 points (−7.5 to 3.5)","Oral cure 85.0%","500 patients randomised","Margin of 10 points"],a:0,e:"In a non-inferiority trial the primary result is the difference with its CI, read against the margin."},
+ {k:"mcq",h:"Significance",q:"Is non-inferiority shown?",o:["Yes: the whole CI lies above −10 points","No: the difference isn’t significant","No: oral cured fewer patients","Yes: oral is better"],a:0,e:"The lower bound (−7.5) stays above −10, in both ITT and per-protocol analyses. “Not significantly different” is a separate question."},
+ {k:"num",h:"For my patient",q:"What is the worst plausible loss of cure with oral therapy, in percentage points?",a:7.5,tol:.1,e:"The lower CI bound: oral could be up to 7.5 points worse. Decide whether that trade is worth skipping a cannula."},
+ {k:"multi",h:"Spin",q:"Which kinds of spin do you see?",a:["none"],e:"Fair: a pre-specified margin, and ITT and per-protocol analyses that agree (a non-inferiority trial should show both)."},
+ {k:"mcq",h:"Bottom line",q:"Your one-line bottom line?",o:["Oral therapy is acceptable; at worst about 7.5 points less cure","Oral therapy is better than IV","Oral and IV are identical"],a:0,e:"Non-inferior means “not unacceptably worse”, not “the same”."}]},
+{id:"ma-steroids-cap",title:"Corticosteroids for hospitalised pneumonia: meta-analysis",set:"ER",text:"<b>Background:</b> Corticosteroids for pneumonia remain debated. <b>Methods:</b> Systematic review and random-effects meta-analysis of RCTs comparing corticosteroids with placebo in adults hospitalised with pneumonia. <b>Results:</b> 12 trials (3,100 patients). Mortality: RR 0.78 (95% CI 0.61 to 0.99); I² = 62%. The four smallest trials showed the largest benefits; Egger’s test p = 0.03. <b>Conclusions:</b> Corticosteroids clearly reduce mortality in pneumonia and should be given to all hospitalised adults.",
+ steps:[{k:"mcq",h:"Design",q:"What design is this?",o:["Systematic review and meta-analysis of RCTs","One large RCT","Cohort study","Narrative review"],a:0,e:"Pooled RCTs with a random-effects model: a systematic review and meta-analysis."},
+ {k:"mcq",h:"Primary result",q:"Which is the primary result?",o:["Mortality RR 0.78 (0.61 to 0.99)","I² = 62%","12 trials","Egger’s p = 0.03"],a:0,e:"The pooled mortality RR is the headline. I² and Egger’s test tell you how far to trust it."},
+ {k:"mcq",h:"Trust",q:"How far should you trust the pooled RR?",o:["Cautiously: the CI barely excludes 1, heterogeneity is substantial and small-study effects suggest bias","Fully: it’s a meta-analysis of RCTs","Not at all: I² over 50% makes it invalid","Fully: p < 0.05"],a:0,e:"The upper bound (0.99) sits near 1; I² 62% means the trials disagree more than chance explains; small trials with the biggest effects (Egger’s p 0.03) suggest publication bias. All three pull the true effect towards none."},
+ {k:"num",h:"For my patient",q:"If the pooled RR were true, what is the NNT on a ward with 10% baseline mortality?",a:46,tol:1,e:"ARR = 10% × (1 − 0.78) = 2.2% → NNT = 1 / 0.022 = 45.5 → 46."},
+ {k:"multi",h:"Spin",q:"Which kinds of spin do you see?",a:["hetero"],e:"“Clearly reduce” and “all hospitalised adults” ignore the heterogeneity (who benefits?) and the small-study effects."},
+ {k:"mcq",h:"Bottom line",q:"Your one-line bottom line?",o:["Possibly a modest benefit; it’s unclear who benefits, and small-study bias may inflate it","Steroids for every pneumonia admission","No benefit, because I² is high"],a:0,e:"Heterogeneity is a question (which patients?), not a verdict."}]},
+{id:"sepsis-subgroup",title:"Drug K in septic shock",set:"ER",text:"<b>Background:</b> Drug K, an endothelial stabiliser, showed promise in animal sepsis models. <b>Methods:</b> Double-blind RCT of drug K vs placebo in 1,600 adults with septic shock in eight ICUs. Primary outcome: 28-day mortality. Fourteen subgroups were analysed after unblinding. <b>Results:</b> 28-day mortality was 24.0% with drug K and 25.0% with placebo (RR 0.96, 95% CI 0.84 to 1.10). In patients with lactate above 4 mmol/L, mortality was 26% vs 37% (RR 0.70, 0.52 to 0.94); test for interaction p = 0.21. <b>Conclusions:</b> Drug K reduces mortality by 30% in high-lactate septic shock.",
+ steps:[{k:"mcq",h:"Design",q:"What design is this?",o:["Randomised controlled trial","Cohort study","Case-control study","Non-inferiority trial"],a:0,e:"A double-blind placebo-controlled RCT. The subgroup analyses were post hoc (after unblinding)."},
+ {k:"mcq",h:"Primary result",q:"Which is the primary result?",o:["Mortality 24.0% vs 25.0%, RR 0.96 (0.84 to 1.10)","RR 0.70 in high lactate","Interaction p = 0.21","Fourteen subgroups"],a:0,e:"The primary outcome is overall 28-day mortality, and it is neutral. The lactate result is one of 14 post-hoc looks."},
+ {k:"mcq",h:"Significance",q:"Does the high-lactate subgroup show a real effect?",o:["Probably not: post hoc, one of 14, and the interaction test is non-significant","Yes: its CI excludes 1","Yes: a 30% reduction is large","Can’t tell: there is no p value for the subgroup"],a:0,e:"What matters is whether the effect differs between subgroups (interaction p = 0.21: weak evidence), not whether one subgroup’s CI happens to exclude 1."},
+ {k:"num",h:"Multiplicity",q:"If drug K did nothing, what is the chance (%) that at least one of 14 independent subgroups is “significant” at p < 0.05?",a:51,tol:2,e:"1 − 0.95¹⁴ = 1 − 0.49 = 51%. A coin toss."},
+ {k:"multi",h:"Spin",q:"Which kinds of spin do you see?",a:["subgroup","nonsig"],e:"A neutral primary result is buried under a post-hoc subgroup that was promoted to the conclusion."},
+ {k:"mcq",h:"Bottom line",q:"Your one-line bottom line?",o:["Drug K doesn’t reduce mortality; the lactate finding is a hypothesis at best","Drug K saves lives in high-lactate shock","Drug K is harmful"],a:0,e:"A post-hoc subgroup earns, at most, its own new trial."}]}
+];
+let XS=null;
+DRAW.xray=function(){const root=$("#xray-root");if(!root)return;st.xray=st.xray||{};
+  if(!XS){root.innerHTML=`<div class="card"><p>Eight synthetic abstracts from the ER, occupational health and family medicine. For each one: name the design, find the primary result, judge it, run the number for your patient, catch the spin, write the bottom line. A model answer follows every step.</p></div><div class="xr-list">${XR.map(x=>`<button class="tile xr-t" data-x="${x.id}"><span class="mono-mark">${st.xray[x.id]!=null?st.xray[x.id]+"%":x.set}</span><div><b>${x.title}</b><span>${x.set} · six steps${st.xray[x.id]!=null?" · done":""}</span></div></button>`).join("")}</div>`;
+    $$("[data-x]").forEach(b=>b.onclick=()=>{XS={x:XR.find(y=>y.id===b.dataset.x),i:0,pts:0,ans:null,sel:{}};DRAW.xray();window.scrollTo(0,0)});return}
+  const x=XS.x,s=x.steps[XS.i];
+  if(!s){const pc=Math.round(XS.pts/x.steps.length*100);st.xray[x.id]=pc;st.xp+=Math.round(pc/4);const tt=st.topics.appraise=st.topics.appraise||{c:0,n:0};tt.n++;if(pc>=70)tt.c++;save();renderHeader();
+    root.innerHTML=`<div class="card summary"><span class="eyebrow">X-ray complete · ${x.title}</span><h2>${pc}% · +${Math.round(pc/4)} XP</h2><p class="muted">Same six questions, every abstract, every time. That routine is the skill.</p><div class="row"><button class="btn primary" id="xr-list">Another abstract</button>${roundNextBtn()}</div></div>`;
+    $("#xr-list").onclick=()=>{XS=null;DRAW.xray()};const wasRound=ROUND&&ROUND.legs[ROUND.i]&&ROUND.legs[ROUND.i].t==="xray";if(wasRound)roundTick("xray");return}
+  const ansd=XS.ans!==null;
+  let body="";
+  if(s.k==="mcq"){if(!s._ord){s._ord=shuffle(s.o.map((_,i)=>i))}body=`<div class="lk-opts">${(s._ord||s.o.map((_,i)=>i)).map(i=>`<button class="ptopt xr-o ${ansd&&i===s.a?"right":""} ${ansd&&XS.ans===i&&i!==s.a?"wrong":""}" data-i="${i}" ${ansd?"disabled":""}>${s.o[i]}</button>`).join("")}</div>`}
+  else if(s.k==="num")body=`<form class="typed" id="xr-num"><div class="row"><input id="xr-in" inputmode="decimal" autocomplete="off" placeholder="your number" ${ansd?"disabled":""} value="${ansd?XS.ans:""}"><button class="btn primary" type="submit" ${ansd?"disabled":""}>Check</button></div></form>`;
+  else body=`<div class="xr-spin">${Object.keys(XR_SPIN).map(k=>`<label class="ck-item xr-sp ${XS.sel[k]?"on":""} ${ansd&&s.a.includes(k)?"right":""}"><p>${XR_SPIN[k]}</p><input type="checkbox" data-k="${k}" ${XS.sel[k]?"checked":""} ${ansd?"disabled":""}></label>`).join("")}</div>${ansd?"":`<div class="row"><button class="btn primary" id="xr-chk">Check</button></div>`}`;
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">Abstract X-ray · ${x.set}</span><button class="btn small" id="xr-back">All abstracts</button></div>
+   <details class="card xr-abs" ${XS.open!==false?"open":""}><summary><b>${x.title}</b> <small class="muted">· synthetic abstract, invented for teaching</small></summary><p>${x.text}</p></details>
+   <div class="card xr-step"><div class="pips">${x.steps.map((_,i)=>`<i class="${i<XS.i?"ok":i===XS.i?"cur":""}"></i>`).join("")}</div><span class="eyebrow">Step ${XS.i+1} of ${x.steps.length} · ${s.h}</span><h3>${s.q}</h3>${body}<div id="xr-fb">${ansd?XS.fb:""}</div></div>`;
+  const det=$(".xr-abs");det.ontoggle=()=>XS.open=det.open;
+  $("#xr-back").onclick=()=>{XS=null;DRAW.xray()};
+  const done=(ok,part,extra)=>{XS.pts+=part;XS.fb=`<div class="fb ${ok?"ok":"no"}"><h3>${ok?"Right.":part>0?"Partly.":"Not quite."}</h3><div class="ex">${extra||""}${s.e}</div></div><div class="qnext"><button class="btn primary" id="xr-next">${XS.i+1>=x.steps.length?"Finish":"Next step"} →</button></div>`;st.xp+=ok?3:0;save();renderHeader();DRAW.xray();bindNext()};
+  const bindNext=()=>{const b=$("#xr-next");if(b)b.onclick=()=>{XS.i++;XS.ans=null;XS.sel={};XS.fb="";DRAW.xray();const el=$(".xr-step");if(el)el.scrollIntoView({block:"nearest"})}};
+  if(ansd){bindNext();return}
+  if(s.k==="mcq")$$(".xr-o").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;XS.ans=i;done(i===s.a,i===s.a?1:0)});
+  else if(s.k==="num")$("#xr-num").onsubmit=e=>{e.preventDefault();const v=parseFloat(($("#xr-in").value||"").replace(/,/g,""));if(isNaN(v))return;XS.ans=v;const ok=Math.abs(v-s.a)<=s.tol;done(ok,ok?1:0,ok?"":`You had ${v}; the answer is ${s.a}. `)};
+  else{$$(".xr-sp input").forEach(cb=>cb.onchange=()=>{XS.sel[cb.dataset.k]=cb.checked;cb.closest("label").classList.toggle("on",cb.checked)});
+    $("#xr-chk").onclick=()=>{const pickd=Object.keys(XS.sel).filter(k=>XS.sel[k]);if(!pickd.length){toast("Tick at least one (or “No major spin”).");return}XS.ans=pickd;const inter=pickd.filter(k=>s.a.includes(k)).length,uni=new Set([...pickd,...s.a]).size;const part=inter/uni;done(part===1,part,part<1?`Answer: ${s.a.map(k=>XR_SPIN[k]).join("; ")}. `:"")}}};
+/* lessons finished before v8 get a start date so their recalls schedule */
+(function(){st.ldone=st.ldone||{};let ch=false;for(const k in st.lessons){if(st.lessons[k]&&st.ldone[k]==null){st.ldone[k]=dayNum();ch=true}}if(ch)save()})();
 
 /* ================= TOOLKIT: one search over everything ================= */
 let SEARCH_IX=null;
