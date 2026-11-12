@@ -528,7 +528,7 @@ select{border:2px solid var(--line);background:var(--raise);color:var(--ink);pad
 .mood-row{display:flex;flex-direction:column;gap:6px;margin:10px 0}.mood-chips{display:flex;gap:6px;flex-wrap:wrap}
 .mood{border:2px solid var(--line);background:var(--raise);color:inherit;font:inherit;padding:6px 10px;min-height:40px;cursor:pointer;display:flex;gap:6px;align-items:center}
 .mood.on{border-color:var(--accent);background:var(--accent-tint);font-weight:700}.mood-d{font-size:.88rem}
-.seg{display:flex;flex-wrap:wrap;gap:6px}.segb{border:2px solid var(--line);background:var(--raise);color:inherit;font:inherit;padding:6px 12px;min-height:40px;cursor:pointer}.segb.on{border-color:var(--accent);background:var(--accent-tint);font-weight:700}
+.kseg{display:flex;flex-wrap:wrap;gap:6px}.ksegb{border:2px solid var(--line);background:var(--raise);color:inherit;font:inherit;padding:6px 12px;min-height:40px;cursor:pointer}.ksegb.on{border-color:var(--accent);background:var(--accent-tint);font-weight:700}
 [data-size="s"] body{zoom:.9}[data-size="l"] body{zoom:1.12}[data-size="xl"] body{zoom:1.25}
 .pad-nav :focus{outline:4px solid var(--accent)!important;outline-offset:3px}
 body.wide main{max-width:1320px}body.wide .player{max-width:none}
@@ -539,8 +539,8 @@ body.wide main{max-width:1320px}body.wide .player{max-width:none}
 [data-ui="clean"] *:not(svg):not(svg *){clip-path:none!important}
 [data-ui="clean"] :is(h1,h2,h3,h4,.num,.timer,.combo,.eyebrow,.brand){-webkit-font-smoothing:antialiased;font-weight:650}
 [data-ui="clean"] .eyebrow{letter-spacing:.06em;font-size:11px}
-[data-ui="clean"] :is(.card,.tile,.mode,.hero,.pathcta,.hook,.opt,.ptopt,input,select,textarea,.lk-node,.mood,.segb,.chip,.btn,.back,.iconbtn,.rb-in,.welcome,.fb){border-radius:12px!important;box-shadow:none!important}
-[data-ui="clean"] :is(.btn,.chip,.mood,.segb){border-radius:10px!important}
+[data-ui="clean"] :is(.card,.tile,.mode,.hero,.pathcta,.hook,.opt,.ptopt,input,select,textarea,.lk-node,.mood,.ksegb,.chip,.btn,.back,.iconbtn,.rb-in,.welcome,.fb){border-radius:12px!important;box-shadow:none!important}
+[data-ui="clean"] :is(.btn,.chip,.mood,.ksegb){border-radius:10px!important}
 [data-ui="clean"] .card{border-width:1px}
 /* Paper interface: a journal page for long reading */
 [data-ui="paper"]{--bg:#F7F4EE;--surface:#FFFFFF;--surface-2:#F1ECE3;--raise:#FFFFFF;--ink:#1D1B18;--fg2:#3A3631;--muted:#6A645B;--line:#DDD5C8;--line2:#C8BEAE;--px:Georgia,"Iowan Old Style","Times New Roman",serif;--f-display:var(--px);--f-body:"Atkinson Hyperlegible",system-ui,sans-serif;--bev:transparent;--bevd:transparent}
@@ -548,8 +548,24 @@ body.wide main{max-width:1320px}body.wide .player{max-width:none}
 [data-ui="paper"] :is(h1,h2,h3,h4,.brand){font-weight:700;-webkit-font-smoothing:antialiased}
 [data-ui="paper"] :is(.num,.timer,.combo){font-family:var(--f-mono);-webkit-font-smoothing:antialiased}
 [data-ui="paper"] .eyebrow{font-family:var(--f-body);font-weight:700;letter-spacing:.08em;font-size:11px}
-[data-ui="paper"] :is(.card,.tile,.mode,.hero,.pathcta,.hook,.opt,.ptopt,input,select,textarea,.lk-node,.mood,.segb,.chip,.btn,.back,.iconbtn,.rb-in,.welcome,.fb){border-radius:4px!important;box-shadow:none!important;border-width:1px!important}
+[data-ui="paper"] :is(.card,.tile,.mode,.hero,.pathcta,.hook,.opt,.ptopt,input,select,textarea,.lk-node,.mood,.ksegb,.chip,.btn,.back,.iconbtn,.rb-in,.welcome,.fb){border-radius:4px!important;box-shadow:none!important;border-width:1px!important}
 [data-ui="paper"] .xr-abs p,[data-ui="paper"] .pr-abs{font-family:Georgia,serif;font-size:1.05rem;line-height:1.7}
+/* ===== v9b ===== */
+.mast.fading{opacity:.6;filter:grayscale(.5)}.fotd code{display:block;margin:6px 0;font-size:1rem}
+.dv-card{display:flex;flex-direction:column;gap:12px}.dv-tb{border-collapse:collapse;align-self:center}.dv-tb th{font-size:.8rem;padding:4px 8px;color:var(--muted);font-weight:600}.dv-tb td{padding:4px}
+.dv-c{min-width:64px;min-height:48px;border:2px solid var(--line);background:var(--raise);color:inherit;font:inherit;font-family:var(--f-mono);font-size:1.05rem;cursor:pointer}.dv-toks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.dv-tok{padding:0 12px}
+.dv-frac{display:flex;flex-direction:column;align-items:center;gap:4px}.dv-frac hr{width:70%;border:0;border-top:3px solid var(--ink);margin:2px 0}
+.dv-slot{min-width:200px;min-height:44px;border:2px dashed var(--line2);background:transparent;color:inherit;font:inherit;font-family:var(--f-mono);cursor:pointer;padding:4px 10px}.dv-slot.on{border-color:var(--accent);border-style:solid;background:var(--accent-tint)}
+.sp-t{font-size:1.6rem;color:var(--accent)}
+.dag{width:100%;max-width:420px;align-self:center;display:block;margin:0 auto}.dg-n{fill:var(--raise);stroke:var(--line2);stroke-width:2}.dg-n.z{stroke:var(--accent)}.dg-t{fill:var(--ink);font:600 13px var(--f-body)}.dg-t.s{fill:var(--muted);font-size:11px}
+.dg-l{stroke:var(--ink);stroke-width:3}.dg-l.off{stroke:var(--line);stroke-dasharray:4 6;stroke-width:2}.dg-l.q{stroke:var(--muted);stroke-dasharray:8 5}.dg-h{fill:var(--ink)}
+.dg-card{display:flex;flex-direction:column;gap:12px}.dg-row{display:flex;flex-direction:column;gap:4px}.dg-story{font-size:1.05rem}
+.dp-q{line-height:1.45}.bs-story{line-height:1.9}.bs-s{display:inline;border:0;border-bottom:2px dotted var(--line2);background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;padding:2px 0}.bs-s:hover{background:var(--accent-tint)}.bs-s.right{background:rgba(46,157,91,.18)}.bs-s.wrong{background:rgba(210,60,60,.15)}.bs-s:disabled{cursor:default}
+.bs-card{display:flex;flex-direction:column;gap:12px}.tc-crumbs{margin:0 0 8px;padding-left:1.2em;color:var(--muted);font-size:.9rem}.tc-leaf h2{margin:4px 0}
+.rp-in,.rp-step{display:flex;flex-direction:column;gap:8px}.rp-in textarea,.rp-a{width:100%;font:inherit;border:2px solid var(--line);background:var(--raise);color:inherit;padding:8px}
+.rp-steps{display:flex;flex-direction:column;gap:12px}.rp-abs p{line-height:1.65}.rp-chips{display:flex;flex-wrap:wrap;gap:6px}.rp-pick.on{border-color:var(--accent);background:var(--accent-tint)}.rp-sig{margin:0;padding-left:1.1em;font-size:.9rem}.rp-ai h4{margin:.8em 0 .2em}
+.rp-nnt input{font:inherit;border:2px solid var(--line);background:var(--raise);color:inherit;padding:4px}
+@media(min-width:1100px){body.wide .rp-abs{position:sticky;top:76px;max-height:calc(100vh - 110px);overflow:auto}}
 /* ===== v8 ===== */
 .hint-code{display:block;white-space:normal;line-height:1.6;margin-top:6px}.hint-note{display:block;margin-top:4px;opacity:.8}
 .rc-card{display:flex;flex-direction:column;gap:10px}.rc-row{display:flex;gap:10px;align-items:flex-start}.rc-row p{margin:0;line-height:1.9}.rc-n{min-width:1.4em;opacity:.6}
@@ -693,6 +709,8 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
   <div class="hook"><span class="tag" id="hook-tag">HOOK #1</span><p id="hook-text"></p></div>
   <div class="two" id="today-cards">
     <div class="card" id="continue-card"></div>
+    <div class="card" id="fade-card" hidden></div>
+    <div class="card fotd" id="fotd-card"></div>
     <div class="card" id="weak-card" hidden></div>
     <div class="card" id="citrus-line" hidden></div>
   </div>
@@ -733,6 +751,14 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
       <a class="tile" href="#mathgym"><span class="mono-mark">σ</span><div><b>Math gym</b><span>z-scores, odds, skew.</span></div></a>
     </div>
   </div>
+  <div class="shelf"><h2>Think like an epidemiologist <small>designs, bias, tests</small></h2>
+    <div class="tiles">
+      <a class="tile" href="#dag"><span class="mono-mark">Z</span><div><b>Third-variable builder</b><span>Confounder, mediator or collider? Draw it.</span></div></a>
+      <a class="tile" href="#design"><span class="mono-mark">?→</span><div><b>Design picker</b><span>The question decides the design.</span></div></a>
+      <a class="tile" href="#spotter"><span class="mono-mark">!</span><div><b>Bias spotter</b><span>Tap the sentence where bias gets in.</span></div></a>
+      <a class="tile" href="#tchoose"><span class="mono-mark">χ²</span><div><b>Test chooser</b><span>Outcome, groups, pairing → the test.</span></div></a>
+    </div>
+  </div>
 </section>
 
 <!-- LABS -->
@@ -767,6 +793,8 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
     <a class="mode" href="#estimate"><b>Estimate</b><span>Guess PPV, NNT, post-test before calculating.</span></a>
     <button class="mode" data-start="twins"><b>Twin drill</b><span>Rapid calls between look-alike concepts.</span></button>
     <a class="mode" href="#flash"><b>Formula flash</b><span>Recall each formula, then flip.</span></a>
+    <a class="mode" href="#sprint"><b>Formula sprint</b><span>60 seconds, name to formula. Beat your best.</span></a>
+    <a class="mode" href="#derive"><b>Derive it</b><span>Rebuild formulas from the table instead of memorising them.</span></a>
   </div></div>
   <div class="shelf"><h2>Deeper</h2><div class="modes">
     <button class="mode" data-start="daily"><b>Daily drill</b><span>10 mixed questions, weighted to your weak spots.</span></button>
@@ -789,6 +817,7 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
   <div class="view-head"><span class="eyebrow">Toolkit</span><h1>Look it up</h1><p>Search every formula, term, bias, design and test. Then the tools for reading a paper tonight.</p></div>
   <div class="card search-card"><input id="tk-q" class="search" type="search" placeholder="Search: I², hazard ratio, NNT, kappa, Berkson, χ²…" aria-label="Search everything" autocomplete="off"><div id="tk-res" class="tk-res"></div></div>
   <div class="shelf"><h2>Reading a paper</h2><div class="tiles">
+    <a class="tile" href="#realpaper"><span class="mono-mark">PDF</span><div><b>Read a real paper</b><span>Paste any abstract: decoded, X-rayed, saved. Claude deep dive optional.</span></div></a>
     <a class="tile" href="#decoder"><span class="mono-mark">{ }</span><div><b>Paper decoder</b><span>Paste an abstract; every number and term explained.</span></div></a>
     <a class="tile" href="#papers"><span class="mono-mark">¶</span><div><b>Read the paper</b><span>Ten guided papers with an expert walk-through.</span></div></a>
     <a class="tile" href="#appraise" data-jump="forest"><span class="mono-mark">◆</span><div><b>Forest plot reader</b><span>Tap squares, lines and the diamond.</span></div></a>
@@ -855,6 +884,34 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 </section>
 <section id="v-round" hidden><div id="round-root" class="player"></div></section>
 <!-- TEACH BACK -->
+<section id="v-derive" hidden>
+  <div class="view-head"><span class="eyebrow">Drill · formulas</span><h1>Derive it</h1><p>Rebuild each formula from the 2×2 table or its pieces. A formula you can rebuild can’t be forgotten.</p></div>
+  <div id="derive-root" class="player"></div>
+</section>
+<section id="v-sprint" hidden>
+  <div class="view-head"><span class="eyebrow">Drill · formulas</span><h1>Formula sprint</h1><p>Sixty seconds, name to formula, as many as you can.</p></div>
+  <div id="sprint-root" class="player"></div>
+</section>
+<section id="v-dag" hidden>
+  <div class="view-head"><span class="eyebrow">Study · bias</span><h1>Third-variable builder</h1><p>Draw the arrows a story describes and see whether the third variable is a confounder, a mediator or a collider, and whether to adjust for it.</p></div>
+  <div id="dag-root" class="player"></div>
+</section>
+<section id="v-design" hidden>
+  <div class="view-head"><span class="eyebrow">Study · designs</span><h1>Design picker</h1><p>A research question and its constraints. You choose the design; see what each choice would and wouldn’t show.</p></div>
+  <div id="design-root" class="player"></div>
+</section>
+<section id="v-spotter" hidden>
+  <div class="view-head"><span class="eyebrow">Study · bias</span><h1>Bias spotter</h1><p>Short study stories. Tap the sentence where the bias gets in, then name it.</p></div>
+  <div id="spotter-root" class="player"></div>
+</section>
+<section id="v-tchoose" hidden>
+  <div class="view-head"><span class="eyebrow">Study · statistics</span><h1>Test chooser</h1><p>Outcome type, groups, pairing: the three questions that pick the test. Explore the tree or be quizzed.</p></div>
+  <div id="tchoose-root" class="player"></div>
+</section>
+<section id="v-realpaper" hidden>
+  <div class="view-head"><span class="eyebrow">Toolkit · real research</span><h1>Read a real paper</h1><p>Paste any abstract. Kumquat decodes the numbers, flags likely spin and walks you through the six X-ray questions. Save it to My papers.</p></div>
+  <div id="rp-root" class="player"></div>
+</section>
 <section id="v-recall" hidden>
   <div class="view-head"><span class="eyebrow">Drill · spaced recall</span><h1>Takeaways recall</h1><p>Each lesson’s key lines come back as gaps 3, 10 and 31 days after you finish it. Recalling the frame keeps the whole lesson alive.</p></div>
   <div id="recall-root" class="player"></div>
@@ -1280,7 +1337,7 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
 let st=load()||{xp:0,streak:0,last:null,best:0,topics:{},ck:{}};
 if(typeof st!=="object"||st===null)st={xp:0,streak:0,last:null,best:0,topics:{},ck:{}};
 function sanitize(o){if(!o||typeof o!=="object"||Array.isArray(o))o={};
-  ["topics","ck","srs","lessons","cases","bp","recent","visited","miss","flash","rounds","teach","badges","why","whyKey","papers","recall","ldone","links","xray","fade"].forEach(k=>{if(!o[k]||typeof o[k]!=="object"||Array.isArray(o[k]))o[k]={}});
+  ["topics","ck","srs","lessons","cases","bp","recent","visited","miss","flash","rounds","teach","badges","why","whyKey","papers","recall","ldone","links","xray","fade","mast","tdays","derive"].forEach(k=>{if(!o[k]||typeof o[k]!=="object"||Array.isArray(o[k]))o[k]={}});
   if(!Array.isArray(o.log))o.log=[];o.log=o.log.filter(l=>l&&typeof l==="object"&&isFinite(l.d)&&isFinite(l.n));
   ["xp","streak","best"].forEach(k=>{if(typeof o[k]!=="number"||!isFinite(o[k])||o[k]<0)o[k]=0});
   for(const k in o.topics){const t=o.topics[k];if(!t||!isFinite(t.c)||!isFinite(t.n))delete o.topics[k]}
@@ -1339,7 +1396,7 @@ $("#reset-progress").onclick=()=>{$("#reset-confirm").hidden=false};
 $("#reset-yes").onclick=()=>{st={xp:0,streak:0,last:null,best:0,topics:{},ck:{},srs:{},lessons:{},cases:{},bp:{},plan:null,log:[],recent:{},visited:{},miss:{},cal:{sure:{c:0,n:0},guess:{c:0,n:0}},flash:{},lastView:null,rounds:{},teach:{},badges:{},why:{},whyKey:{},papers:{}};save();$("#reset-confirm").hidden=true;location.hash="home";renderToday();toast("Progress wiped. Fresh start.")};
 
 /* ---------- router ---------- */
-const VIEWS=["home","papers","paper","decoder","toolkit","learn","labs","practice","progress","settings","web","rounds","round","teach","recall","links","xray","estimate","tree","flash","path","plan","blueprint","mastery","lesson","case","cases","outbreak","confound","funnel","dx","cutoff","bayes","risk","power","ci","mathgym","designs","bias","twins","tests","appraise","vault","quiz"];
+const VIEWS=["home","papers","paper","decoder","toolkit","learn","labs","practice","progress","settings","web","rounds","round","teach","recall","links","xray","derive","sprint","dag","design","spotter","tchoose","realpaper","estimate","tree","flash","path","plan","blueprint","mastery","lesson","case","cases","outbreak","confound","funnel","dx","cutoff","bayes","risk","power","ci","mathgym","designs","bias","twins","tests","appraise","vault","quiz"];
 const DRAW={};
 let current="home";
 let ARG=null;
@@ -2148,7 +2205,7 @@ const PT_M={sens:["Sensitivity","TP ÷ (TP + FN): down the disease column"],spec
 const PT_G=[["sens","spec","ppv","npv","lrp"],["lrp","lrn","post","ppv","sens"],["nnt","nnh","arr","rrr","rr","or"],["rr","or","arr","rrr","nnt"],["ir","ci","prev","herd"],["se","sd","z","ci95"],["odds","prob","rr","or"]];
 const PT_RX=[[/sensitivity\s*\??$/i,"sens"],[/specificity\s*\??$/i,"spec"],[/\bPPV\b|positive predictive/i,"ppv"],[/\bNPV\b|negative predictive/i,"npv"],[/LR\+|positive likelihood ratio/i,"lrp"],[/LR−|LR-|negative likelihood ratio/i,"lrn"],[/post-?test probability/i,"post"],[/needed to harm/i,"nnh"],[/needed to treat|\bNNT\b/i,"nnt"],[/relative risk reduction/i,"rrr"],[/absolute risk reduction/i,"arr"],[/risk ratio|relative risk/i,"rr"],[/odds ratio/i,"or"],[/incidence rate/i,"ir"],[/incidence/i,"ci"],[/prevalence\s*\??$/i,"prev"],[/herd immunity/i,"herd"],[/standard error/i,"se"],[/what are the odds/i,"odds"],[/what is the probability/i,"prob"],[/proportion of people have a value/i,"z"]];
 let PT_RATE=.34;
-function ptypeFor(q){if(!q||q.kind!=="calc"||!["daily","topic","retry","review"].includes(Q.mode))return null;if(Q.ptFor===q)return Q.pt;Q.ptFor=q;Q.pt=null;
+function ptypeFor(q){if(!q||Q.exam||q.kind!=="calc"||!["daily","topic","retry","review"].includes(Q.mode))return null;if(Q.ptFor===q)return Q.pt;Q.ptFor=q;Q.pt=null;
   if(Math.random()>=PT_RATE)return null;const t=String(q.prompt).replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();const m=/([^.?]*\?)\s*$/.exec(t);const qs=m?m[1]:t.slice(-120);
   const hit=PT_RX.find(([rx])=>rx.test(qs));if(!hit)return null;const id=hit[1];
   const grp=PT_G.find(g=>g.includes(id))||PT_G[0];let pool=shuffle(grp.filter(x=>x!==id));if(pool.length<3)pool=pool.concat(shuffle(Object.keys(PT_M).filter(x=>x!==id&&!pool.includes(x))));
@@ -2199,7 +2256,7 @@ function answer(i){
   let gain=0;
   if(ok){Q.score++;Q.combo++;Q.maxCombo=Math.max(Q.maxCombo,Q.combo);gain=(q.s1?14:10)+Math.min(Q.combo-1,5)*2+(Q.typed?4:0);if(Q.hinted)gain=Q.hinted===1?Math.ceil(gain/4):Math.ceil(gain/2);t.c++}
   else{Q.combo=0;Q.missed.push(q);$("#q-card").classList.add("shake")}
-  srsUpdate(q.key,ok&&!Q.guess&&!Q.hinted);fadeNote(q,ok);SND.fx(ok?"ok":"bad");
+  srsUpdate(q.key,ok&&!Q.guess&&!Q.hinted);fadeNote(q,ok);SND.fx(ok?"ok":"bad");mastNote(q.topic);
   Q.xp+=gain;st.xp+=gain;Q.hist.push(ok);save();renderHeader();
   const cb=$("#q-combo");cb.textContent=Q.combo>=2?"×"+Q.combo+" combo":"";if(ok&&Q.combo>=2){cb.classList.remove("pop");void cb.offsetWidth;cb.classList.add("pop")}
   const lv=levelOf(st.xp);if(lv>Q.startLv){Q.startLv=lv;toast("Level up · "+LEVELS[lv][1]);confetti();SND.fx("up")}
@@ -2220,6 +2277,7 @@ function advance(){if(!Q||Q.done)return;Q.i++;if(Q.mode!=="blitz"&&Q.i>=Q.total)
 function endQuiz(){
   stopTimer();if(!Q||Q.done)return;
   const n=Q.hist.length,acc=n?Q.score/n:0;
+  if(Q.recheck&&n)mastRecheckDone(Q.topic,Q.score,n);
   if(n&&st.last!==today()){st.streak=st.last===yesterday()?st.streak+1:1;st.last=today()}
   let rec=false;if(Q.mode==="blitz"&&Q.score>(st.best||0)){st.best=Q.score;rec=true}
   if(n){st.log.push({d:dayNum(),mode:Q.mode,topic:Q.topic||null,n,score:Q.score});if(st.log.length>400)st.log.shift()}
@@ -2928,7 +2986,7 @@ const BLUEPRINT=[
 st.bp=st.bp||{};st.plan=st.plan||null;st.log=st.log||[];st.recent=st.recent||{};st.visited=st.visited||{};
 const RATE=["","Shaky","Okay","Solid"];
 function topicRecent(t){const a=st.recent[t]||[];const n=a.length,c=a.filter(Boolean).length;return{n,acc:n?c/n:0}}
-function topicMastered(t){const r=topicRecent(t);return r.n>=30&&r.acc>=.9}
+
 function bestMock(){return st.log.filter(l=>l.mode==="mock").reduce((m,l)=>Math.max(m,l.n?l.score/l.n:0),0)}
 function masteryScore(){
   const ks=Object.keys(TOPICS);const tm=ks.filter(topicMastered).length/ks.length;
@@ -3009,11 +3067,11 @@ DRAW.plan=function(){
 let PLANVIEW=null;
 DRAW.mastery=function(){
   const ms=masteryScore(),ks=Object.keys(TOPICS);const ordered=ks.slice().sort((a,b)=>{const ra=topicRecent(a),rb=topicRecent(b);return (ra.n?ra.acc:-1)-(rb.n?rb.acc:-1)});
-  const row=t=>{const r=topicRecent(t),m=topicMastered(t);return `<button class="mast ${m?"gold":""}" data-start="topic:${t}"><span class="t"><span>${TOPICS[t].label}</span><span class="num">${r.n?Math.round(r.acc*100)+"%":"–"}</span></span><span class="bar"><i style="width:${r.acc*100}%"></i></span><small>${m?"Mastered":r.n<30?`${30-r.n} more answers to judge`:"Below 90% · keep drilling"}</small></button>`};
+  const row=t=>{const r=topicRecent(t),m=topicMastered(t);return `<button class="mast ${m?"gold":""} ${mastState(t)==="fading"?"fading":""}" data-start="topic:${t}"><span class="t"><span>${TOPICS[t].label}</span><span class="num">${r.n?Math.round(r.acc*100)+"%":"–"}</span></span><span class="bar"><i style="width:${r.acc*100}%"></i></span><small>${mastState(t)==="fading"?"Fading · re-check":m?"Mastered":r.n<30?`${30-r.n} more answers to judge`:r.acc<.85?"Below 85% · keep drilling":"85%+ · needs 3 separate days"}</small></button>`};
   $("#ms-root").innerHTML=`<div class="card" style="display:flex;flex-direction:column;gap:10px"><div class="row" style="justify-content:space-between"><span class="eyebrow">Topics · weakest first</span><span class="num mscore-s">${ms.total}% mastery</span></div><div class="mastery">${ordered.slice(0,3).map(row).join("")}</div><details><summary class="eyebrow">All ${ks.length} topics</summary><div class="mastery" style="margin-top:8px">${ordered.slice(3).map(row).join("")}</div></details></div>
   <div class="card"><span class="eyebrow">Mock exams</span>${st.log.filter(l=>l.mode==="mock").length?`<div class="steps" style="margin-top:8px">${st.log.filter(l=>l.mode==="mock").map(l=>`<div><span>${fmtD(l.d)}</span><span>${l.score} / ${l.n} · ${Math.round(l.score/l.n*100)}%</span></div>`).join("")}</div>`:`<p class="muted" style="margin-top:6px">No mocks yet. The plan schedules the first on day 15.</p>`}<div style="margin-top:12px"><button class="btn" data-start="mock">Sit a mock exam now</button></div></div>
   <details class="card"><summary class="eyebrow">What 100% mastery means</summary><div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
-   <div class="crit ${ms.tm===1?"ok":""}"><b>Every topic ≥ 90% over your last 30 answers</b><span>${ks.filter(topicMastered).length} / ${ks.length}</span></div>
+   <div class="crit ${ms.tm===1?"ok":""}"><b>Every topic ≥ 85% over 30+ answers on 3+ days, kept by re-checks</b><span>${ks.filter(topicMastered).length} / ${ks.length}</span></div>
    <div class="crit ${ms.solid===1?"ok":""}"><b>Every blueprint item rated Solid</b><span>${Math.round(ms.solid*100)}%</span></div>
    <div class="crit ${ms.mock>=.85?"ok":""}"><b>A mock exam at ≥ 85%</b><span>${ms.mock?Math.round(ms.mock*100)+"% best":"none yet"}</span></div>
    <div class="crit ${ms.lessons===1?"ok":""}"><b>All ${LESSONS.length} lessons</b><span>${Object.keys(st.lessons).length} / ${LESSONS.length}</span></div>
@@ -3027,12 +3085,12 @@ st.miss=st.miss||{};st.cal=st.cal||{sure:{c:0,n:0},guess:{c:0,n:0}};st.flash=st.
 const HUB_OF={home:"home",learn:"learn",labs:"learn",practice:"practice",progress:"progress",toolkit:"toolkit",
   path:"learn",lesson:"learn",case:"learn",cases:"learn",designs:"toolkit",bias:"toolkit",twins:"toolkit",tests:"toolkit",appraise:"toolkit",vault:"toolkit",blueprint:"toolkit",
   tree:"learn",dx:"learn",cutoff:"learn",bayes:"learn",risk:"learn",outbreak:"learn",confound:"learn",power:"learn",ci:"learn",funnel:"learn",mathgym:"learn",
-  quiz:"practice",flash:"practice",plan:"progress",mastery:"progress",settings:"progress",web:"learn",rounds:"learn",round:"learn",papers:"learn",paper:"learn",decoder:"toolkit",teach:"practice",estimate:"practice",recall:"practice",links:"practice",xray:"learn"};
+  quiz:"practice",flash:"practice",plan:"progress",mastery:"progress",settings:"progress",web:"learn",rounds:"learn",round:"learn",papers:"learn",paper:"learn",decoder:"toolkit",teach:"practice",estimate:"practice",recall:"practice",links:"practice",xray:"learn",derive:"practice",sprint:"practice",dag:"learn",design:"learn",spotter:"learn",tchoose:"learn",realpaper:"toolkit"};
 const HUBS=["home","learn","labs","practice","toolkit","progress"];
 function paintNav(v){const h=HUB_OF[v]||"home";$$("[data-tab]").forEach(a=>a.classList.toggle("on",a.dataset.tab===h));
   const back=$("#back");back.hidden=HUBS.includes(v);back.dataset.to=h;}
 $("#back").onclick=()=>{location.hash=$("#back").dataset.to||"home"};
-const VIEW_NAMES={recall:"Takeaways recall",links:"Name the link",xray:"Abstract X-ray",dx:"2×2 Lab",cutoff:"Cut-off dial",bayes:"Fagan nomogram",risk:"Risk Lab",power:"Power playground",ci:"CI dance",outbreak:"Outbreak simulator",confound:"Confounding lab",funnel:"Funnel lab",mathgym:"Math gym",tree:"Tree drill",designs:"Study designs",bias:"Bias bestiary",twins:"Twins",tests:"Test picker",appraise:"Appraisal kit",vault:"Formula vault",blueprint:"Blueprint",path:"The Path",cases:"Casebook",flash:"Formula flash",plan:"Mastery month",settings:"Settings",web:"Concept web",rounds:"Clinic calls",papers:"Read the paper",decoder:"Paper decoder",teach:"Teach it back",estimate:"Estimate"};
+const VIEW_NAMES={derive:"Derive it",sprint:"Formula sprint",dag:"Third-variable builder",design:"Design picker",spotter:"Bias spotter",tchoose:"Test chooser",realpaper:"Read a real paper",recall:"Takeaways recall",links:"Name the link",xray:"Abstract X-ray",dx:"2×2 Lab",cutoff:"Cut-off dial",bayes:"Fagan nomogram",risk:"Risk Lab",power:"Power playground",ci:"CI dance",outbreak:"Outbreak simulator",confound:"Confounding lab",funnel:"Funnel lab",mathgym:"Math gym",tree:"Tree drill",designs:"Study designs",bias:"Bias bestiary",twins:"Twins",tests:"Test picker",appraise:"Appraisal kit",vault:"Formula vault",blueprint:"Blueprint",path:"The Path",cases:"Casebook",flash:"Formula flash",plan:"Mastery month",settings:"Settings",web:"Concept web",rounds:"Clinic calls",papers:"Read the paper",decoder:"Paper decoder",teach:"Teach it back",estimate:"Estimate"};
 
 DRAW.learn=()=>{$("#path-prog").textContent=Object.keys(st.lessons).length+"/10";$("#cases-prog").textContent=Object.keys(st.cases).length+"/10";$("#rounds-prog").textContent=Object.keys(st.rounds||{}).length+"/"+ROUNDS.length;if($("#papers-prog"))$("#papers-prog").textContent=Object.keys(st.papers||{}).length+"/"+PAPERS.length;if($("#xray-prog"))$("#xray-prog").textContent=Object.keys(st.xray||{}).length+"/"+XR.length};
 DRAW.practice=()=>{{const e=$("#recall-due");if(e){const c=recallCount();e.textContent=c?c+" due":""}}const due=dueKeys().length,deck=Object.keys(st.srs).length;$("#pm-review").textContent=due?`${due} due now · ${deck} in the deck · clear these first`:deck?`Nothing due today · ${deck} waiting`:"Empty for now. Misses land here.";$("#pm-review-btn").classList.toggle("due",due>0);
@@ -3070,7 +3128,7 @@ function renderToday(){
   $("#continue-card").innerHTML=lv?`<span class="eyebrow">Continue</span><h3>${VIEW_NAMES[lv]}</h3><p class="muted">Where you left off.</p><a class="btn small" href="#${lv}">Open</a>`:nl>=0?`<span class="eyebrow">Next lesson</span><h3>${PATH[nl].n}</h3><p class="muted">${PATH[nl].hook}</p><a class="btn small" href="#lesson-${nl+1}">Start lesson ${nl+1}</a>`:`<span class="eyebrow">Five minutes?</span><h3>A blitz beats nothing</h3><p class="muted">Streaks are built on small days.</p><button class="btn small" data-start="blitz">Blitz</button>`;
   const answered=Object.values(st.topics).reduce((a,t)=>a+t.n,0),wc=$("#weak-card");wc.hidden=answered<10;
   if(answered>=10){const w=weakest(1)[0],r=topicRecent(w);wc.innerHTML=`<span class="eyebrow">Weak spot</span><h3>${TOPICS[w].label}</h3><p class="muted">${r.n?`${Math.round(r.acc*100)}% over your last ${r.n} answers.`:"Not tried yet."}</p><button class="btn small" data-start="topic:${w}">Drill it · 10 Q</button>`}
-  $("#citrus-line").hidden=!(signedIn()||gLinked());renderCitrusLine();renderMoodRow();
+  $("#citrus-line").hidden=!(signedIn()||gLinked());renderCitrusLine();renderMoodRow();renderFotd();{const f=fadingTopics(),fc=$("#fade-card");fc.hidden=!f.length;if(f.length){fc.innerHTML=`<span class="eyebrow">Mastery fading</span><h3>${TOPICS[f[0]].label}</h3><p class="muted">Mastered ${f.length>1?`with ${f.length-1} other topic${f.length>2?"s":""} `:""}a while ago. Five questions, no hints, keeps the badge.</p><button class="btn small" id="fade-go">Re-check · 5 Q</button>`;$("#fade-go").onclick=()=>startRecheck(f[0])}}
   renderHeader();
 }
 /* ---- Trap tracker & calibration ---- */
@@ -3212,7 +3270,7 @@ TWINCUES.length=0;TWINS.forEach((p,pi)=>p.c.forEach(c=>TWINCUES.push({p:pi,txt:c
 POOLS.W.arr=TWINCUES;
 
 /* ================= CITRUS HUB + GOOGLE DRIVE (per hub-contract.md / google-cloud-setup.md) ================= */
-const APP_VERSION="8.1.0";
+const APP_VERSION="8.2.0";
 const HUB_ROOT="My Apps",HUB_DIR="hub",APP_SLUG="kumquat",CITRUS_ROOT="Citrus Maxima",CITRUS_APPS="Apps";
 const G={tok:null,exp:0,email:null,ids:{},busy:false,line:"",plan:null};
 st.google=st.google||{clientId:"",syncState:true,publish:true};
@@ -3644,7 +3702,10 @@ function roundPlanFocused(){const due=dueKeys().length,budget=st.budget||25,legs
   else{const rd=ROUNDS.find(r=>st.rounds[r.id]==null)||ROUNDS[dayNum()%ROUNDS.length];legs.push({t:"round",id:rd.id,label:"Clinic call: "+rd.title,min:6,p:6})}
   legs.push({t:"teach",label:"Teach one concept back",min:3,p:4});
   legs.push({t:"links",n:4,label:"Name four links",min:2,p:2});
-  const rot=["concept","teach","estimate","links"][dayNum()%4];legs.forEach(l=>{if(l.t===rot)l.p+=4});
+  const fd=fadingTopics();if(fd.length)legs.push({t:"recheck",topic:fd[0],label:"Mastery re-check: "+TOPICS[fd[0]].label,min:3,p:8});
+  const tools=[["derive","Derive three formulas",3],["dag","Two third-variable diagrams",3],["design","Pick two study designs",3],["spotter","Spot bias in two stories",3],["tests","Choose two statistical tests",3]];const tl=tools[dayNum()%tools.length];
+  legs.push({t:tl[0],n:tl[0]==="derive"?3:2,label:tl[1],min:tl[2],p:3});
+  const rot=["concept","teach","estimate","links",tl[0]][dayNum()%5];legs.forEach(l=>{if(l.t===rot)l.p+=4});
   return trimLegs(legs,budget)}
 function trimLegs(legs,budget){const out=legs.slice();while(out.reduce((a,l)=>a+l.min,0)>budget+3&&out.length>2){let lo=null;out.forEach(l=>{if(l.p<10&&(!lo||l.p<lo.p))lo=l});if(!lo)break;out.splice(out.indexOf(lo),1)}return out}
 function startRound(){ROUND={legs:roundPlan(),i:0,cnt:0,started:Date.now(),xp0:st.xp,ans0:st.log.reduce((a,l)=>a+l.n,0),ok0:st.log.reduce((a,l)=>a+l.score,0)};save();roundGo()}
@@ -3653,7 +3714,7 @@ function roundGo(){const L=ROUND.legs[ROUND.i];if(!L){roundFinish();return}ROUND
    case"lesson":PL=null;location.hash="lesson-"+(L.n+1);break;
    case"concept":WEBSEL=L.c;location.hash="web";break;case"tree":TR=null;location.hash="tree";break;case"estimate":ES=null;location.hash="estimate";break;
    case"drill":if(L.topic)startQuiz("topic",L.topic);else startQuiz("daily");Q.total=L.n||8;renderQ();break;
-   case"round":RD=null;location.hash="round-"+L.id;break;case"paper":PR=null;location.hash="paper-"+L.id;break;case"teach":TB=null;location.hash="teach";break;case"blitz":startQuiz("blitz");break;case"boss":startQuiz("boss",L.topic);break;case"exam":startQuiz("step1");Q.exam=true;renderQ();break;case"recall":RC=null;RC_PICK=L.n;location.hash="recall";break;case"links":LK={n:0,score:0,total:L.n||4,cur:linkPick()};location.hash="links";break;case"xray":XS={x:XR.find(y=>y.id===L.id)||XR[0],i:0,pts:0,ans:null,sel:{}};location.hash="xray";break}
+   case"round":RD=null;location.hash="round-"+L.id;break;case"paper":PR=null;location.hash="paper-"+L.id;break;case"teach":TB=null;location.hash="teach";break;case"blitz":startQuiz("blitz");break;case"recheck":startRecheck(L.topic);break;case"derive":DVS=null;location.hash="derive";break;case"dag":DG=null;location.hash="dag";break;case"design":DP=null;location.hash="design";break;case"spotter":BS=null;location.hash="spotter";break;case"tests":TCS=null;location.hash="tchoose";break;case"sprint":SP=null;location.hash="sprint";break;case"boss":startQuiz("boss",L.topic);break;case"exam":startQuiz("step1");Q.exam=true;renderQ();break;case"recall":RC=null;RC_PICK=L.n;location.hash="recall";break;case"links":LK={n:0,score:0,total:L.n||4,cur:linkPick()};location.hash="links";break;case"xray":XS={x:XR.find(y=>y.id===L.id)||XR[0],i:0,pts:0,ans:null,sel:{}};location.hash="xray";break}
   renderRoundBar()}
 function roundTick(kind){if(!ROUND)return;const L=ROUND.legs[ROUND.i];if(!L||L.t!==kind)return;ROUND.cnt++;renderRoundBar();if(ROUND.cnt>=(L.n||1))setTimeout(()=>{if(ROUND&&ROUND.legs[ROUND.i]===L)roundLegDone()},900)}
 function roundLegDone(){if(!ROUND)return;const L=ROUND.legs[ROUND.i];if(L&&L.t==="lesson")st.lastLessonDay=dayNum();ROUND.i++;if(ROUND.i>=ROUND.legs.length){roundFinish();return}renderRoundBar();setTimeout(roundGo,450)}
@@ -3662,7 +3723,7 @@ function roundFinish(){const mins=Math.max(1,Math.round((Date.now()-ROUND.starte
   st.roundsDone=(st.roundsDone||0)+1;SND.fx("done");st.lastRound=dayNum();st.xp+=40;if(st.last!==today()){st.streak=st.last===yesterday()?st.streak+1:1;st.last=today()}save();ROUND=null;renderRoundBar();if(!reduce)confetti();location.hash="home";
   setTimeout(()=>{const nl=LESSONS.findIndex((_,i)=>!st.lessons[i]);$("#round-summary").innerHTML=`<div class="card summary"><span class="eyebrow">Round complete</span><h2>${mins} min · +${xp+40} XP · 🔥 ${liveStreak()}</h2><ul class="sum-legs">${legs.map(l=>`<li>✓ ${l.label}</li>`).join("")}</ul>${ans?`<p>${ok} of ${ans} questions right (${Math.round(ok/ans*100)}%).</p>`:""}<p class="muted">Tomorrow: ${Object.keys(st.srs).filter(k=>st.srs[k].due<=dayNum()+1).length} cards due${nl>=0?` · Lesson ${nl+1}: ${PATH[nl].n}`:""}.</p><div class="row"><button class="btn small" id="sum-x">Close</button></div></div>`;$("#sum-x").onclick=()=>{$("#round-summary").innerHTML=""};renderToday()},60)}
 function renderRoundBar(){let bar=$("#roundbar");document.body.classList.toggle("in-round",!!ROUND&&current!=="home");if(!ROUND||current==="home"){if(bar)bar.remove();return}if(!bar){bar=document.createElement("div");bar.id="roundbar";document.body.appendChild(bar)}
-  const L=ROUND.legs[ROUND.i],cnt=L&&L.n&&["tree","estimate","links"].includes(L.t)?` <span class="num">(${Math.min(ROUND.cnt,L.n)}/${L.n})</span>`:"";
+  const L=ROUND.legs[ROUND.i],cnt=L&&L.n&&["tree","estimate","links","derive","dag","design","spotter","tests"].includes(L.t)?` <span class="num">(${Math.min(ROUND.cnt,L.n)}/${L.n})</span>`:"";
   bar.innerHTML=`<div class="rb-in"><span class="eyebrow">Round · ${ROUND.i+1}/${ROUND.legs.length}</span><div class="pips">${ROUND.legs.map((_,i)=>`<i class="${i<ROUND.i?"ok":i===ROUND.i?"cur":""}"></i>`).join("")}</div><b>${L?L.label:""}${cnt}</b><button class="btn small" id="rb-next">Next leg →</button><button class="btn small ghost" id="rb-pause">Pause</button></div>`;
   $("#rb-next").onclick=()=>{stopTimer();if(Q&&!Q.done)Q={done:true};roundLegDone()};$("#rb-pause").onclick=roundPause}
 function roundNextBtn(){return ROUND?`<button class="btn primary" onclick="roundLegDone()">Next leg →</button>`:""}
@@ -3728,13 +3789,13 @@ const SND=(()=>{let ac=null,master=null,musicBus=null,fxBus=null,cur=null,timer=
 
 /* ---- appearance card in Settings ---- */
 function renderAppearance(){const root=$("#appear-root");if(!root)return;const u=uiGet();
-  const seg=(key,opts)=>`<div class="seg" role="group">${opts.map(([v,l])=>`<button class="segb ${u[key]===v?"on":""}" data-uk="${key}" data-uv="${v}" aria-pressed="${u[key]===v}">${l}</button>`).join("")}</div>`;
+  const seg=(key,opts)=>`<div class="kseg" role="group">${opts.map(([v,l])=>`<button class="ksegb ${u[key]===v?"on":""}" data-uk="${key}" data-uv="${v}" aria-pressed="${u[key]===v}">${l}</button>`).join("")}</div>`;
   root.innerHTML=`<span class="eyebrow">Look and sound · this device</span>
    <label class="pico-l">Interface</label>${seg("ui",[["arcade","Arcade"],["clean","Clean"],["paper","Paper"]])}
    <p class="muted" style="font-size:.85rem">Arcade: pixel type and bevels. Clean: calm and dark, soft corners. Paper: a journal page, best for long reading.</p>
    ${u.ui==="paper"?"":`<label class="pico-l">Theme</label>${seg("theme",[["system","System"],["light","Light"],["dark","Dark"]])}`}
    <label class="pico-l">Text size</label>${seg("size",[["s","Small"],["m","Normal"],["l","Large"],["xl","Huge"]])}
-   <label class="pico-l">Sound</label><div class="row" style="flex-wrap:wrap;gap:8px"><button class="segb ${u.music?"on":""}" id="ap-music" aria-pressed="${u.music}">♫ Music ${u.music?"on":"off"}</button><button class="segb ${u.fx?"on":""}" id="ap-fx" aria-pressed="${u.fx}">Effects ${u.fx?"on":"off"}</button></div>
+   <label class="pico-l">Sound</label><div class="row" style="flex-wrap:wrap;gap:8px"><button class="ksegb ${u.music?"on":""}" id="ap-music" aria-pressed="${u.music}">♫ Music ${u.music?"on":"off"}</button><button class="ksegb ${u.fx?"on":""}" id="ap-fx" aria-pressed="${u.fx}">Effects ${u.fx?"on":"off"}</button></div>
    <label class="pico-l" for="ap-vol">Volume</label><input type="range" id="ap-vol" min="0" max="1" step=".05" value="${u.vol}">
    <p class="muted" style="font-size:.85rem">The music is generated live and follows your mood: soft pads when tired, arcade chiptune when playful, a quiet clock in exam blocks.</p>
    <label class="pico-l" for="ap-mood">Default mood</label><select id="ap-mood">${Object.entries(MOODS).map(([k,v])=>`<option value="${k}" ${(st.moodDefault||"focused")===k?"selected":""}>${v.e} ${v.n}</option>`).join("")}</select>
@@ -3791,6 +3852,255 @@ const WIDE_VIEWS=new Set(["xray","paper","decoder","lesson","case","round","real
 function wideCheck(){document.body.classList.toggle("wide",WIDE_VIEWS.has(current)&&window.innerWidth>=1100)}
 window.addEventListener("resize",wideCheck);window.addEventListener("hashchange",()=>setTimeout(wideCheck,30));
 uiApply();
+
+/* ================= v9 learning tools: strict mastery · formulas · bias & design tools · real papers ================= */
+/* ---- strict mastery that can fade: 85%+ of the last 30, on 3+ separate days, kept by re-checks ---- */
+const MAST_GAP=[7,14,30,60,120];
+function mastNote(t){if(!t||!TOPICS[t])return;st.tdays=st.tdays||{};const d=dayNum(),a=st.tdays[t]=st.tdays[t]||[];if(a[a.length-1]!==d){a.push(d);if(a.length>40)a.shift()}
+  st.mast=st.mast||{};const m=st.mast[t];if(m&&!m.lost)return;const r=topicRecent(t);const since=m&&m.lost||-1;const days=a.filter(x=>x>since&&x>d-30).length;
+  if(r.n>=30&&r.acc>=.85&&days>=3){st.mast[t]={on:d,check:d,lv:0};setTimeout(()=>{toast("Mastered: "+TOPICS[t].label+". It will ask for a re-check in 7 days.");SND.fx("up")},400)}}
+function mastState(t){const m=(st.mast||{})[t];if(!m||m.lost!=null&&m.on==null)return"none";if(m.lost!=null)return"none";return dayNum()-m.check>(MAST_GAP[m.lv]||120)?"fading":"mastered"}
+function topicMastered(t){return mastState(t)!=="none"}
+function toolScore(t,ok){if(!TOPICS[t])return;const tt=st.topics[t]=st.topics[t]||{c:0,n:0};tt.n++;if(ok)tt.c++;const rc=st.recent[t]=st.recent[t]||[];rc.push(!!ok);if(rc.length>40)rc.shift();mastNote(t)}
+function fadingTopics(){return Object.keys(TOPICS).filter(t=>mastState(t)==="fading")}
+function startRecheck(t){startQuiz("topic",t);Q.recheck=true;Q.exam=true;Q.total=5;renderQ()}
+function mastRecheckDone(t,score,n){const m=st.mast[t];if(!m)return;if(score>=Math.min(4,n)){m.check=dayNum();m.lv=Math.min(m.lv+1,MAST_GAP.length-1);toast(`Re-check passed. ${TOPICS[t].label} stays mastered; next check in ${MAST_GAP[m.lv]} days.`);SND.fx("up")}
+  else{st.mast[t]={lost:dayNum()};toast(`${TOPICS[t].label} slipped. Rebuild it: 85% over 30 answers on 3 days.`)}save()}
+(function(){st.mast=st.mast||{};let ch=false;Object.keys(TOPICS).forEach(t=>{const r=topicRecent(t);if(!st.mast[t]&&r.n>=30&&r.acc>=.9){st.mast[t]={on:dayNum(),check:dayNum(),lv:0};ch=true}});if(ch)save()})();
+
+/* ---- formula of the day ---- */
+function formulaRows(){return VAULT.flatMap(g=>g[1].map(r=>({g:g[0],n:r[0],f:r[1],w:r[2]}))).filter(r=>/[\/=×÷−+]/.test(r.f))}
+function formulaOfDay(){const rs=formulaRows();return rs[(dayNum()*7)%rs.length]}
+function renderFotd(){const el=$("#fotd-card");if(!el)return;const f=formulaOfDay();
+  el.innerHTML=`<span class="eyebrow">Formula of the day</span><h3>${f.n}</h3><p class="muted fotd-q">Say it out loud, then reveal.</p><div class="fotd-a" hidden><code>${f.f}</code><p class="muted">${f.w}</p></div><div class="row"><button class="btn small" id="fotd-rev">Reveal</button><a class="btn small ghost" href="#derive">Derive it</a></div>`;
+  $("#fotd-rev").onclick=()=>{$(".fotd-a").hidden=false;$("#fotd-rev").remove();st.fotd=dayNum();save()}}
+
+/* ---- derive it: rebuild formulas from the table instead of memorising them ---- */
+const DV=[
+ {id:"sens",n:"Sensitivity",tb:"dx",num:["a"],den:["a","c"],why:"Down the <b>disease-present column</b>: of everyone who has it (a + c), how many did the test catch (a)?"},
+ {id:"spec",n:"Specificity",tb:"dx",num:["d"],den:["b","d"],why:"Down the <b>disease-absent column</b>: of everyone healthy (b + d), how many did the test clear (d)?"},
+ {id:"ppv",n:"PPV",tb:"dx",num:["a"],den:["a","b"],why:"Across the <b>test-positive row</b>: of everyone flagged (a + b), how many really have it (a)?"},
+ {id:"npv",n:"NPV",tb:"dx",num:["d"],den:["c","d"],why:"Across the <b>test-negative row</b>: of everyone cleared (c + d), how many are truly well (d)?"},
+ {id:"prev",n:"Prevalence (in this sample)",tb:"dx",num:["a","c"],den:["a","b","c","d"],why:"Everyone with the disease (the left column) over everyone tested."},
+ {id:"acc",n:"Accuracy",tb:"dx",num:["a","d"],den:["a","b","c","d"],why:"The two correct cells (true positives + true negatives) over everyone. Note how prevalence-dependent it is."},
+ {id:"re",n:"Risk in the exposed",tb:"coh",num:["a"],den:["a","b"],why:"Across the <b>exposed row</b>: of the exposed (a + b), how many got the outcome (a)?"},
+ {id:"ru",n:"Risk in the unexposed",tb:"coh",num:["c"],den:["c","d"],why:"Across the <b>unexposed row</b>: c out of (c + d)."},
+ {id:"or",n:"Odds ratio",tb:"coh",mode:"prod",num:["a","d"],den:["b","c"],why:"Odds of exposure in cases (a/c) ÷ in controls (b/d) = (a × d) ÷ (b × c): the cross-product. It works the same read either way, which is why case-control studies can use it."},
+ {id:"lrp",n:"LR+",tok:["sens","spec","1 − sens","1 − spec","PPV","prevalence"],num:["sens"],den:["1 − spec"],why:"How much more often a positive result turns up in the sick than in the well: true-positive rate ÷ false-positive rate."},
+ {id:"lrn",n:"LR−",tok:["sens","spec","1 − sens","1 − spec","NPV","prevalence"],num:["1 − sens"],den:["spec"],why:"How often a negative result turns up in the sick (misses) vs in the well: false-negative rate ÷ true-negative rate."},
+ {id:"nnt",n:"NNT",tok:["1","ARR","RRR","CER","EER","RR"],num:["1"],den:["ARR"],why:"If treating 100 prevents ARR × 100 events, you treat 1 ÷ ARR people per event prevented. Never 1 ÷ RRR."},
+ {id:"rrr",n:"RRR",tok:["ARR","CER","EER","RR","1","NNT"],num:["ARR"],den:["CER"],why:"The absolute drop as a share of the control risk. Same as 1 − RR."},
+ {id:"odds",n:"Odds from probability",tok:["p","1 − p","1 + p","odds"],num:["p"],den:["1 − p"],why:"Chances for ÷ chances against. p = 0.75 → 0.75 ÷ 0.25 = 3 (3 to 1)."},
+ {id:"prob",n:"Probability from odds",tok:["odds","1 + odds","1 − odds","p"],num:["odds"],den:["1 + odds"],why:"Odds 3 means 3 for every 1 against: 3 of 4 → 3 ÷ (1 + 3) = 75%."},
+ {id:"se",n:"Standard error of a mean",tok:["SD","√n","n","mean","SD²"],num:["SD"],den:["√n"],why:"Spread of individuals shrunk by the square root of the sample size: quadruple n to halve the SE."},
+ {id:"ir",n:"Incidence rate",tok:["new cases","all cases","person-time","population","deaths"],num:["new cases"],den:["person-time"],why:"New events per unit of time actually observed at risk."},
+ {id:"herd",n:"Herd immunity threshold",tok:["1","1/R₀","R₀","R₀ − 1"],mode:"herd",num:["1"],den:["1/R₀"],why:"Each case must infect fewer than one: immune share > 1 − 1/R₀. R₀ 4 → 75%."}];
+const DV_TB={dx:{cols:["Disease +","Disease −"],rows:["Test +","Test −"]},coh:{cols:["Outcome +","Outcome −"],rows:["Exposed","Unexposed"]}};
+let DVS=null;
+DRAW.derive=function(){const root=$("#derive-root");if(!root)return;st.derive=st.derive||{};
+  if(!DVS){const order=DV.slice().sort((x,y)=>((st.derive[x.id]||0)-(st.derive[y.id]||0))||Math.random()-.5);DVS={list:order.slice(0,6),i:0,num:[],den:[],slot:"num",done:false,score:0}}
+  const it=DVS.list[DVS.i];if(!it){root.innerHTML=`<div class="card summary"><span class="eyebrow">Derived</span><h2>${DVS.score} / ${DVS.list.length} first try</h2><p class="muted">Formulas you can rebuild don’t need memorising.</p><div class="row"><button class="btn primary" id="dv-again">Six more</button>${roundNextBtn()}</div></div>`;$("#dv-again").onclick=()=>{DVS=null;DRAW.derive()};return}
+  const slot=k=>`<button class="dv-slot ${DVS.slot===k?"on":""}" data-slot="${k}">${(DVS[k].length?DVS[k].join(it.mode==="prod"?" × ":" + "):"tap to fill")}</button>`;
+  const T=it.tb&&DV_TB[it.tb];
+  const table=T?`<table class="dv-tb"><tr><th></th><th>${T.cols[0]}</th><th>${T.cols[1]}</th></tr><tr><th>${T.rows[0]}</th><td><button class="dv-c" data-t="a">a</button></td><td><button class="dv-c" data-t="b">b</button></td></tr><tr><th>${T.rows[1]}</th><td><button class="dv-c" data-t="c">c</button></td><td><button class="dv-c" data-t="d">d</button></td></tr></table>`
+    :`<div class="dv-toks">${it.tok.map(t=>`<button class="dv-c dv-tok" data-t="${t}">${t}</button>`).join("")}</div>`;
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">Derive it · ${DVS.i+1} / ${DVS.list.length}</span><span class="muted num">${DVS.score} first try</span></div>
+   <div class="card dv-card"><h2>${it.n} = ?</h2><p class="muted">${T?"Tap cells to fill the top, then tap the bottom slot and fill it.":"Tap the pieces you need for the top, then for the bottom."}</p>
+   ${table}<div class="dv-frac">${slot("num")}<hr>${slot("den")}</div>
+   <div class="row"><button class="btn small ghost" id="dv-clear">Clear</button><button class="btn primary" id="dv-check" ${DVS.done?"disabled":""}>Check</button></div><div id="dv-fb">${DVS.fb||""}</div></div>`;
+  $$(".dv-slot").forEach(b=>b.onclick=()=>{DVS.slot=b.dataset.slot;DRAW.derive()});
+  $$(".dv-c").forEach(b=>b.onclick=()=>{if(DVS.done)return;const a=DVS[DVS.slot],t=b.dataset.t;const i=a.indexOf(t);if(i>=0)a.splice(i,1);else{if(!T)a.length=0;a.push(t)}if(!T&&DVS.slot==="num"&&a.length)DVS.slot="den";SND.fx("tick");DRAW.derive()});
+  $("#dv-clear").onclick=()=>{DVS.num=[];DVS.den=[];DVS.slot="num";DRAW.derive()};
+  $("#dv-check").onclick=()=>{const same=(x,y)=>x.length===y.length&&x.every(v=>y.includes(v));const ok=same(DVS.num,it.num)&&same(DVS.den,it.den);
+    if(!ok&&!DVS.tried){DVS.tried=true;SND.fx("bad");DVS.fb=`<div class="fb no"><h3>Not yet.</h3><div class="ex">Think about which group the question is <i>about</i>: that group is the bottom.</div></div>`;DRAW.derive();return}
+    DVS.done=true;if(ok&&!DVS.tried){DVS.score++;st.derive[it.id]=(st.derive[it.id]||0)+1;st.xp+=4}else st.derive[it.id]=Math.max(0,(st.derive[it.id]||0)-1);save();renderHeader();SND.fx(ok?"ok":"bad");
+    const j=it.mode==="prod"?" × ":" + ";DVS.fb=`<div class="fb ${ok?"ok":"no"}"><h3>${ok?"Rebuilt.":"Here’s the build."}</h3><div class="ex"><code>${it.n} = ${it.num.length>1?"("+it.num.join(j)+")":it.num[0]} ÷ ${it.den.length>1?"("+it.den.join(j)+")":it.den[0]}${it.mode==="herd"?" → threshold = 1 − 1/R₀":""}</code><br>${it.why}</div></div><div class="qnext"><button class="btn primary" id="dv-next">Next →</button></div>`;DRAW.derive();
+    $("#dv-next").onclick=()=>{DVS.i++;DVS.num=[];DVS.den=[];DVS.slot="num";DVS.done=false;DVS.tried=false;DVS.fb="";roundTick("derive");DRAW.derive()}};
+  if(DVS.done&&$("#dv-next"))$("#dv-next").onclick=()=>{DVS.i++;DVS.num=[];DVS.den=[];DVS.slot="num";DVS.done=false;DVS.tried=false;DVS.fb="";roundTick("derive");DRAW.derive()}};
+
+/* ---- formula sprint: 60 seconds, name → formula ---- */
+let SP=null,SP_T=null;
+function spQ(){const rs=formulaRows();const r=pick(rs);const same=rs.filter(x=>x.g===r.g&&x.f!==r.f);const pool=shuffle(same.length>=3?same:rs.filter(x=>x.f!==r.f)).slice(0,3);return {r,opts:shuffle([r,...pool])}}
+DRAW.sprint=function(){const root=$("#sprint-root");if(!root)return;
+  if(!SP){clearInterval(SP_T);root.innerHTML=`<div class="card"><span class="eyebrow">Formula sprint</span><h2>60 seconds. Name → formula.</h2><p class="muted">Best: <b class="num">${st.sprintBest||0}</b>. A wrong answer costs 3 seconds.</p><button class="btn primary big" id="sp-go"><span>Go</span></button></div>`;$("#sp-go").onclick=()=>{SP={t:60,score:0,n:0,cur:spQ()};SP_T=setInterval(()=>{if(!SP)return clearInterval(SP_T);SP.t--;const e=$("#sp-t");if(e)e.textContent=SP.t;if(SP.t<=0){clearInterval(SP_T);spEnd()}},1000);DRAW.sprint()};return}
+  if(SP.over)return;const c=SP.cur;
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">Sprint</span><span class="num sp-t" id="sp-t">${SP.t}</span><span class="num">${SP.score}</span></div><div class="card"><h2>${c.r.n}</h2><div class="lk-opts">${c.opts.map((o,i)=>`<button class="ptopt sp-o" data-i="${i}"><code>${o.f}</code></button>`).join("")}</div></div>`;
+  $$(".sp-o").forEach(b=>b.onclick=()=>{const ok=c.opts[+b.dataset.i]===c.r;SP.n++;if(ok){SP.score++;SND.fx("ok")}else{SP.t=Math.max(0,SP.t-3);SND.fx("bad");toast(c.r.n+" = "+c.r.f)}SP.cur=spQ();DRAW.sprint()})};
+function spEnd(){if(!SP)return;const rec=SP.score>(st.sprintBest||0);if(rec)st.sprintBest=SP.score;st.xp+=SP.score*2;save();renderHeader();SND.fx(rec?"up":"done");SP.over=true;const root=$("#sprint-root");
+  if(root)root.innerHTML=`<div class="card summary"><span class="eyebrow">${rec?"New best":"Time"}</span><h2>${SP.score} of ${SP.n}</h2><p class="muted">Best ${st.sprintBest}. +${SP.score*2} XP</p><div class="row"><button class="btn primary" id="sp-again">Again</button>${roundNextBtn()}</div></div>`;
+  const a=$("#sp-again");if(a)a.onclick=()=>{SP=null;DRAW.sprint()};roundTick("sprint");SP=null}
+
+/* ---- third-variable builder: confounder, mediator or collider? ---- */
+const DAG=[
+ {e:"Coffee",o:"Lung cancer",z:"Smoking",ze:"z",zo:"z",story:"Smokers drink more coffee, and smoking causes lung cancer."},
+ {e:"Regular exercise",o:"Blood pressure",z:"Body weight",ze:"e",zo:"z",story:"Exercise lowers body weight, and lower weight lowers blood pressure."},
+ {e:"Diabetes",o:"Gallstones",z:"Hospital admission",ze:"e",zo:"o",story:"The study only looked at inpatients. Diabetes gets people admitted; so do gallstones."},
+ {e:"Grey hair",o:"Heart attack",z:"Age",ze:"z",zo:"z",story:"Getting older greys your hair and raises your heart-attack risk."},
+ {e:"Statin",o:"Heart attack",z:"LDL cholesterol",ze:"e",zo:"z",story:"The statin lowers LDL, and lower LDL means fewer heart attacks."},
+ {e:"Night shifts",o:"Work injury",z:"Sleep duration",ze:"e",zo:"z",story:"Night shifts cut sleep, and short sleep raises injury risk."},
+ {e:"HRT use",o:"Heart disease",z:"Wealth and health-consciousness",ze:"z",zo:"z",story:"Wealthier, health-conscious women were more likely to take HRT and less likely to get heart disease anyway."},
+ {e:"Acting talent",o:"Good looks",z:"Being a film star",ze:"e",zo:"o",story:"Studying only film stars: talent gets you there, so do good looks."},
+ {e:"Alcohol",o:"Oral cancer",z:"Smoking",ze:"z",zo:"z",story:"Drinkers smoke more, and smoking causes oral cancer."},
+ {e:"Age",o:"Hearing loss",z:"Years of noise exposure",ze:"e",zo:"z",story:"The older a worker, the more years of noise they have had, and noise damages hearing."},
+ {e:"Flu vaccine",o:"Hospitalisation",z:"Antibody level",ze:"e",zo:"z",story:"The vaccine raises antibodies, and antibodies prevent severe flu."},
+ {e:"Obesity",o:"Death",z:"Having heart failure",ze:"e",zo:"o",story:"The study enrolled only heart-failure patients. Obesity leads to heart failure; so do other deadly conditions that themselves raise the risk of death."}];
+const DAG_ROLE={"z|z":["Confounder","A common cause of exposure and outcome. Adjust for it (stratify, match or regress) or it fakes or hides an effect."],
+ "e|z":["Mediator","On the causal path from exposure to outcome. Adjusting for it removes part of the real effect; don’t, if you want the total effect."],
+ "e|o":["Collider","Caused by both exposure and outcome. Adjusting for it, or selecting on it, creates an association that isn’t there (Berkson, selection bias)."],
+ "|z":["Outcome risk factor","Causes the outcome only. Adjusting is fine and can sharpen precision."],"z|":["Cause of exposure only","Not a confounder; adjusting adds nothing (and can cost precision)."],
+ "e|":["Consequence of exposure","Not on the path to the outcome; no need to adjust."],"|o":["Consequence of outcome","Never adjust for it: you’d be conditioning on the outcome."],
+ "z|o":["Cause of exposure, effect of outcome","Adjusting for it conditions on a descendant of the outcome: biased."],"|":["Unrelated","No arrows to either: irrelevant to this question."]};
+let DG=null;
+function dagSvg(it,ze,zo,lab){const ar=(x1,y1,x2,y2,on)=>on?`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="dg-l" marker-end="url(#dgm)"/>`:`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="dg-l off"/>`;
+  return `<svg viewBox="0 0 360 230" class="dag" role="img" aria-label="Diagram of ${it.e}, ${it.o} and ${it.z}"><defs><marker id="dgm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="dg-h"/></marker></defs>
+   ${ze==="z"?ar(150,58,78,160,1):ze==="e"?ar(78,160,150,58,1):ar(150,58,78,160,0)}${zo==="z"?ar(210,58,282,160,1):zo==="o"?ar(282,160,210,58,1):ar(210,58,282,160,0)}
+   <line x1="112" y1="190" x2="244" y2="190" class="dg-l q" marker-end="url(#dgm)"/><text x="178" y="212" class="dg-t s" text-anchor="middle">effect we want</text>
+   <g><rect x="110" y="18" width="140" height="40" class="dg-n z"/><text x="180" y="43" class="dg-t" text-anchor="middle">${lab?it.z.slice(0,24):it.z.slice(0,24)}</text></g>
+   <g><rect x="8" y="166" width="104" height="44" class="dg-n"/><text x="60" y="193" class="dg-t" text-anchor="middle">${it.e.slice(0,15)}</text></g>
+   <g><rect x="248" y="166" width="104" height="44" class="dg-n"/><text x="300" y="193" class="dg-t" text-anchor="middle">${it.o.slice(0,15)}</text></g></svg>`}
+DRAW.dag=function(){const root=$("#dag-root");if(!root)return;
+  if(!DG)DG={i:0,list:shuffle(DAG.slice()).slice(0,6),ze:"",zo:"",done:false,score:0,sandbox:false};
+  if(DG.sandbox){const it={e:"Exposure",o:"Outcome",z:"Third variable"},role=DAG_ROLE[DG.ze+"|"+DG.zo];
+    root.innerHTML=`<div class="pl-top"><span class="eyebrow">Sandbox</span><button class="btn small" id="dg-back">Back to the stories</button></div><div class="card dg-card">${dagSvg(it,DG.ze,DG.zo)}${dagCtl()}<div class="fb ok"><h3>${role[0]}</h3><div class="ex">${role[1]}</div></div></div>`;
+    dagBind();$("#dg-back").onclick=()=>{DG=null;DRAW.dag()};return}
+  const it=DG.list[DG.i];if(!it){root.innerHTML=`<div class="card summary"><span class="eyebrow">Diagrams</span><h2>${DG.score} / ${DG.list.length}</h2><div class="row"><button class="btn primary" id="dg-again">Six more</button><button class="btn" id="dg-sand">Free sandbox</button>${roundNextBtn()}</div></div>`;$("#dg-again").onclick=()=>{DG=null;DRAW.dag()};$("#dg-sand").onclick=()=>{DG={sandbox:true,ze:"z",zo:"z"};DRAW.dag()};roundTick("dag");return}
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">Third variable · ${DG.i+1} / ${DG.list.length}</span><button class="btn small ghost" id="dg-sb">Sandbox</button></div>
+   <div class="card dg-card"><p class="dg-story">${it.story}</p><p class="muted">Draw the two arrows the story describes. Is <b>${it.z}</b> a confounder, mediator or collider for <b>${it.e} → ${it.o}</b>?</p>${dagSvg(it,DG.ze,DG.zo)}${dagCtl(it)}
+   <div class="row"><button class="btn primary" id="dg-chk" ${DG.done?"disabled":""}>Check</button></div><div id="dg-fb">${DG.fb||""}</div></div>`;
+  dagBind(it);$("#dg-sb").onclick=()=>{DG={sandbox:true,ze:"z",zo:"z"};DRAW.dag()};
+  $("#dg-chk").onclick=()=>{const ok=DG.ze===it.ze&&DG.zo===it.zo;DG.done=true;if(ok){DG.score++;st.xp+=4}SND.fx(ok?"ok":"bad");toolScore("bias",ok);save();renderHeader();const role=DAG_ROLE[it.ze+"|"+it.zo];
+    const yours=DAG_ROLE[DG.ze+"|"+DG.zo];DG.ze=it.ze;DG.zo=it.zo;
+    DG.fb=`<div class="fb ${ok?"ok":"no"}"><h3>${ok?"Right: ":"It’s a "}${role[0].toLowerCase()}.</h3><div class="ex">${ok?"":`Your arrows made it a ${yours[0].toLowerCase()}. `}${role[1]}</div></div><div class="qnext"><button class="btn primary" id="dg-next">Next →</button></div>`;DRAW.dag()};
+  if(DG.done&&$("#dg-next"))$("#dg-next").onclick=()=>{roundTick("dag");DG.i++;DG.ze="";DG.zo="";DG.done=false;DG.fb="";DRAW.dag()}};
+function dagCtl(it){it=it||{e:"Exposure",o:"Outcome",z:"Third variable"};const s=(k,a,b)=>`<div class="dg-row"><span class="pico-l">${it.z} ↔ ${k==="ze"?it.e:it.o}</span><div class="kseg">${[["","No arrow"],["z",`${it.z.split(" ")[0]} → ${(k==="ze"?it.e:it.o).split(" ")[0]}`],[k==="ze"?"e":"o",`${(k==="ze"?it.e:it.o).split(" ")[0]} → ${it.z.split(" ")[0]}`]].map(([v,l])=>`<button class="ksegb ${DG[k]===v?"on":""}" data-dk="${k}" data-dv="${v}" ${DG.done?"disabled":""}>${l}</button>`).join("")}</div></div>`;return s("ze")+s("zo")}
+function dagBind(){$$("[data-dk]").forEach(b=>b.onclick=()=>{DG[b.dataset.dk]=b.dataset.dv;SND.fx("tick");DRAW.dag()})}
+
+/* ---- design picker: the question decides the design ---- */
+const DSG={rct:"Randomised controlled trial",pcoh:"Prospective cohort",rcoh:"Retrospective cohort",cc:"Case-control",xs:"Cross-sectional survey",eco:"Ecological study",cross:"Crossover trial",ma:"Systematic review + meta-analysis",cs:"Case series"};
+const DSG_NOTE={rct:"Randomisation balances known and unknown confounders, so it can show cause. Needs equipoise, consent, time and money; poor for rare or slow harms.",pcoh:"Measures exposure first, then follows people forward: gives incidence and relative risk, avoids recall bias. Slow and costly for rare or late outcomes.",rcoh:"Uses records already collected to follow an exposed group forward in time: fast and cheap, good for rare exposures, limited by what the records hold.",cc:"Starts from people with the outcome and compares their past exposures with controls: ideal for rare diseases, gives an odds ratio, vulnerable to recall and selection bias.",xs:"A snapshot of exposure and outcome at one moment: gives prevalence, can’t tell which came first.",eco:"Compares groups (countries, regions), not individuals: cheap hypothesis generation, prone to the ecological fallacy.",cross:"Each patient gets both treatments in turn, with a washout: needs a stable condition and short-lived effects, and halves the sample size needed.",ma:"Pools all comparable trials found by a systematic search: the best summary of existing evidence, only as good as the trials and the search.",cs:"Describes a handful of patients: fast signal for new diseases or harms, no comparison group, no causal claims."};
+const DSQ=[
+ {q:"A rare cancer (1 in 100,000 a year) might follow a common occupational exposure decades earlier. You have one year and little money.",a:["cc"],w:"Start from the cases: a cohort would need millions of people followed for decades, and nobody can be randomised to a carcinogen."},
+ {q:"Workers at one chemical plant (a rare exposure) since 1980. You want their rates of several outcomes: cancers, heart disease, deaths. Employment and payroll records exist.",a:["rcoh"],w:"A rare exposure plus several outcomes points to a cohort, and records from 1980 make it retrospective: decades of follow-up, done in months."},
+ {q:"Does a new oral anticoagulant prevent stroke better than warfarin? Equipoise exists and funding is good.",a:["rct"],w:"A treatment question with equipoise: randomise. Only randomisation balances the unknown confounders."},
+ {q:"How common is latent TB among construction workers arriving this month?",a:["xs"],w:"“How common, right now” is prevalence: one screening survey."},
+ {q:"Do countries with higher average salt intake have higher stroke rates? You only have national averages.",a:["eco"],w:"Group-level data only: an ecological study. Remember the ecological fallacy: a country-level link need not hold for individuals."},
+ {q:"Five ER patients developed the same unusual rash within a week of a newly introduced sedative. You want to alert colleagues today.",a:["cs"],w:"A new signal, a handful of patients, urgency: a case series. It raises the alarm; it can’t prove the sedative did it."},
+ {q:"Does a short-acting inhaler improve peak flow in stable asthma? The effect wears off within a day.",a:["cross"],w:"Stable condition, short-lived effect: each patient can be their own control, with a washout."},
+ {q:"Twenty small trials of steroids in septic shock disagree. What answers “what is the overall effect?”",a:["ma"],w:"Existing trials, conflicting results: pool them systematically and look at heterogeneity."},
+ {q:"You want the incidence of hypertension in new security guards over 5 years, and whether night shifts raise it.",a:["pcoh"],w:"Incidence needs follow-up, and measuring shifts before anyone has hypertension keeps the time order clean."},
+ {q:"Does smoking cause lung cancer? You can’t randomise people to smoke.",a:["pcoh","cc"],w:"Both work and both were used: Doll & Hill ran a case-control study (1950), then the British Doctors cohort (from 1951) showing the dose–response over time."},
+ {q:"A newly licensed drug may cause liver failure in about 1 in 50,000 users.",a:["cc","rcoh"],w:"Too rare for trials. A case-control study of liver-failure cases, or a cohort built from a large prescribing database, can find it."},
+ {q:"Will a new vaccine reduce influenza hospitalisation in adults over 75, where it has never been tested and experts genuinely disagree?",a:["rct"],w:"Genuine uncertainty plus a preventive intervention: randomise. Observational vaccine studies suffer the healthy-user effect."}];
+let DP=null;
+DRAW.design=function(){const root=$("#design-root");if(!root)return;if(!DP)DP={list:shuffle(DSQ.slice()).slice(0,6),i:0,score:0,pick:null};
+  const it=DP.list[DP.i];if(!it){root.innerHTML=`<div class="card summary"><span class="eyebrow">Design picker</span><h2>${DP.score} / ${DP.list.length}</h2><div class="row"><button class="btn primary" id="dp-again">Six more</button>${roundNextBtn()}</div></div>`;$("#dp-again").onclick=()=>{DP=null;DRAW.design()};roundTick("design");return}
+  const ans=DP.pick!==null;
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">Design picker · ${DP.i+1} / ${DP.list.length}</span><span class="muted num">${DP.score} right</span></div>
+   <div class="card"><h3 class="dp-q">${it.q}</h3><p class="muted">Which design would you run?</p><div class="lk-opts">${Object.keys(DSG).map(k=>`<button class="ptopt dsg-o ${ans&&it.a.includes(k)?"right":""} ${ans&&DP.pick===k&&!it.a.includes(k)?"wrong":""}" data-k="${k}" ${ans?"disabled":""}><b>${DSG[k]}</b></button>`).join("")}</div>
+   ${ans?`<div class="fb ${it.a.includes(DP.pick)?"ok":"no"}"><h3>${it.a.includes(DP.pick)?"Good call.":"Better: "+it.a.map(k=>DSG[k]).join(" or ")+"."}</h3><div class="ex">${it.w}${!it.a.includes(DP.pick)?`<br><br><b>What your ${DSG[DP.pick].toLowerCase()} would give:</b> ${DSG_NOTE[DP.pick]}`:""}</div></div><div class="qnext"><button class="btn primary" id="dp-next">Next →</button></div>`:""}</div>`;
+  $$(".dsg-o").forEach(b=>b.onclick=()=>{DP.pick=b.dataset.k;const ok=it.a.includes(DP.pick);if(ok){DP.score++;st.xp+=3}SND.fx(ok?"ok":"bad");toolScore("design",ok);save();renderHeader();DRAW.design()});
+  if(ans)$("#dp-next").onclick=()=>{roundTick("design");DP.i++;DP.pick=null;DRAW.design();window.scrollTo(0,0)}};
+
+/* ---- bias spotter: tap the sentence where the bias gets in ---- */
+const BS_NAMES=["Healthy worker effect","Recall bias","Lead-time bias","Length-time bias","Attrition bias","Confounding by indication","Observer (measurement) bias","Berkson’s bias","Publication bias","Immortal time bias","Hawthorne effect","Detection (surveillance) bias","Ecological fallacy","Volunteer bias"];
+const BSP=[
+ {s:["Researchers followed 5,000 steel-plant workers for 20 years.","Their death rate was compared with that of the general population of the region.","Deaths were identified from national registers.","Workers had 20% lower mortality.","The authors concluded that steel work is good for health."],i:1,b:"Healthy worker effect",w:"The general population includes people too ill to work. Employed people start healthier, so any workforce looks protected. Compare with another working group instead."},
+ {s:["A study looked at medicines taken in pregnancy and birth defects.","Mothers of babies with birth defects and mothers of healthy babies were identified at the same hospital.","Both groups were interviewed a year after the birth about every medicine they had taken.","Antiemetic use was more often reported by mothers of affected babies."],i:2,b:"Recall bias",w:"Mothers of affected babies search their memories harder. Use prescription records gathered before the outcome."},
+ {s:["A lung-cancer screening programme was evaluated.","Survival was measured from the date of diagnosis.","Screen-detected patients lived 3 years longer after diagnosis than symptom-detected patients.","The programme was declared a success."],i:1,b:"Lead-time bias",w:"Diagnosing earlier starts the survival clock earlier even if death comes on the same day. Compare mortality in a screened vs unscreened population instead."},
+ {s:["Women had mammograms every two years.","Cancers found at screening were compared with cancers that appeared between screens.","Screen-detected cancers had better 10-year outcomes.","The authors credited screening for the difference."],i:1,b:"Length-time bias",w:"Slow-growing tumours spend longer in the detectable window, so screening catches more of them; fast, aggressive ones appear between screens. The comparison is rigged before screening does anything."},
+ {s:["400 adults with back pain were randomised to drug or placebo.","30% of the drug group stopped early because of side effects.","The analysis included only people who completed 12 weeks.","Pain scores were better on the drug."],i:2,b:"Attrition bias",w:"Dropping the people who couldn’t tolerate the drug leaves a healthier, more responsive group. Analyse by intention to treat."},
+ {s:["ICU patients with pneumonia were studied from records.","Doctors chose the new antibiotic for the sickest patients.","Those given the new drug had higher mortality.","The authors warned against the new drug."],i:1,b:"Confounding by indication",w:"The reason for treatment (severity) also drives the outcome. Randomise, or adjust carefully for severity."},
+ {s:["Shipyard workers were studied for pleural plaques.","Radiologists were told which workers had worked with asbestos before reading the X-rays.","More plaques were reported in the asbestos group."],i:1,b:"Observer (measurement) bias",w:"Knowing exposure changes how borderline films are read. Blind the readers."},
+ {s:["Researchers studied 1,000 hospital inpatients.","Patients with diabetes were less likely to have gallstones than other inpatients.","The authors suggested diabetes protects against gallstones."],i:0,b:"Berkson’s bias",w:"Both conditions cause admission; selecting only inpatients conditions on a collider and can create an inverse link."},
+ {s:["A review of a new antidepressant was planned.","The team searched only English-language journals.","Nineteen of twenty trials found were positive.","The pooled effect was large."],i:1,b:"Publication bias",w:"Negative trials are less often published (and less often in English-language journals). Search trial registries and grey literature; check a funnel plot."},
+ {s:["Patients listed for heart transplant were studied.","Those who received a transplant were compared with those who did not.","Survival was counted from the date of listing for both groups.","Transplant recipients survived longer."],i:2,b:"Immortal time bias",w:"Recipients had to survive long enough to get an organ; that waiting time is credited to transplant. Treat transplant as time-varying."},
+ {s:["A hospital ward started a handwashing study.","Staff knew observers would record their handwashing for a month.","Compliance rose from 60% to 95%.","The new soap dispenser was credited."],i:1,b:"Hawthorne effect",w:"Being watched changes behaviour. Use a control ward observed the same way, or covert measurement."},
+ {s:["Women taking HRT were compared with non-users.","HRT users saw their doctors more often for prescription reviews.","More endometrial cancers were diagnosed among HRT users."],i:1,b:"Detection (surveillance) bias",w:"More contact means more tests and more diagnoses. Compare groups with equal surveillance."}];
+let BS=null;
+DRAW.spotter=function(){const root=$("#spotter-root");if(!root)return;if(!BS)BS={list:shuffle(BSP.slice()).slice(0,6),i:0,score:0,step:"where",si:null,bi:null};
+  const it=BS.list[BS.i];if(!it){root.innerHTML=`<div class="card summary"><span class="eyebrow">Bias spotter</span><h2>${BS.score} / ${BS.list.length*2}</h2><p class="muted">One point for the sentence, one for the name.</p><div class="row"><button class="btn primary" id="bs-again">Six more</button>${roundNextBtn()}</div></div>`;$("#bs-again").onclick=()=>{BS=null;DRAW.spotter()};roundTick("spotter");return}
+  if(!it._o)it._o=shuffle([it.b,...shuffle(BS_NAMES.filter(x=>x!==it.b)).slice(0,3)]);
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">Bias spotter · ${BS.i+1} / ${BS.list.length}</span><span class="muted num">${BS.score} pts</span></div>
+   <div class="card bs-card"><p class="muted">${BS.step==="where"?"Tap the sentence where the bias gets in.":"Now name it."}</p><div class="bs-story">${it.s.map((x,i)=>`<button class="bs-s ${BS.si!==null&&i===it.i?"right":""} ${BS.si===i&&i!==it.i?"wrong":""}" data-i="${i}" ${BS.step!=="where"?"disabled":""}>${x}</button>`).join(" ")}</div>
+   ${BS.step!=="where"?`<div class="lk-opts">${it._o.map((o,i)=>`<button class="ptopt bs-b ${BS.bi!==null&&o===it.b?"right":""} ${BS.bi===i&&o!==it.b?"wrong":""}" data-i="${i}" ${BS.step==="done"?"disabled":""}>${o}</button>`).join("")}</div>`:""}
+   ${BS.step==="done"?`<div class="fb ${it._o[BS.bi]===it.b?"ok":"no"}"><h3>${it.b}</h3><div class="ex">${it.w}</div></div><div class="qnext"><button class="btn primary" id="bs-next">Next →</button></div>`:""}</div>`;
+  $$(".bs-s").forEach(b=>b.onclick=()=>{BS.si=+b.dataset.i;const ok=BS.si===it.i;if(ok)BS.score++;SND.fx(ok?"ok":"bad");BS.step="name";DRAW.spotter()});
+  $$(".bs-b").forEach(b=>b.onclick=()=>{BS.bi=+b.dataset.i;const ok=it._o[BS.bi]===it.b;if(ok){BS.score++;st.xp+=3}SND.fx(ok?"ok":"bad");toolScore("bias",ok&&BS.si===it.i);save();renderHeader();BS.step="done";DRAW.spotter()});
+  const n=$("#bs-next");if(n)n.onclick=()=>{roundTick("spotter");BS.i++;BS.step="where";BS.si=null;BS.bi=null;DRAW.spotter();window.scrollTo(0,0)}};
+
+/* ---- stats test chooser: a decision tree you can explore or be quizzed on ---- */
+const TC={q:"What kind of outcome?",o:[
+ ["A measurement, roughly normal (BP, HbA1c)",{q:"How many groups?",o:[["One group vs a known value",{t:"One-sample t-test",g:"Is the mean different from a fixed number (e.g., a population norm)?"}],["Two groups",{q:"Same people measured twice, or matched pairs?",o:[["Yes, paired",{t:"Paired t-test",g:"Mean of the within-person differences. Before/after in the same patients."}],["No, independent",{t:"Independent (two-sample) t-test",g:"Difference between two group means. Assumes roughly normal data."}]]}],["Three or more groups",{q:"Same people measured repeatedly?",o:[["No, independent groups",{t:"One-way ANOVA",g:"Any difference among 3+ means. Follow with post-hoc tests to find which."}],["Yes, repeated",{t:"Repeated-measures ANOVA",g:"3+ measurements on the same people."}]]}]]}],
+ ["Skewed measurement or a rank/score (length of stay, pain 0–10)",{q:"How many groups?",o:[["Two groups",{q:"Paired?",o:[["Yes, paired",{t:"Wilcoxon signed-rank test",g:"Non-parametric twin of the paired t-test."}],["No, independent",{t:"Mann–Whitney U test",g:"Non-parametric twin of the independent t-test; compares ranks/medians."}]]}],["Three or more groups",{q:"Paired/repeated?",o:[["No, independent",{t:"Kruskal–Wallis test",g:"Non-parametric twin of one-way ANOVA."}],["Yes, repeated",{t:"Friedman test",g:"Non-parametric twin of repeated-measures ANOVA."}]]}]]}],
+ ["Categories or yes/no (infected or not)",{q:"Independent groups or the same people twice?",o:[["Independent groups",{q:"Are all expected cell counts at least 5?",o:[["Yes",{t:"Chi-square test",g:"Compares proportions across groups in a contingency table."}],["No, some are small",{t:"Fisher’s exact test",g:"Exact p value when counts are small."}]]}],["Same people twice (before/after)",{t:"McNemar’s test",g:"Paired yes/no data: only the people who changed carry information."}]]}],
+ ["Time until an event (death, relapse)",{q:"What do you need?",o:[["Compare survival curves",{t:"Log-rank test",g:"Compares Kaplan–Meier curves across groups."}],["Adjust for other variables, get a hazard ratio",{t:"Cox proportional hazards regression",g:"Gives hazard ratios, adjusted for covariates."}]]}],
+ ["How two variables relate, or predicting an outcome",{q:"Which question?",o:[["Strength of a straight-line link, both roughly normal",{t:"Pearson correlation (r)",g:"Linear association; r² is the share of variance shared."}],["Link with ranks or skewed data",{t:"Spearman rank correlation",g:"Monotonic association on ranks."}],["Predict a measurement from several variables",{t:"Multiple linear regression",g:"Coefficients = change in outcome per unit change in each predictor."}],["Predict a yes/no outcome from several variables",{t:"Logistic regression",g:"Coefficients exponentiate to adjusted odds ratios."}]]}]]};
+const TCQ=[["Mean systolic BP before and after a drug in the same 30 patients.","Paired t-test"],["Wound infection (yes/no) in two antibiotic groups of 200 patients each.","Chi-square test"],["Wound infection in two groups of 6 patients, with 2 infections in total.","Fisher’s exact test"],["Pain scores (0–10) in two independent groups.","Mann–Whitney U test"],["Time to relapse in two treatment arms.","Log-rank test"],["Mean HbA1c across three diets, different people on each.","One-way ANOVA"],["Hearing loss (yes/no) in the same workers before and after a noise programme.","McNemar’s test"],["Is age linearly related to systolic BP? Both roughly normal.","Pearson correlation (r)"],["Predict heart attack (yes/no) from age, sex and smoking.","Logistic regression"],["Length of hospital stay (heavily skewed) across three wards.","Kruskal–Wallis test"],["Hazard of death by treatment, adjusted for age and stage.","Cox proportional hazards regression"],["Mean cholesterol of 50 workers vs the national mean of 5.2 mmol/L.","One-sample t-test"]];
+let TCS=null;
+DRAW.tchoose=function(){const root=$("#tchoose-root");if(!root)return;if(!TCS)TCS={mode:"quiz",list:shuffle(TCQ.slice()).slice(0,6),i:0,path:[],score:0};
+  let node=TC;TCS.path.forEach(i=>node=node.o[i][1]);const it=TCS.mode==="quiz"?TCS.list[TCS.i]:null;
+  if(TCS.mode==="quiz"&&!it){root.innerHTML=`<div class="card summary"><span class="eyebrow">Test chooser</span><h2>${TCS.score} / ${TCS.list.length}</h2><div class="row"><button class="btn primary" id="tc-again">Six more</button><button class="btn" id="tc-ex">Explore the tree</button>${roundNextBtn()}</div></div>`;$("#tc-again").onclick=()=>{TCS=null;DRAW.tchoose()};$("#tc-ex").onclick=()=>{TCS={mode:"explore",path:[]};DRAW.tchoose()};roundTick("tests");return}
+  const crumbs=[];let nd=TC;TCS.path.forEach(i=>{crumbs.push(nd.o[i][0]);nd=nd.o[i][1]});
+  const leaf=!!node.t;let fb="";
+  if(leaf&&it){const ok=node.t===it[1];if(TCS.graded==null){TCS.graded=ok;if(ok){TCS.score++;st.xp+=3}SND.fx(ok?"ok":"bad");toolScore("tests",ok);save();renderHeader()}
+    fb=`<div class="fb ${TCS.graded?"ok":"no"}"><h3>${TCS.graded?"Right test.":"The answer: "+it[1]+"."}</h3><div class="ex">${TCS.graded?node.g:`You reached ${node.t}. Retrace: the outcome type and pairing decide it.`}</div></div><div class="qnext"><button class="btn primary" id="tc-next">Next →</button></div>`}
+  root.innerHTML=`<div class="pl-top"><span class="eyebrow">${it?`Which test? · ${TCS.i+1} / ${TCS.list.length}`:"Explore the tree"}</span>${it?`<button class="btn small ghost" id="tc-ex2">Explore</button>`:`<button class="btn small" id="tc-quiz">Quiz me</button>`}</div>
+   <div class="card">${it?`<h3 class="dp-q">${it[0]}</h3>`:""}${crumbs.length?`<ol class="tc-crumbs">${crumbs.map(c=>`<li>${c}</li>`).join("")}</ol>`:""}
+   ${leaf?`<div class="tc-leaf"><span class="eyebrow">Test</span><h2>${node.t}</h2><p>${node.g}</p></div>`:`<h3>${node.q}</h3><div class="lk-opts">${node.o.map((o,i)=>`<button class="ptopt tc-o" data-i="${i}">${o[0]}</button>`).join("")}</div>`}
+   ${TCS.path.length&&!(leaf&&it)?`<button class="btn small ghost" id="tc-up">← Step back</button>`:""}${leaf&&!it?`<button class="btn small" id="tc-reset">Start again</button>`:""}${fb}</div>`;
+  $$(".tc-o").forEach(b=>b.onclick=()=>{TCS.path.push(+b.dataset.i);SND.fx("tick");DRAW.tchoose()});
+  const up=$("#tc-up");if(up)up.onclick=()=>{TCS.path.pop();DRAW.tchoose()};const rs=$("#tc-reset");if(rs)rs.onclick=()=>{TCS.path=[];DRAW.tchoose()};
+  const nx=$("#tc-next");if(nx)nx.onclick=()=>{roundTick("tests");TCS.i++;TCS.path=[];TCS.graded=null;DRAW.tchoose()};
+  const ex=$("#tc-ex2");if(ex)ex.onclick=()=>{TCS={mode:"explore",path:[]};DRAW.tchoose()};const qz=$("#tc-quiz");if(qz)qz.onclick=()=>{TCS=null;DRAW.tchoose()}};
+
+/* ---- read a real paper: paste it, X-ray it, optionally ask Claude ---- */
+const RP_KEY="kumquat.claude";
+function rpKey(){try{return localStorage.getItem(RP_KEY)||""}catch(e){return""}}
+const RP_STEPS=[["design","Design","What design is it? Look for “randomised”, “cohort”, “case-control”, “meta-analysis”, “diagnostic accuracy”."],["primary","Primary result","Which number answers the primary outcome? Tap one the decoder found, or type it."],["sig","Significance and precision","Does the CI cross the line of no effect (1 for ratios, 0 for differences)? How wide is it?"],["patient","For my patient","Turn it into absolute numbers: baseline risk × RRR = ARR; NNT = 1 ÷ ARR."],["spin","Spin check","Tick anything you see."],["bottom","Bottom line","One sentence you’d say to a colleague."]];
+const RP_SPIN=[["rel","Relative numbers only",/\b(\d+)%\s*(reduction|lower|decrease|increase)|reduced .* by \d+%/i],["nonsig","Non-significant primary result sold as a win",null],["causal","Causal words from an observational design",/\b(prevent|cause[sd]?|reduc(e|es|ed)|protect)/i],["composite","Composite outcome",/composite/i],["subgroup","Subgroup promoted",/subgroup/i],["hetero","Heterogeneity ignored",/I²|I2|heterogeneity/i],["pp","Per-protocol only",/per[- ]protocol/i]];
+function rpGuessDesign(t){const s=t.toLowerCase();return /meta-analys|systematic review/.test(s)?"Systematic review / meta-analysis":/non-?inferiority/.test(s)?"Non-inferiority RCT":/randomi[sz]ed|randomly assigned/.test(s)?"Randomised controlled trial":/diagnostic accuracy|sensitivity|specificity/.test(s)?"Diagnostic accuracy study":/case[- ]control/.test(s)?"Case-control study":/cohort|followed|follow-up/.test(s)?"Cohort study":/cross[- ]sectional|survey|prevalence/.test(s)?"Cross-sectional survey":"Not clear: check the Methods"}
+let RPS=null;
+DRAW.realpaper=function(){const root=$("#rp-root");if(!root)return;st.myPapers=st.myPapers||[];
+  if(!RPS)RPS={text:"",title:"",ans:{},spin:{},ai:null};
+  const found=RPS.text?decodeNumbers(RPS.text):[];const obs=/cohort|case[- ]control|cross[- ]sectional|observational/i.test(RPS.text)&&!/randomi[sz]/i.test(RPS.text);
+  const sigLines=found.filter(f=>f.kind==="ratio"||f.kind==="diff"||f.kind==="p").map(f=>`<li><code>${escH(f.src.slice(0,60))}</code> ${escH(f.lines[1]||f.lines[0])}</li>`).join("");
+  const auto={design:rpGuessDesign(RPS.text)};
+  const flagged=RP_SPIN.filter(([k,,rx])=>rx&&rx.test(RPS.text)&&(k!=="causal"||obs)).map(x=>x[0]);
+  root.innerHTML=`<div class="card rp-in"><label class="pico-l" for="rp-title">Title (optional)</label><input id="rp-title" value="${escH(RPS.title)}" placeholder="e.g. RECOVERY dexamethasone, NEJM 2021">
+    <label class="pico-l" for="rp-text">Paste the abstract (or Results + Conclusions)</label><textarea id="rp-text" rows="8" placeholder="Paste text from PubMed or the journal…">${escH(RPS.text)}</textarea>
+    <div class="row"><button class="btn primary" id="rp-go">X-ray it</button>${st.myPapers.length?`<button class="btn ghost small" id="rp-lib">My papers (${st.myPapers.length})</button>`:""}</div></div>
+   ${RPS.text?`<div class="xr-grid"><div class="card rp-abs"><span class="eyebrow">Abstract · ${found.length} numbers decoded</span><p>${glossLink(escH(RPS.text)).replace(/\n/g,"<br>")}</p></div><div class="rp-steps">
+    ${RP_STEPS.map(([k,h,g],i)=>`<div class="card rp-step"><span class="eyebrow">Step ${i+1} · ${h}</span><p class="muted">${g}</p>
+     ${k==="design"?`<p>Kumquat’s guess: <b>${auto.design}</b>.${obs?" Observational: watch for causal language.":""}</p>`:""}
+     ${k==="primary"&&found.length?`<div class="rp-chips">${found.slice(0,8).map((f,j)=>`<button class="chip rp-pick ${RPS.ans.primary===f.src?"on":""}" data-j="${j}">${escH(f.src.slice(0,40))}</button>`).join("")}</div>`:""}
+     ${k==="sig"&&sigLines?`<ul class="rp-sig">${sigLines}</ul>`:""}
+     ${k==="patient"?`<div class="row rp-nnt"><label>Baseline risk % <input id="rp-br" inputmode="decimal" value="${RPS.br||""}" style="width:5em"></label><label>RR <input id="rp-rr" inputmode="decimal" value="${RPS.rr||""}" style="width:5em"></label><span class="num" id="rp-nntout"></span></div>`:""}
+     ${k==="spin"?`<div class="xr-spin">${RP_SPIN.map(([s,l])=>`<label class="ck-item ${RPS.spin[s]?"on":""}"><p>${l}${flagged.includes(s)?` <small class="muted">· wording found</small>`:""}</p><input type="checkbox" data-sp="${s}" ${RPS.spin[s]?"checked":""}></label>`).join("")}</div>`:""}
+     ${k!=="spin"?`<textarea class="rp-a" data-k="${k}" rows="2" placeholder="Your answer">${escH(RPS.ans[k]||"")}</textarea>`:""}</div>`).join("")}
+    <div class="card"><span class="eyebrow">Deep dive with Claude</span>${rpKey()?`<p class="muted">Sends this abstract to Claude with your API key and asks for an examiner-style walk-through.</p><button class="btn" id="rp-ai">Ask Claude</button><div id="rp-ai-out" class="rp-ai">${RPS.ai||""}</div>`:`<p class="muted">Add an Anthropic API key below to get Claude’s walk-through of any abstract. Without it, everything above still works offline.</p>`}
+     <details class="adv"><summary>API key</summary><p class="muted" style="font-size:.85rem;margin:6px 0">Stored only on this device. Get one at console.anthropic.com → API keys (pay per use; one walk-through costs a few cents).</p><input id="rp-key" type="password" autocomplete="off" placeholder="sk-ant-…" value="${rpKey()?"••••••••":""}"><div class="row"><button class="btn small" id="rp-key-save">Save key</button>${rpKey()?`<button class="btn small ghost" id="rp-key-del">Remove</button>`:""}</div></details></div>
+    <div class="row"><button class="btn primary" id="rp-save">Save to My papers</button><button class="btn ghost" id="rp-new">New paper</button></div></div></div>`:`<div class="card"><p class="muted">Tip: on PubMed, copy everything from “Background” to the end of “Conclusions”. Kumquat decodes every effect size, CI and p value, links the jargon, flags likely spin, then walks you through the six X-ray questions.</p></div>`}
+   <div id="rp-libbox"></div>`;
+  $("#rp-go").onclick=()=>{RPS.text=$("#rp-text").value.trim().slice(0,8000);RPS.title=$("#rp-title").value.trim();RPS.spin={};flagged.length=0;SND.fx("tick");DRAW.realpaper()};
+  if(!RPS.text)return rpLibBind();
+  $$(".rp-a").forEach(a=>a.oninput=()=>{RPS.ans[a.dataset.k]=a.value});
+  $$(".rp-pick").forEach(b=>b.onclick=()=>{RPS.ans.primary=found[+b.dataset.j].src;const a=$('.rp-a[data-k="primary"]');if(a)a.value=RPS.ans.primary;$$(".rp-pick").forEach(x=>x.classList.toggle("on",x===b))});
+  $$("[data-sp]").forEach(c=>c.onchange=()=>{RPS.spin[c.dataset.sp]=c.checked;c.closest("label").classList.toggle("on",c.checked)});
+  const calc=()=>{const br=parseFloat(($("#rp-br").value||"").replace(",",".")),rr=parseFloat(($("#rp-rr").value||"").replace(",","."));RPS.br=$("#rp-br").value;RPS.rr=$("#rp-rr").value;const o=$("#rp-nntout");
+    if(!(br>0&&rr>0)){o.textContent="";return}const arr=br/100*(1-rr);o.textContent=Math.abs(arr)<1e-9?"No difference":arr>0?`ARR ${(arr*100).toFixed(1)} points → NNT ${Math.ceil(1/arr)}`:`ARI ${(-arr*100).toFixed(1)} points → NNH ${Math.floor(1/-arr)||1}`};
+  if($("#rp-br")){$("#rp-br").oninput=calc;$("#rp-rr").oninput=calc;const rr0=found.find(f=>f.kind==="ratio");if(!RPS.rr&&rr0){const m=/(\d+(?:\.\d+)?)/.exec(rr0.src.replace(/^[A-Za-z ]+/,""));if(m)$("#rp-rr").value=m[1]}calc()}
+  $("#rp-key-save").onclick=()=>{const v=$("#rp-key").value.trim();if(!/^sk-ant-/.test(v)){toast("That doesn’t look like an Anthropic key (sk-ant-…).");return}try{localStorage.setItem(RP_KEY,v)}catch(e){}toast("Key saved on this device.");DRAW.realpaper()};
+  const del=$("#rp-key-del");if(del)del.onclick=()=>{try{localStorage.removeItem(RP_KEY)}catch(e){}DRAW.realpaper()};
+  const ai=$("#rp-ai");if(ai)ai.onclick=async()=>{ai.disabled=true;$("#rp-ai-out").innerHTML=`<p class="muted">Claude is reading…</p>`;try{RPS.ai=await rpAsk(RPS.text);$("#rp-ai-out").innerHTML=RPS.ai}catch(e){$("#rp-ai-out").innerHTML=`<p class="muted">Couldn’t reach Claude: ${escH(e.message)}. Everything above still works.</p>`}ai.disabled=false};
+  $("#rp-save").onclick=()=>{const rec={id:Date.now().toString(36),d:dayNum(),title:RPS.title||RPS.text.slice(0,60),text:RPS.text,ans:RPS.ans,spin:RPS.spin,br:RPS.br,rr:RPS.rr};const i=st.myPapers.findIndex(p=>p.id===RPS.id);if(i>=0)st.myPapers[i]=Object.assign(rec,{id:RPS.id});else{st.myPapers.unshift(rec);RPS.id=rec.id}st.myPapers=st.myPapers.slice(0,40);st.xp+=10;save();renderHeader();SND.fx("done");toast("Saved to My papers. +10 XP")};
+  $("#rp-new").onclick=()=>{RPS=null;DRAW.realpaper()};rpLibBind()};
+function rpLibBind(){const b=$("#rp-lib");if(b)b.onclick=()=>{$("#rp-libbox").innerHTML=`<div class="card"><span class="eyebrow">My papers</span><div class="rc-list">${st.myPapers.map(p=>`<button class="btn" data-rp="${p.id}">${escH(p.title)} <small class="muted">${fmtD(p.d)}</small></button>`).join("")}</div></div>`;$$("[data-rp]").forEach(x=>x.onclick=()=>{const p=st.myPapers.find(y=>y.id===x.dataset.rp);RPS={id:p.id,text:p.text,title:p.title,ans:p.ans||{},spin:p.spin||{},br:p.br,rr:p.rr,ai:null};DRAW.realpaper();window.scrollTo(0,0)})}}
+async function rpAsk(text){const key=rpKey();if(!key)throw new Error("no API key");
+  const sys="You are a senior clinical epidemiologist teaching a GP who works in emergency medicine and occupational health. Walk through the abstract using exactly these headings: Design; Primary result; Significance and precision; For my patient (absolute numbers, NNT/NNH with time frame, using a plausible baseline risk you state); Bias and spin; Bottom line (one sentence). Then a short 'Exam angle' line naming the USMLE-style concept it tests. Be concrete, use the abstract's numbers, plain English, under 350 words. Use simple HTML: <h4>, <p>, <ul><li>. No markdown.";
+  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-5-5",max_tokens:1200,system:sys,messages:[{role:"user",content:"Abstract:\n\n"+text.slice(0,8000)}]})});
+  if(!r.ok){let m=r.status+"";try{const j=await r.json();m=(j.error&&j.error.message)||m}catch(e){}throw new Error(m)}
+  const j=await r.json();const html=(j.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("\n");
+  return html.replace(/<(?!\/?(h4|p|ul|ol|li|b|i|strong|em|code|br)\b)[^>]*>/gi,"")}
 
 /* ================= v8: fading hints · takeaways recall · name the link · abstract X-ray ================= */
 /* ---- three-level fading hints (worked example → half-done → formula) ---- */
