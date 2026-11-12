@@ -118,3 +118,9 @@ World bible: project doc `claude/kumquat-world.md`. Code `v10.js` + patch `v12.p
 - **Duels**: avatars per jump (`AVATARS`), intro card + `duelBanner()` atop the quiz (HP pips); win/lose Shaykh lines.
 - **Archive** `#lore` (`LORE` 10 folios, unlock by progress; bestiary of avatars; "What is real" entry).
 - **Era sound**: `eraStyle(yr)` → oud (<1300, oud plucks + ney vibrato over a D drone), victorian (<1900), radio (<1990), modern; guild hall uses oud for the Focused mood.
+
+## Source moved to GitHub (13/11/2026)
+- Repo Kumquat-Evidence/Kumquat now holds everything: `src/kumquat.html` (source of truth, = the claude.ai artifact page), `src/pwa-head.html` + `src/pwa-tail.html` + `src/sw.template.js`, built `index.html` + `sw.js` (`node tools/build.js`; `--check` fails on stale), `tests/` (v7–v10, audit, hubtest, pwatest, sweep; `node tests/run.js [quick]`), `docs/` (notes, world bible, review reports).
+- **Future chats: clone the repo, edit `src/kumquat.html`, `node tools/build.js`, `node tests/run.js quick`, commit src + build together, publish the artifact from `src/kumquat.html`.** The old scratchpad patch scripts are history only.
+- CI `.github/workflows/tests.yml`: every push/PR → build check + all suites (~15 min on Actions), screenshots uploaded on failure. Deploy job publishes to Pages only after green tests, and only when Settings → Pages → Source = "GitHub Actions" (otherwise Pages keeps deploying `main` directly and the job leaves a notice).
+- `gh run list/view -R Kumquat-Evidence/Kumquat` works through the session proxy (the Pages API path does not).
