@@ -550,6 +550,18 @@ body.wide main{max-width:1320px}body.wide .player{max-width:none}
 [data-ui="paper"] .eyebrow{font-family:var(--f-body);font-weight:700;letter-spacing:.08em;font-size:11px}
 [data-ui="paper"] :is(.card,.tile,.mode,.hero,.pathcta,.hook,.opt,.ptopt,input,select,textarea,.lk-node,.mood,.ksegb,.chip,.btn,.back,.iconbtn,.rb-in,.welcome,.fb){border-radius:4px!important;box-shadow:none!important;border-width:1px!important}
 [data-ui="paper"] .xr-abs p,[data-ui="paper"] .pr-abs{font-family:Georgia,serif;font-size:1.05rem;line-height:1.7}
+/* ===== v9c ===== */
+.camp-cta{border-color:var(--accent)!important;background:linear-gradient(90deg,var(--accent-tint),var(--surface))}
+.camp-hero{display:flex;flex-direction:column;gap:8px}.camp-arts{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.camp-art{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border:2px dashed var(--line2);font-size:20px;color:var(--muted)}.camp-art.on{border-style:solid;border-color:var(--accent);background:var(--accent-tint)}.camp-art.big{width:56px;height:56px;font-size:30px}
+.camp-line{list-style:none;margin:12px 0 0;padding:0 0 0 18px;border-left:3px solid var(--line2);display:flex;flex-direction:column;gap:10px}
+.camp-n{position:relative}.camp-n::before{content:"";position:absolute;left:-27px;top:50%;width:14px;height:14px;margin-top:-7px;background:var(--surface);border:3px solid var(--line2)}
+.camp-n.done::before{background:var(--accent);border-color:var(--accent)}.camp-n.open::before{border-color:var(--accent)}
+.camp-b{width:100%;display:flex;align-items:center;gap:12px;text-align:left;border:2px solid var(--line);background:var(--surface);color:inherit;font:inherit;padding:10px 12px;cursor:pointer}
+.camp-n.locked .camp-b{opacity:.65}.camp-n.open .camp-b{border-color:var(--accent)}
+.camp-yr{font-size:1.1rem;color:var(--accent-ink);min-width:3.2em}.camp-yr.big{font-size:2rem}.camp-t{display:flex;flex-direction:column;flex:1}.camp-t small{color:var(--muted)}.camp-ic{font-size:1.2rem}
+.camp-ch{display:flex;flex-direction:column;gap:10px}.camp-brief{font-size:1.05rem;line-height:1.6}.camp-got{display:flex;gap:12px;align-items:center}.camp-act{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.mood-shift{font-size:.88rem;border-left:3px solid var(--cool);padding-left:8px}.citrus-back{text-decoration:none;margin-left:4px}
 /* ===== v9b ===== */
 .mast.fading{opacity:.6;filter:grayscale(.5)}.fotd code{display:block;margin:6px 0;font-size:1rem}
 .dv-card{display:flex;flex-direction:column;gap:12px}.dv-tb{border-collapse:collapse;align-self:center}.dv-tb th{font-size:.8rem;padding:4px 8px;color:var(--muted);font-weight:600}.dv-tb td{padding:4px}
@@ -722,12 +734,14 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
   <div class="card" style="display:flex;flex-direction:column;gap:10px"><span class="eyebrow">Daily round</span><label class="pico-l" for="set-budget">Time I have most days</label><select id="set-budget"><option value="15">15 minutes</option><option value="25">25 minutes</option><option value="40">40 minutes</option><option value="60">60 minutes</option></select><p class="muted" style="font-size:.88rem">The Round sizes itself to this. Review and the day’s lesson always stay in; extras drop first.</p></div>
   <div class="card" id="appear-root" style="display:flex;flex-direction:column;gap:10px"></div>
   <div id="google-root" style="display:flex;flex-direction:column;gap:14px"></div>
+  <div class="card" id="yuzu-card" style="display:flex;flex-direction:column;gap:8px"></div>
   <div class="card" style="display:flex;flex-direction:column;gap:8px"><span class="eyebrow">About</span><p class="muted" style="font-size:.88rem">Kumquat <span id="ver"></span> · progress saved in this browser and on Drive when connected.</p><div class="row"><button class="btn small" id="reset-progress">Reset progress</button><span id="reset-confirm" hidden><button class="btn small" id="reset-yes" style="border-color:var(--bad);color:var(--bad)">Yes, wipe it</button></span></div></div>
 </section>
 
 <!-- STUDY -->
 <section id="v-learn" hidden>
   <div class="view-head"><span class="eyebrow">Study</span><h1>From the ground up</h1><p>Lessons build the ideas in order. Cases and clinic calls put you inside decisions. Labs let you move the numbers.</p></div>
+  <a class="pathcta camp-cta" href="#campaign"><span class="num pc-n" id="camp-prog">0/11</span><span><b>The Kumquat Machine</b><span>A time-travel campaign: Semmelweis to RECOVERY to your own clinic. Mastery opens each jump.</span></span><span class="pc-go">Travel →</span></a>
   <a class="pathcta" href="#path"><span class="num pc-n" id="path-prog">0/10</span><span><b>The Path</b><span>Ten guided lessons, each with its lab, a drill and a boss fight.</span></span><span class="pc-go">Open →</span></a>
   <div class="two">
     <a class="tile big" href="#cases"><span class="mono-mark" id="cases-prog">0/10</span><div><b>Casebook</b><span>Snow, Semmelweis, Doll & Hill, RECOVERY, MERS. You make the calls.</span></div></a>
@@ -884,6 +898,10 @@ body.in-round .qnext{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
 </section>
 <section id="v-round" hidden><div id="round-root" class="player"></div></section>
 <!-- TEACH BACK -->
+<section id="v-campaign" hidden>
+  <div class="view-head"><span class="eyebrow">Study · campaign</span><h1>The Kumquat Machine</h1><p>Eleven jumps through the history of evidence, from Vienna in 1847 to your own clinic today. You play the epidemiologist in the room.</p></div>
+  <div id="camp-root" class="player"></div>
+</section>
 <section id="v-derive" hidden>
   <div class="view-head"><span class="eyebrow">Drill · formulas</span><h1>Derive it</h1><p>Rebuild each formula from the 2×2 table or its pieces. A formula you can rebuild can’t be forgotten.</p></div>
   <div id="derive-root" class="player"></div>
@@ -1337,7 +1355,7 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
 let st=load()||{xp:0,streak:0,last:null,best:0,topics:{},ck:{}};
 if(typeof st!=="object"||st===null)st={xp:0,streak:0,last:null,best:0,topics:{},ck:{}};
 function sanitize(o){if(!o||typeof o!=="object"||Array.isArray(o))o={};
-  ["topics","ck","srs","lessons","cases","bp","recent","visited","miss","flash","rounds","teach","badges","why","whyKey","papers","recall","ldone","links","xray","fade","mast","tdays","derive"].forEach(k=>{if(!o[k]||typeof o[k]!=="object"||Array.isArray(o[k]))o[k]={}});
+  ["topics","ck","srs","lessons","cases","bp","recent","visited","miss","flash","rounds","teach","badges","why","whyKey","papers","recall","ldone","links","xray","fade","mast","tdays","derive","camp","citrusDays","yuzuSent"].forEach(k=>{if(!o[k]||typeof o[k]!=="object"||Array.isArray(o[k]))o[k]={}});
   if(!Array.isArray(o.log))o.log=[];o.log=o.log.filter(l=>l&&typeof l==="object"&&isFinite(l.d)&&isFinite(l.n));
   ["xp","streak","best"].forEach(k=>{if(typeof o[k]!=="number"||!isFinite(o[k])||o[k]<0)o[k]=0});
   for(const k in o.topics){const t=o.topics[k];if(!t||!isFinite(t.c)||!isFinite(t.n))delete o.topics[k]}
@@ -1396,7 +1414,7 @@ $("#reset-progress").onclick=()=>{$("#reset-confirm").hidden=false};
 $("#reset-yes").onclick=()=>{st={xp:0,streak:0,last:null,best:0,topics:{},ck:{},srs:{},lessons:{},cases:{},bp:{},plan:null,log:[],recent:{},visited:{},miss:{},cal:{sure:{c:0,n:0},guess:{c:0,n:0}},flash:{},lastView:null,rounds:{},teach:{},badges:{},why:{},whyKey:{},papers:{}};save();$("#reset-confirm").hidden=true;location.hash="home";renderToday();toast("Progress wiped. Fresh start.")};
 
 /* ---------- router ---------- */
-const VIEWS=["home","papers","paper","decoder","toolkit","learn","labs","practice","progress","settings","web","rounds","round","teach","recall","links","xray","derive","sprint","dag","design","spotter","tchoose","realpaper","estimate","tree","flash","path","plan","blueprint","mastery","lesson","case","cases","outbreak","confound","funnel","dx","cutoff","bayes","risk","power","ci","mathgym","designs","bias","twins","tests","appraise","vault","quiz"];
+const VIEWS=["home","papers","paper","decoder","toolkit","learn","labs","practice","progress","settings","web","rounds","round","teach","recall","links","xray","derive","sprint","dag","design","spotter","tchoose","realpaper","campaign","estimate","tree","flash","path","plan","blueprint","mastery","lesson","case","cases","outbreak","confound","funnel","dx","cutoff","bayes","risk","power","ci","mathgym","designs","bias","twins","tests","appraise","vault","quiz"];
 const DRAW={};
 let current="home";
 let ARG=null;
@@ -2278,6 +2296,7 @@ function endQuiz(){
   stopTimer();if(!Q||Q.done)return;
   const n=Q.hist.length,acc=n?Q.score/n:0;
   if(Q.recheck&&n)mastRecheckDone(Q.topic,Q.score,n);
+  if(Q.camp&&n)campDebriefDone(Q.camp,Q.score,n);
   if(n&&st.last!==today()){st.streak=st.last===yesterday()?st.streak+1:1;st.last=today()}
   let rec=false;if(Q.mode==="blitz"&&Q.score>(st.best||0)){st.best=Q.score;rec=true}
   if(n){st.log.push({d:dayNum(),mode:Q.mode,topic:Q.topic||null,n,score:Q.score});if(st.log.length>400)st.log.shift()}
@@ -2834,7 +2853,7 @@ function renderPlayer(){
 function finishPlayer(root,D){
   const isL=PL.kind==="lesson",key=isL?PL.idx:CASES[PL.idx].id,first=isL?!st.lessons[key]:st.cases[key]==null;
   const bonus=first?(isL?30:40):5;st.xp+=bonus;
-  if(isL){st.lessons[key]=true;st.ldone=st.ldone||{};if(st.ldone[key]==null)st.ldone[key]=dayNum()}else st.cases[key]=Math.max(st.cases[key]||0,PL.asked?Math.round(PL.score/PL.asked*100):100);
+  if(isL){st.lessons[key]=true;st.ldone=st.ldone||{};if(st.ldone[key]==null)st.ldone[key]=dayNum()}else{st.cases[key]=Math.max(st.cases[key]||0,PL.asked?Math.round(PL.score/PL.asked*100):100);campCaseFinished(key)}
   if(st.last!==today()){st.streak=st.last===yesterday()?st.streak+1:1;st.last=today()}
   save();renderHeader();if(!reduce)confetti();
   const C=isL?null:CASES[PL.idx];
@@ -3085,14 +3104,14 @@ st.miss=st.miss||{};st.cal=st.cal||{sure:{c:0,n:0},guess:{c:0,n:0}};st.flash=st.
 const HUB_OF={home:"home",learn:"learn",labs:"learn",practice:"practice",progress:"progress",toolkit:"toolkit",
   path:"learn",lesson:"learn",case:"learn",cases:"learn",designs:"toolkit",bias:"toolkit",twins:"toolkit",tests:"toolkit",appraise:"toolkit",vault:"toolkit",blueprint:"toolkit",
   tree:"learn",dx:"learn",cutoff:"learn",bayes:"learn",risk:"learn",outbreak:"learn",confound:"learn",power:"learn",ci:"learn",funnel:"learn",mathgym:"learn",
-  quiz:"practice",flash:"practice",plan:"progress",mastery:"progress",settings:"progress",web:"learn",rounds:"learn",round:"learn",papers:"learn",paper:"learn",decoder:"toolkit",teach:"practice",estimate:"practice",recall:"practice",links:"practice",xray:"learn",derive:"practice",sprint:"practice",dag:"learn",design:"learn",spotter:"learn",tchoose:"learn",realpaper:"toolkit"};
+  quiz:"practice",flash:"practice",plan:"progress",mastery:"progress",settings:"progress",web:"learn",rounds:"learn",round:"learn",papers:"learn",paper:"learn",decoder:"toolkit",teach:"practice",estimate:"practice",recall:"practice",links:"practice",xray:"learn",derive:"practice",sprint:"practice",dag:"learn",design:"learn",spotter:"learn",tchoose:"learn",realpaper:"toolkit",campaign:"learn"};
 const HUBS=["home","learn","labs","practice","toolkit","progress"];
 function paintNav(v){const h=HUB_OF[v]||"home";$$("[data-tab]").forEach(a=>a.classList.toggle("on",a.dataset.tab===h));
   const back=$("#back");back.hidden=HUBS.includes(v);back.dataset.to=h;}
 $("#back").onclick=()=>{location.hash=$("#back").dataset.to||"home"};
-const VIEW_NAMES={derive:"Derive it",sprint:"Formula sprint",dag:"Third-variable builder",design:"Design picker",spotter:"Bias spotter",tchoose:"Test chooser",realpaper:"Read a real paper",recall:"Takeaways recall",links:"Name the link",xray:"Abstract X-ray",dx:"2×2 Lab",cutoff:"Cut-off dial",bayes:"Fagan nomogram",risk:"Risk Lab",power:"Power playground",ci:"CI dance",outbreak:"Outbreak simulator",confound:"Confounding lab",funnel:"Funnel lab",mathgym:"Math gym",tree:"Tree drill",designs:"Study designs",bias:"Bias bestiary",twins:"Twins",tests:"Test picker",appraise:"Appraisal kit",vault:"Formula vault",blueprint:"Blueprint",path:"The Path",cases:"Casebook",flash:"Formula flash",plan:"Mastery month",settings:"Settings",web:"Concept web",rounds:"Clinic calls",papers:"Read the paper",decoder:"Paper decoder",teach:"Teach it back",estimate:"Estimate"};
+const VIEW_NAMES={campaign:"The Kumquat Machine",derive:"Derive it",sprint:"Formula sprint",dag:"Third-variable builder",design:"Design picker",spotter:"Bias spotter",tchoose:"Test chooser",realpaper:"Read a real paper",recall:"Takeaways recall",links:"Name the link",xray:"Abstract X-ray",dx:"2×2 Lab",cutoff:"Cut-off dial",bayes:"Fagan nomogram",risk:"Risk Lab",power:"Power playground",ci:"CI dance",outbreak:"Outbreak simulator",confound:"Confounding lab",funnel:"Funnel lab",mathgym:"Math gym",tree:"Tree drill",designs:"Study designs",bias:"Bias bestiary",twins:"Twins",tests:"Test picker",appraise:"Appraisal kit",vault:"Formula vault",blueprint:"Blueprint",path:"The Path",cases:"Casebook",flash:"Formula flash",plan:"Mastery month",settings:"Settings",web:"Concept web",rounds:"Clinic calls",papers:"Read the paper",decoder:"Paper decoder",teach:"Teach it back",estimate:"Estimate"};
 
-DRAW.learn=()=>{$("#path-prog").textContent=Object.keys(st.lessons).length+"/10";$("#cases-prog").textContent=Object.keys(st.cases).length+"/10";$("#rounds-prog").textContent=Object.keys(st.rounds||{}).length+"/"+ROUNDS.length;if($("#papers-prog"))$("#papers-prog").textContent=Object.keys(st.papers||{}).length+"/"+PAPERS.length;if($("#xray-prog"))$("#xray-prog").textContent=Object.keys(st.xray||{}).length+"/"+XR.length};
+DRAW.learn=()=>{$("#path-prog").textContent=Object.keys(st.lessons).length+"/10";$("#cases-prog").textContent=Object.keys(st.cases).length+"/10";$("#rounds-prog").textContent=Object.keys(st.rounds||{}).length+"/"+ROUNDS.length;if($("#papers-prog"))$("#papers-prog").textContent=Object.keys(st.papers||{}).length+"/"+PAPERS.length;if($("#xray-prog"))$("#xray-prog").textContent=Object.keys(st.xray||{}).length+"/"+XR.length;if($("#camp-prog"))$("#camp-prog").textContent=CAMP.filter(c=>campDone(c.id)).length+"/"+CAMP.length};
 DRAW.practice=()=>{{const e=$("#recall-due");if(e){const c=recallCount();e.textContent=c?c+" due":""}}const due=dueKeys().length,deck=Object.keys(st.srs).length;$("#pm-review").textContent=due?`${due} due now · ${deck} in the deck · clear these first`:deck?`Nothing due today · ${deck} waiting`:"Empty for now. Misses land here.";$("#pm-review-btn").classList.toggle("due",due>0);
   $("#topic-chips").innerHTML=Object.entries(TOPICS).map(([k,t])=>{const r=topicRecent(k);return `<button class="tchip ${topicMastered(k)?"gold":""}" data-start="topic:${k}">${t.label}<small class="num">${r.n?Math.round(r.acc*100)+"%":"new"}</small></button>`}).join("")};
 DRAW.progress=()=>{renderWeek();renderTraps();DRAW.mastery();renderCal();renderMonthCta()};
@@ -3270,7 +3289,7 @@ TWINCUES.length=0;TWINS.forEach((p,pi)=>p.c.forEach(c=>TWINCUES.push({p:pi,txt:c
 POOLS.W.arr=TWINCUES;
 
 /* ================= CITRUS HUB + GOOGLE DRIVE (per hub-contract.md / google-cloud-setup.md) ================= */
-const APP_VERSION="8.2.0";
+const APP_VERSION="9.0.0";
 const HUB_ROOT="My Apps",HUB_DIR="hub",APP_SLUG="kumquat",CITRUS_ROOT="Citrus Maxima",CITRUS_APPS="Apps";
 const G={tok:null,exp:0,email:null,ids:{},busy:false,line:"",plan:null};
 st.google=st.google||{clientId:"",syncState:true,publish:true};
@@ -3320,7 +3339,7 @@ function hubStatus(){
     next:{title:nextTitle,minutes:mins},asks,pending,extra:{mastery:ms.total,bestMock:Math.round(ms.mock*100),streak:liveStreak(),xp:st.xp,level:LEVELS[levelOf(st.xp)][1],planDay:pd,cardsDue:due,lessons:Object.keys(st.lessons).length,cases:Object.keys(st.cases).length,url:location.origin+location.pathname}}}
 function citrusStatus(s){return{title:"Kumquat",icon:"🍊",color:"#FF6A13",summary:s.summary,due:(dueKeys().length)+(s.extra.planDay?PLAN[s.extra.planDay-1].tasks.filter(t=>!taskDone(t,s.extra.planDay)).length*10:0),estimatedMinutes:s.next.minutes,streak:s.extra.streak,nextDue:s.asks.length?"today":"tomorrow",url:s.extra.url,updatedAt:s.updatedAt,mastery:s.extra.mastery,planDay:s.extra.planDay,next:s.next.title}}
 let lastFp="",lastWrite=0;
-async function writeStatus(force){if(!signedIn()||!st.google.publish)return;const s=hubStatus();const fp=JSON.stringify({...s,updatedAt:0});if(!force&&(fp===lastFp||Date.now()-lastWrite<3e5))return;
+async function writeStatus(force){if(!signedIn()||!st.google.publish)return;const s=hubV2(hubStatus());const fp=JSON.stringify({...s,updatedAt:0});if(!force&&(fp===lastFp||Date.now()-lastWrite<3e5))return;
   const {app}=await hubFolder();await putJSON("status.json",app,s);
   const croot=await folder(CITRUS_ROOT,null),capps=await folder(CITRUS_APPS,croot);await putJSON("Kumquat.status.json",capps,citrusStatus(s));lastFp=fp;lastWrite=Date.now()}
 /* ---- state sync: Drive is the master copy ---- */
@@ -3337,9 +3356,9 @@ async function pullOrPush(opts={}){
   if(localDirty||opts.force||!remote){const body=stateForDrive();await putJSON("state.json",app,body);st.savedAt=body.savedAt;save();localStorage.setItem(gk("synced_at"),body.savedAt);G.line="Progress saved to Drive"}
   else G.line="Up to date";
 }
-async function readPlan(){if(!signedIn())return;try{const root=await folder(HUB_ROOT,null,false);if(!root)return;const hub=await folder(HUB_DIR,root,false);if(!hub)return;const sch=await folder("scheduler",hub,false);if(!sch)return;const p=await getJSON("plan.json",sch);if(!p)return;const today=new Date().toISOString().slice(0,10);const arr=Array.isArray(p.data)?p.data:(p.data.blocks||p.data.items||p.data.today||[]);
+async function readPlan(){if(!signedIn())return;try{const root=await folder(HUB_ROOT,null,false);if(!root)return;const hub=await folder(HUB_DIR,root,false);if(!hub)return;if(await readCitrusDays(root,hub))return;const sch=await folder("scheduler",hub,false);if(!sch)return;const p=await getJSON("plan.json",sch);if(!p)return;const today=new Date().toISOString().slice(0,10);const arr=Array.isArray(p.data)?p.data:(p.data.blocks||p.data.items||p.data.today||[]);
   const mine=arr.filter(b=>b&&String(b.app||b.title||"").toLowerCase().includes("kumquat")&&(!b.date||b.date===today));G.plan=mine[0]||null}catch(e){}}
-async function syncAll(force){if(!hubCan()||!signedIn()||G.busy)return;G.busy=true;try{await pullOrPush({force});await readPlan();await writeStatus(force)}catch(e){G.line=e.message}finally{G.busy=false;renderGoogle();if(current==="home")renderCitrusLine()}}
+async function syncAll(force){if(!hubCan()||!signedIn()||G.busy)return;G.busy=true;try{await pullOrPush({force});await readPlan();await writeStatus(force);await autoYuzu()}catch(e){G.line=e.message}finally{G.busy=false;renderGoogle();if(current==="home")renderCitrusLine()}}
 /* hooks */
 const _save=save;save=function(){st.savedAt=new Date().toISOString();_save();if(signedIn()&&!G.busy){clearTimeout(save._t);save._t=setTimeout(()=>syncAll(false),8000)}};
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&signedIn())syncAll(true);else if(!document.hidden&&signedIn()&&Date.now()-lastWrite>6e5)syncAll(false)});
@@ -3372,7 +3391,7 @@ function renderGoogle(){const r=$("#google-root");if(!r)return;const g=st.google
   $("#g-export").onclick=()=>{const t=JSON.stringify(stateForDrive());$("#g-io").value=t;try{navigator.clipboard.writeText(t).then(()=>toast("Copied. Paste it into the other copy of Kumquat."),()=>{$("#g-io").select()})}catch(e){$("#g-io").select()}};
   $("#g-import").onclick=()=>{try{const o=JSON.parse($("#g-io").value);if(!o||typeof o!=="object"||!o.topics)throw 0;const g=st.google;st=sanitize(Object.assign({},o,{google:g}));_save();renderHeader();toast("Progress restored.");renderGoogle()}catch(e){toast("That didn’t look like a Kumquat backup.")}};
 }
-DRAW.settings=function(){renderGoogle();renderAppearance()};
+DRAW.settings=function(){renderGoogle();renderAppearance();renderYuzuCard()};
 if(hubCan()){setTimeout(()=>gsi().catch(()=>{}),800)}
 /* quiet renewal once a day */
 (async()=>{if(!hubCan()||!gLinked())return;const k=gk("renew");const last=+localStorage.getItem(k)||0;if(Date.now()-last<864e5&&signedIn()){syncAll(false);return}try{await connectGoogle(true);localStorage.setItem(k,String(Date.now()));syncAll(false)}catch(e){G.line="Sign in needed"}})();
@@ -3681,7 +3700,7 @@ MODE_NAME.boss="Boss fight";
 /* ================= THE ROUND: one composed daily session ================= */
 let ROUND=null;
 function roundPlan(){return roundPlanMood()}
-function roundPlanFocused(){const due=dueKeys().length,budget=st.budget||25,legs=[];
+function roundPlanFocused(){const due=dueKeys().length,budget=Math.min(st.budget||25,(shiftLoad()||{}).kind==="day"?15:999,moodNow()==="tired"?10:999),legs=[];
   const beginner=!Object.keys(st.lessons).length&&!st.roundsDone;
   if(beginner){legs.push({t:"lesson",n:0,label:"Lesson 1: "+PATH[0].n,min:8,p:9});legs.push({t:"tree",n:2,label:"Two tree problems",min:4,p:6});legs.push({t:"drill",n:5,label:"Five warm-up questions",min:5,p:8});legs.push({t:"teach",label:"Teach one idea back",min:3,p:4});return trimLegs(legs,budget)}
   if(due)legs.push({t:"review",n:Math.min(due,8),label:`Clear ${Math.min(due,8)} due cards${due>8?` (+${due-8} later)`:""}`,min:Math.min(due,8)*.6+1|0,p:10});
@@ -3739,7 +3758,7 @@ function uiApply(u){u=u||uiGet();const h=document.documentElement;h.dataset.ui=u
 
 /* ---- moods: the Round reshapes itself to how you feel today ---- */
 const MOODS={tired:{e:"🌙",n:"Tired",d:"Ten light minutes: due cards, a recall, two trees. No new lesson."},focused:{e:"🎯",n:"Focused",d:"Deep work: the next lesson, a paper or X-ray, a clinic call, teach-back."},playful:{e:"🕹️",n:"Playful",d:"Arcade: a 90-second blitz, a boss fight, links and estimates."},exam:{e:"⏱️",n:"Exam",d:"Twenty timed questions, 90 seconds each, no hints. Review after."}};
-function moodNow(){return st.moodDay===dayNum()&&MOODS[st.mood]?st.mood:(st.moodDefault&&MOODS[st.moodDefault]?st.moodDefault:"focused")}
+function moodNow(){if(st.moodDay===dayNum()&&MOODS[st.mood])return st.mood;const sl=typeof shiftLoad==="function"&&shiftLoad();if(sl&&sl.kind!=="day")return"tired";return st.moodDefault&&MOODS[st.moodDefault]?st.moodDefault:"focused"}
 function roundPlanMood(){const m=moodNow();const beginner=!Object.keys(st.lessons).length&&!st.roundsDone;
   if(m==="focused"||beginner)return roundPlanFocused();
   const due=dueKeys().length,legs=[];
@@ -3754,7 +3773,7 @@ function roundPlanMood(){const m=moodNow();const beginner=!Object.keys(st.lesson
   legs.push({t:"exam",n:20,label:"Exam block: 20 questions, 90 s each, no hints",min:30,p:10});
   if(due)legs.push({t:"review",n:Math.min(due,8),label:`Then clear ${Math.min(due,8)} due cards`,min:5,p:5});return legs}
 function renderMoodRow(){const row=$("#mood-row");if(!row)return;const doneToday=st.lastRound===dayNum();if(ROUND||doneToday){row.innerHTML="";return}const m=moodNow();
-  row.innerHTML=`<span class="eyebrow">How do you feel?</span><div class="mood-chips">${Object.entries(MOODS).map(([k,v])=>`<button class="mood ${k===m?"on":""}" data-mood="${k}" aria-pressed="${k===m}"><span aria-hidden="true">${v.e}</span>${v.n}</button>`).join("")}</div><p class="muted mood-d">${MOODS[m].d}</p>`;
+  row.innerHTML=`<span class="eyebrow">How do you feel?</span><div class="mood-chips">${Object.entries(MOODS).map(([k,v])=>`<button class="mood ${k===m?"on":""}" data-mood="${k}" aria-pressed="${k===m}"><span aria-hidden="true">${v.e}</span>${v.n}</button>`).join("")}</div><p class="muted mood-d">${MOODS[m].d}</p>${(()=>{const sl=shiftLoad();return sl?`<p class="mood-shift">🗓 ${sl.note} <small class="muted">(from Citrus)</small></p>`:""})()}`;
   $$("[data-mood]").forEach(b=>b.onclick=()=>{st.mood=b.dataset.mood;st.moodDay=dayNum();save();SND.fx("tick");renderToday();SND.retune()})}
 
 /* ---- soundscape: everything generated, no audio files ---- */
@@ -3770,7 +3789,9 @@ const SND=(()=>{let ac=null,master=null,musicBus=null,fxBus=null,cur=null,timer=
   const STY={focused:{ch:[[48,55,59,64,67],[45,52,55,60,64],[41,48,52,57,60],[43,50,55,59,62]],bar:4.2,pad:"sine",pl:"triangle",pls:[72,74,76,79,81,84],dens:.45},
     tired:{ch:[[45,52,55,60],[41,48,53,57],[43,50,53,58],[40,47,52,55]],bar:6.5,pad:"sine",pl:"sine",pls:[69,72,74,76],dens:.2},
     playful:{ch:[[48,52,55],[45,48,52],[41,45,48],[43,47,50]],bar:2.0,pad:"square",pl:"square",pls:[72,74,76,79,81,84,86,88],dens:.9,arp:true},
-    exam:{ch:[[38,45,50],[38,45,49],[36,43,48],[37,44,49]],bar:4,pad:"sawtooth",pl:"sine",pls:[86],dens:1,clock:true}};
+    exam:{ch:[[38,45,50],[38,45,49],[36,43,48],[37,44,49]],bar:4,pad:"sawtooth",pl:"sine",pls:[86],dens:1,clock:true},
+    history:{ch:[[45,52,57,60],[43,50,55,59],[41,48,53,57],[40,47,52,56]],bar:5,pad:"triangle",pl:"triangle",pls:[69,71,72,74,76,81],dens:.6},
+    modern:{ch:[[40,47,52,55],[36,43,48,52],[43,50,55,59],[38,45,50,53]],bar:3.2,pad:"sawtooth",pl:"sine",pls:[76,79,83,86],dens:.5,clock:true}};
   function stopMusic(){if(timer){clearInterval(timer);timer=null}nodes.forEach(n=>{try{n.stop()}catch(e){}});nodes=[];cur=null}
   function playChord(S,t){const ch=S.ch[step%S.ch.length];const lp=ac.createBiquadFilter();lp.type="lowpass";lp.frequency.value=S.pad==="sine"?1800:900;lp.connect(musicBus);
     ch.forEach((n,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.type=S.pad;o.frequency.value=hz(n);o.detune.value=(i%2?6:-6);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(S.pad==="sine"?.05:.018,t+S.bar*.35);g.gain.linearRampToValueAtTime(0,t+S.bar*1.05);o.connect(g);g.connect(lp);o.start(t);o.stop(t+S.bar*1.1);nodes.push(o)});
@@ -4261,6 +4282,134 @@ DRAW.xray=function(){const root=$("#xray-root");if(!root)return;st.xray=st.xray|
     $("#xr-chk").onclick=()=>{const pickd=Object.keys(XS.sel).filter(k=>XS.sel[k]);if(!pickd.length){toast("Tick at least one (or “No major spin”).");return}XS.ans=pickd;const inter=pickd.filter(k=>s.a.includes(k)).length,uni=new Set([...pickd,...s.a]).size;const part=inter/uni;done(part===1,part,part<1?`Answer: ${s.a.map(k=>XR_SPIN[k]).join("; ")}. `:"")}}};
 /* lessons finished before v8 get a start date so their recalls schedule */
 (function(){st.ldone=st.ldone||{};let ch=false;for(const k in st.lessons){if(st.lessons[k]&&st.ldone[k]==null){st.ldone[k]=dayNum();ch=true}}if(ch)save()})();
+
+/* ================= v9 campaign: the Kumquat Machine (time-travelling epidemiologist) ================= */
+const CAMP=[
+ {id:"semmelweis",yr:1847,place:"Vienna",art:"🪣",artN:"A basin of chlorinated lime",gate:null,
+  brief:"Vienna General Hospital, 1847. Two maternity clinics side by side: one staffed by doctors and students who come straight from the autopsy room, one by midwives. Mothers beg not to be sent to the first. There is no germ theory yet. You arrive with a notebook and the habit of counting."},
+ {id:"snow",yr:1854,place:"Soho, London",art:"🚰",artN:"The Broad Street pump handle",gate:["epi","acc"],
+  brief:"London, late August 1854. Cholera is tearing through Soho and the experts blame bad air. Dr John Snow thinks it is the water. You will walk the streets with him, count the dead house by house and decide what one pump handle is worth."},
+ {id:"tuskegee",yr:1932,place:"Macon County, Alabama",art:"⚖️",artN:"The Belmont Report (1979)",gate:["design","acc"],
+  brief:"The Machine misfires and drops you onto a research ethics committee, with a file reaching back to 1932: Black men with syphilis observed for forty years and never treated, even after penicillin. What should have stopped it, and what stops it now?"},
+ {id:"strepto",yr:1948,place:"London",art:"✉️",artN:"A sealed allocation envelope",gate:["design","acc"],
+  brief:"Post-war Britain. There is very little streptomycin and a great deal of tuberculosis. Austin Bradford Hill proposes something radical: let chance decide who gets the drug, and seal the allocation in envelopes. You help run the first modern randomised trial."},
+ {id:"dollhill",yr:1950,place:"London",art:"📮",artN:"A 1951 doctors’ questionnaire",gate:["risk","acc"],
+  brief:"1950. Lung cancer is rising and nobody agrees why. Richard Doll and Austin Bradford Hill interview patients across London hospitals, then write to every doctor in Britain. You keep the tallies that end the argument about smoking."},
+ {id:"thalido",yr:1961,place:"West Germany and Britain",art:"📁",artN:"An unapproved drug file",gate:["bias","mastered"],
+  brief:"1961. A sedative sold as safe in pregnancy. Clinicians are noticing babies born with severe limb defects. Case reports trickle in. You have to separate a signal from coincidence before more mothers take it."},
+ {id:"legion",yr:1976,place:"Philadelphia",art:"🌬️",artN:"An air-conditioning swab",gate:["epi","mastered"],
+  brief:"Philadelphia, July 1976. Delegates at a convention fall ill with pneumonia and some die. The cause is unknown. As an Epidemic Intelligence Service officer you build the case definition, the epidemic curve and the 2×2 tables that point to the hotel."},
+ {id:"hrt",yr:2002,place:"Your clinic",art:"🛑",artN:"The trial’s early-stop notice",gate:["bias","mastered"],
+  brief:"Decades of observational studies said HRT protects the heart. In 2002 a large randomised trial says otherwise. You are a GP with a patient in front of you, and you need to explain how the evidence turned."},
+ {id:"mers",yr:2014,place:"Riyadh",art:"😷",artN:"A triage mask",gate:["dx","mastered"],
+  brief:"Riyadh, 2014. A new coronavirus is spreading in hospitals. You are on the ER floor deciding who to isolate, with a screening question set and a test that takes hours. Every number you misread costs beds or lives."},
+ {id:"recovery",yr:2020,place:"An ICU in Britain",art:"🎲",artN:"A RECOVERY randomisation code",gate:["stats","mastered"],
+  brief:"June 2020. COVID-19 is filling ICUs and every week brings a new miracle claim. One platform trial randomises tens of thousands of patients across many hospitals. You must decide what to give tonight: the anecdote or the trial."},
+ {id:"present",yr:2026,place:"Qiddiya, today",art:"🍊",artN:"Your own X-rayed paper",gate:["appraise","mastered"],finale:true,
+  brief:"The Machine brings you home. No guide this time: pick a real paper that matters to your ER or occupational health work, X-ray it in Read a real paper and save it. Then you’re the epidemiologist in the room."}];
+let CAMP_ACTIVE=null,CAMP_OPEN=null;
+function campDone(id){return !!(st.camp&&st.camp[id]&&st.camp[id].done!=null)}
+function campGateOk(i){const c=CAMP[i];if(i>0&&!campDone(CAMP[i-1].id))return {ok:false,why:`Finish ${CAMP[i-1].yr}: ${caseTitle(CAMP[i-1].id)} first.`};if(!c.gate)return{ok:true};
+  const [t,kind]=c.gate,r=topicRecent(t);if(kind==="acc"){return r.n>=20&&r.acc>=.85?{ok:true}:{ok:false,t,why:`The Machine needs you sharper at ${TOPICS[t].label}: 85% over your last 20 answers (now ${r.n?Math.round(r.acc*100)+"% of "+r.n:"no answers yet"}).`}}
+  return topicMastered(t)?{ok:true}:{ok:false,t,why:`This jump needs ${TOPICS[t].label} mastered: 85% over 30 answers on 3 separate days (now ${r.n?Math.round(r.acc*100)+"% of "+r.n:"no answers yet"}).`}}
+function caseTitle(id){if(id==="present")return"The present";const c=CASES.find(x=>x.id===id);return c?c.title:id}
+function CAMPAIGN_STYLE(){if(current==="campaign")return(CAMP_OPEN!=null&&CAMP[CAMP_OPEN]&&CAMP[CAMP_OPEN].yr<1950)?"history":"modern";if(current==="case"&&CAMP_ACTIVE){const c=CAMP.find(x=>x.id===CAMP_ACTIVE);return c&&c.yr<1950?"history":"modern"}return null}
+DRAW.campaign=function(){const root=$("#camp-root");if(!root)return;st.camp=st.camp||{};const nDone=CAMP.filter(c=>campDone(c.id)).length;
+  if(CAMP_OPEN==null){root.innerHTML=`<div class="card camp-hero"><span class="eyebrow">The Kumquat Machine</span><h2>${nDone} / ${CAMP.length} jumps</h2><p>You’re a time-travelling epidemiologist. Each jump lands you at a moment when reading evidence well, or badly, changed medicine. Every jump is gated: the Machine only fires when your skills are good enough to survive the era.</p>
+     <div class="camp-arts">${CAMP.map(c=>`<span class="camp-art ${campDone(c.id)?"on":""}" title="${c.artN}">${campDone(c.id)?c.art:"·"}</span>`).join("")}</div></div>
+    <ol class="camp-line">${CAMP.map((c,i)=>{const g=campGateOk(i),d=campDone(c.id);return `<li class="camp-n ${d?"done":g.ok?"open":"locked"}"><button class="camp-b" data-ci="${i}"><span class="camp-yr num">${c.yr}</span><span class="camp-t"><b>${caseTitle(c.id)}</b><small>${c.place}${d?" · "+c.artN:g.ok?" · ready":" · locked"}</small></span><span class="camp-ic" aria-hidden="true">${d?c.art:g.ok?"▶":"🔒"}</span></button></li>`}).join("")}</ol>`;
+    $$("[data-ci]").forEach(b=>b.onclick=()=>{CAMP_OPEN=+b.dataset.ci;SND.fx("tick");DRAW.campaign();SND.retune();window.scrollTo(0,0)});return}
+  const i=CAMP_OPEN,c=CAMP[i],g=campGateOk(i),d=campDone(c.id),played=c.finale?(st.myPapers||[]).some(p=>p.d>=((st.camp[c.id]||{}).open||0)):st.cases[c.id]!=null,rec=st.camp[c.id]||{};
+  let act="";
+  if(!g.ok)act=`<div class="fb no"><h3>Locked</h3><div class="ex">${g.why}</div></div>${g.t?`<button class="btn primary" data-start="topic:${g.t}">Train ${TOPICS[g.t].label} · 10 Q</button>`:""}`;
+  else if(c.finale){if(!rec.open){st.camp[c.id]={open:dayNum()};save()}act=d?`<p>You did it. ${nDone} jumps, one Machine, and the evidence now reads you back.</p>`:played?`<button class="btn primary" id="camp-fin">Close the loop</button>`:`<a class="btn primary" href="#realpaper">Open Read a real paper</a><p class="muted">Save one X-rayed paper, then come back here.</p>`}
+  else act=`${played?"":`<button class="btn primary big" id="camp-go"><span>Fire the Machine</span><small>${c.yr} · ${c.place}</small></button>`}${played&&!d?`<p class="muted">Case solved (${st.cases[c.id]}%). The debrief decides whether the jump counts: six questions, no hints, five right to pass.</p><button class="btn primary" id="camp-deb">Debrief · 6 Q</button><button class="btn ghost small" id="camp-go">Replay the case</button>`:""}${d?`<p class="muted">Debrief ${rec.score}/6 on ${fmtD(rec.done)}.</p><button class="btn ghost small" id="camp-go">Replay the case</button>`:""}`;
+  root.innerHTML=`<div class="pl-top"><button class="btn small" id="camp-back">← Timeline</button><span class="eyebrow">Jump ${i+1} of ${CAMP.length}</span></div>
+   <div class="card camp-ch ${d?"done":""}"><span class="camp-yr num big">${c.yr}</span><h2>${caseTitle(c.id)}</h2><p class="muted">${c.place}</p><p class="camp-brief">${c.brief}</p>
+   ${d?`<div class="camp-got"><span class="camp-art on big">${c.art}</span><div><span class="eyebrow">Collected</span><b>${c.artN}</b></div></div>`:""}<div class="camp-act">${act}</div></div>`;
+  $("#camp-back").onclick=()=>{CAMP_OPEN=null;DRAW.campaign();SND.retune()};
+  const go=$("#camp-go");if(go)go.onclick=()=>{CAMP_ACTIVE=c.id;SND.fx("up");toast(`Whirr… ${c.yr}, ${c.place}.`);setTimeout(()=>location.hash="case-"+c.id,350)};
+  const deb=$("#camp-deb");if(deb)deb.onclick=()=>{const cs=CASES.find(x=>x.id===c.id);startQuiz("topic",(cs&&cs.topics&&cs.topics[0])||"epi");Q.total=6;Q.exam=true;Q.camp=c.id;renderQ()};
+  const fin=$("#camp-fin");if(fin)fin.onclick=()=>{st.camp[c.id]=Object.assign(st.camp[c.id]||{},{done:dayNum(),score:6});st.xp+=300;save();renderHeader();SND.fx("done");if(!reduce)confetti();DRAW.campaign()}};
+function campDebriefDone(id,score,n){st.camp=st.camp||{};if(score>=5){st.camp[id]=Object.assign(st.camp[id]||{},{done:dayNum(),score});st.xp+=150;const c=CAMP.find(x=>x.id===id);setTimeout(()=>{toast(`Jump complete. Collected: ${c.artN}. +150 XP`);SND.fx("done")},500)}
+  else{st.camp[id]=Object.assign(st.camp[id]||{},{lastTry:dayNum(),score});setTimeout(()=>toast(`${score}/6. The Machine needs 5. Review the case and try the debrief again.`),500)}save()}
+function campCaseFinished(key){if(CAMP_ACTIVE!==key)return;const i=CAMP.findIndex(c=>c.id===key);CAMP_ACTIVE=null;CAMP_OPEN=i;setTimeout(()=>{toast("The Machine pulls you back. Debrief unlocked.");location.hash="campaign"},1600)}
+
+/* ================= v9 hub: shift-aware Round · misses → Yuzu · contract v2 · deep links ================= */
+function shiftOn(dateStr){const d=(st.citrusDays||{})[dateStr];return d&&d.shift||null}
+function isoDay(off){const t=new Date(Date.now()+(off||0)*864e5);return t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0")}
+function shiftLoad(){const td=shiftOn(isoDay(0)),yd=shiftOn(isoDay(-1));const night=s=>s&&(s.overnight||/^N/i.test(s.code||"")||/night/i.test(s.label||""));
+  if(night(td))return{kind:"night",s:td,note:`Night shift tonight (${td.code||td.label||"N"}${td.start?" "+td.start:""}). Light Round.`};
+  if(night(yd))return{kind:"postnight",s:yd,note:"Post-night day. Light Round, no new lesson."};
+  if(td)return{kind:"day",s:td,note:`On shift today (${td.code||td.label||""}${td.start?" "+td.start+"–"+(td.end||""):""}). Round capped at 15 minutes.`};return null}
+async function readCitrusDays(root,hub){try{for(const dir of ["citrus","scheduler"]){const f=await folder(dir,hub,false);if(!f)continue;const p=await getJSON("plan.json",f);if(p&&p.data){const days=p.data.days||{};const keep={};Object.keys(days).forEach(k=>{if(k>=isoDay(-1)&&k<=isoDay(10))keep[k]={shift:days[k]&&days[k].shift||null}});st.citrusDays=keep;
+   const today=isoDay(0);const arr=Array.isArray(p.data)?p.data:(p.data.blocks||[]);const mine=arr.filter(b=>b&&String(b.app||b.title||"").toLowerCase().includes("kumquat")&&(!b.date||b.date===today));if(mine[0])G.plan=mine[0];return true}}}catch(e){}return false}
+
+/* misses → Yuzu: a weekly MCQ pack in My Apps/Yuzu/collection/inbox (Yuzu shows it for review before adding) */
+function isoWeek(){const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+3-(d.getDay()+6)%7);const w1=new Date(d.getFullYear(),0,4);return d.getFullYear()+"w"+String(1+Math.round(((d-w1)/864e5-3+(w1.getDay()+6)%7)/7)).padStart(2,"0")}
+const stripQ=h=>String(h||"").replace(/<br\s*\/?>/gi,"\n").replace(/<\/(p|div|li|tr)>/gi,"\n").replace(/<[^>]+>/g,"").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/\n{3,}/g,"\n\n").trim();
+function yuzuMissCards(){const keys=Object.entries(st.miss||{}).filter(([k])=>keyValid(k)&&!/^g:/.test(k)).sort((a,b)=>b[1]-a[1]).slice(0,60).map(x=>x[0]);const cards=[];
+  keys.forEach(k=>{const q=regen(k);if(!q||/<svg|<table/i.test(q.prompt))return;cards.push({id:"kq-"+k.replace(/[^A-Za-z0-9]/g,"-"),type:"mcq",question:stripQ(q.prompt),options:q.opts.map(stripQ),answer:q.ans,explanation:stripQ(q.explain).slice(0,1200),tags:["kumquat",TOPICS[q.topic]?TOPICS[q.topic].label:"epi"]})});return cards}
+function yuzuFormulaCards(){return formulaRows().map(r=>({id:"kq-f-"+r.n.toLowerCase().replace(/[^a-z0-9]+/g,"-"),type:"basic",front:r.n+" = ?",back:stripQ(r.f)+"\n\n"+stripQ(r.w),tags:["kumquat","formulas",r.g]}))}
+async function yuzuInbox(){const root=await folder(HUB_ROOT,null,false);if(!root)throw new Error("No My Apps folder on Drive yet");const y=await folder("Yuzu",root,false);if(!y)throw new Error("Yuzu’s folder isn’t on Drive yet. Connect Yuzu to Google first.");const c=await folder("collection",y,false);if(!c)throw new Error("Yuzu’s collection folder isn’t on Drive yet.");return folder("inbox",c,true)}
+async function sendToYuzu(kind){if(!signedIn())throw new Error("Connect Google first (Settings).");const inbox=await yuzuInbox();
+  const cards=kind==="formulas"?yuzuFormulaCards():yuzuMissCards();if(!cards.length)throw new Error("No missed questions to send yet.");
+  const id=kind==="formulas"?"kumquat-formulas":"kumquat-misses-"+isoWeek();
+  await putJSON(id+".json",inbox,{yuzu_pack:1,id,name:kind==="formulas"?"Kumquat · formulas":"Kumquat · my misses ("+isoWeek()+")",category:"Biostatistics & epidemiology",tags:["kumquat"],cards});
+  st.yuzuSent=st.yuzuSent||{};st.yuzuSent[kind]={at:dayNum(),n:cards.length,week:isoWeek()};save();return cards.length}
+async function autoYuzu(){try{if(!st.yuzuAuto||!signedIn())return;const s=(st.yuzuSent||{}).misses;if(s&&s.week===isoWeek())return;await sendToYuzu("misses")}catch(e){}}
+function renderYuzuCard(){const el=$("#yuzu-card");if(!el)return;const s=st.yuzuSent||{},m=yuzuMissCards().length;
+  el.innerHTML=`<span class="eyebrow">Yuzu flashcards</span><p class="muted">Send your missed questions (and the formula deck) to Yuzu’s inbox on Drive. Yuzu shows each pack for review before adding anything.</p>
+   <div class="row" style="flex-wrap:wrap"><button class="btn small" id="yz-miss" ${m?"":"disabled"}>Send ${m} misses</button><button class="btn small ghost" id="yz-form">Send formula deck</button></div>
+   <label class="ck-item"><p>Send this week’s misses automatically</p><input type="checkbox" id="yz-auto" ${st.yuzuAuto?"checked":""}></label>
+   <p class="muted" id="yz-line" style="font-size:.85rem">${s.misses?`Last sent: ${s.misses.n} misses, ${fmtD(s.misses.at)}.`:""}${s.formulas?` Formula deck sent ${fmtD(s.formulas.at)}.`:""}</p>`;
+  const run=kind=>async()=>{$("#yz-line").textContent="Sending…";try{const n=await sendToYuzu(kind);$("#yz-line").textContent=`Sent ${n} cards to Yuzu’s inbox. Open Yuzu to review them.`;SND.fx("ok")}catch(e){$("#yz-line").textContent=e.message}};
+  $("#yz-miss").onclick=run("misses");$("#yz-form").onclick=run("formulas");$("#yz-auto").onchange=e=>{st.yuzuAuto=e.target.checked;save()}}
+
+/* contract v2 for Citrus: metrics, progress, inbox proposals, deep-link actions */
+const CITRUS_URL="https://amaerys.github.io/Citrus-Maxima/";
+function hubV2(s){const ms=masteryScore(),due=dueKeys().length,ks=Object.keys(TOPICS),mast=ks.filter(topicMastered).length,fd=fadingTopics(),wk=isoWeek(),today=isoDay(0),url=location.origin+location.pathname;
+  const legs=roundPlan(),mins=legs.reduce((a,l)=>a+l.min,0),doneToday=st.lastRound===dayNum(),sl=shiftLoad();
+  const v2={contract:2,title:"Kumquat",icon:"🍊",color:"#FF6A13",url,due:due+fd.length,estimatedMinutes:doneToday?0:mins,streak:liveStreak(),nextDue:doneToday?"tomorrow":"today",
+   metrics:[{key:"mastery",label:"Mastery",value:ms.total,goal:100,unit:"%",date:today},{key:"topics-mastered",label:"Topics mastered",value:mast,goal:ks.length,unit:"topics",date:today},{key:"cards-due",label:"Review cards due",value:due,goal:0,unit:"cards",date:today},{key:"rounds",label:"Round done today",value:doneToday?1:0,goal:1,unit:"round",date:today}],
+   progress:[{key:"mastery",label:"Epi & biostat mastery",pct:ms.total,date:today},{key:"campaign",label:"Kumquat Machine jumps",pct:Math.round(CAMP.filter(c=>campDone(c.id)).length/CAMP.length*100),date:today},{key:"lessons",label:"Lessons",pct:Math.round(Object.keys(st.lessons).length/LESSONS.length*100),date:today}],
+   inbox:fd.slice(0,2).map(t=>({id:`recheck-${t}-${wk}`,type:"task",title:`Kumquat: re-check ${TOPICS[t].label} (5 Q)`,minutes:3,pri:2,url:url+"?from=citrus&do=recheck-"+t})).concat(doneToday?[]:[{id:`round-${today}`,type:"task",title:`Kumquat: today’s Round (${MOODS[moodNow()].n.toLowerCase()}, ~${mins} min)`,minutes:mins,pri:1,url:url+"?from=citrus&do=round"}]),
+   actions:[{id:"round",label:doneToday?"Bonus blitz":"Start today’s Round",url:url+"?from=citrus&do=round",icon:"🍊",minutes:mins},{id:"review",label:`Review ${due} cards`,url:url+"?from=citrus&do=review",icon:"🔁",minutes:Math.max(3,Math.round(due*.6))},{id:"paper",label:"X-ray a real paper",url:url+"?from=citrus&do=realpaper",icon:"📄",minutes:15},{id:"campaign",label:"The Kumquat Machine",url:url+"?from=citrus&do=campaign",icon:"🕰️",minutes:20}]};
+  s.extra=Object.assign(s.extra||{},{formulaOfDay:(()=>{const f=formulaOfDay();return f.n+" = "+stripQ(f.f)})(),mood:moodNow(),shift:sl?sl.kind:null,fading:fd.map(t=>TOPICS[t].label),campaign:CAMP.filter(c=>campDone(c.id)).length+"/"+CAMP.length});
+  if(sl&&s.asks)s.asks.forEach(a=>{if(a.date===today){a.minutes=Math.min(a.minutes,sl.kind==="day"?15:10);a.slot=sl.kind==="night"?"before":"free"}});
+  if(s.summary)s.summary=s.summary.replace(/\.$/,"")+(fd.length?`; ${fd.length} topic${fd.length>1?"s":""} fading`:"")+(sl?`; ${sl.kind==="night"?"night shift: light Round":sl.kind==="postnight"?"post-night: light Round":"on shift: 15-min Round"}`:"")+".";
+  return Object.assign(s,v2)}
+/* deep links: ?from=citrus&do=round|review|realpaper|campaign|recheck-<topic> */
+let FROM_CITRUS=false;
+function handleDeepLink(){let u;try{u=new URL(location.href)}catch(e){return}const from=u.searchParams.get("from"),d=u.searchParams.get("do");if(!from&&!d)return;FROM_CITRUS=from==="citrus";
+  u.searchParams.delete("from");u.searchParams.delete("do");try{history.replaceState(null,"",u.pathname+(u.search||"")+(location.hash||""))}catch(e){}
+  setTimeout(()=>{if(d==="round"){location.hash="home";setTimeout(()=>{if(st.lastRound===dayNum())startQuiz("blitz");else if(ROUND)roundGo();else startRound()},200)}
+   else if(d==="review")startQuiz("review");else if(d&&d.startsWith("recheck-")){const t=d.slice(8);if(TOPICS[t])startRecheck(t)}else if(d&&VIEWS.includes(d))location.hash=d;
+   renderCitrusBack()},300)}
+function renderCitrusBack(){let el=$("#citrus-back");if(!FROM_CITRUS){if(el)el.remove();return}if(!el){el=document.createElement("a");el.id="citrus-back";el.className="chip citrus-back";el.href=CITRUS_URL+"?from=kumquat";el.textContent="← Citrus";const t=$(".top-in .brand");if(t)t.after(el)}}
+
+/* ---- clinic calls from your own ER and OH work ---- */
+ROUNDS.push(
+ {id:"er-trop",title:"Troponin at 4 a.m.",where:"ER, Lower Village",topics:["dx"],xapp:true,intro:"04:10. A 52-year-old man had 3 hours of central chest tightness, now settled. ECG normal. A single high-sensitivity troponin below the detection limit on arrival has, in studies like this, sensitivity about 99% and specificity about 40% for MI.",
+  steps:{s1:{p:"Your pre-test probability of MI is about 10%. The troponin comes back below the limit.",q:"Post-test probability?",o:[["About 0.3%: LR− = 0.01 ÷ 0.40 = 0.025","s2","Pre-odds 0.11 × 0.025 = 0.0028 → about 0.3%. Low enough to discharge with follow-up in most pathways."],["About 1%: one minus the sensitivity","s1x","1 − sensitivity is the share of MIs the test misses, not your patient’s chance of MI. Work in odds with the LR."]]},
+   s1x:{p:"The registrar asks how you got 1%.",q:"Redo it:",o:[["Odds 0.11 × LR− 0.025 → 0.3%","s2","Right: the LR carries the test, the pre-test odds carry the patient."]]},
+   s2:{p:"The next patient’s pain started 40 minutes ago. Same test, same result: below the limit.",q:"Does the same rule-out apply?",o:[["No. Troponin may not have risen yet; sensitivity is lower in early presenters, so repeat at 1–3 hours","end","Sensitivity isn’t a fixed property of a test: it depends on who is tested and when (spectrum effect). The published 99% came from patients past the early window."],["Yes. Sensitivity is a property of the test, so it’s the same 99%","s2x","Sensitivity shifts with the spectrum of patients and the timing."]]},
+   s2x:{p:"Four hours later he is back with an anterior STEMI.",q:"The lesson?",o:[["Sensitivity depends on the population and timing: early presenters need a second troponin","end","Exactly. Use the pathway’s timing rules."]]},
+   end:{p:"Same test, two patients, two answers. Read the study’s population before you borrow its numbers.",done:true}}},
+ {id:"oh-drugscreen",title:"The pre-placement drug screen",where:"OH clinic, Qiddiya",topics:["dx"],xapp:true,intro:"Pre-placement medicals: 2,000 workers a month screened with an immunoassay urine drug screen (sensitivity 95%, specificity 98%). True recent use in this population is about 1%.",
+  steps:{s1:{p:"Picture 2,000 workers: 20 users, 1,980 non-users.",q:"Of the positive screens, what share are true users?",o:[["About a third: 19 true positives vs about 40 false positives","s2","TP = 0.95 × 20 = 19; FP = 0.02 × 1,980 ≈ 40. PPV = 19 ÷ 59 ≈ 32%."],["About 95%, because the test is 95% sensitive","s1x","Sensitivity is about the 20 users. PPV is about the people who test positive, and at 1% prevalence most of those are false positives."]]},
+   s1x:{p:"HR quotes you: “95% accurate”.",q:"Correct it:",o:[["At this prevalence about 2 in 3 positives are false; PPV is about 32%","s2","Yes: draw the 2,000-person tree."]]},
+   s2:{p:"HR wants every screen-positive worker sent home today.",q:"What do you advise?",o:[["Hold any decision until confirmatory GC-MS; a screen positive here is more likely false than true","end","Two-step testing: a sensitive screen, then a specific confirmation. Acting on screens alone would wrongly exclude about 40 workers a month."],["Send them home: 98% specificity is near perfect","s2x","98% specificity still means 2% of 1,980 non-users test positive: about 40 people."]]},
+   s2x:{p:"Three workers appeal and all confirm negative on GC-MS.",q:"The fix?",o:[["Confirm every positive before any decision","end","Right."]]},
+   end:{p:"With 1% prevalence, even a 98%-specific test produces more false positives than true ones. Screens screen; confirmations decide.",done:true}}},
+ {id:"fm-aspirin",title:"Aspirin at 60?",where:"Family medicine clinic",topics:["risk"],xapp:true,intro:"A healthy 60-year-old asks about daily aspirin to prevent heart attacks. A trial summary (illustrative figures): major cardiovascular events 4.0% vs 4.5% over 5 years (RR 0.89); major bleeding 1.6% vs 1.0% (RR 1.6).",
+  steps:{s1:{p:"Start with the benefit.",q:"In absolute terms?",o:[["ARR 0.5 points over 5 years → NNT 200","s2","4.5% − 4.0% = 0.5%; 1 ÷ 0.005 = 200 people for 5 years to prevent one event."],["11% fewer events → NNT about 9","s1x","11% is the relative reduction. NNT is 1 ÷ ARR, never 1 ÷ RRR."]]},
+   s1x:{p:"She asks: “So 1 in 9 of us is saved?”",q:"Correct it:",o:[["No: ARR is 0.5 points, so NNT is 200 over 5 years","s2","Right."]]},
+   s2:{p:"Now the harm.",q:"Major bleeding in absolute terms?",o:[["ARI 0.6 points → NNH about 167 over 5 years: slightly more bleeds than events prevented","end","1.6% − 1.0% = 0.6%; 1 ÷ 0.006 ≈ 167. Over 5 years, 1,000 people would have about 5 fewer cardiovascular events and 6 more major bleeds."],["“60% more bleeding” means it’s dangerous for everyone","s2x","Relative harm without the baseline misleads just as much as relative benefit."]]},
+   s2x:{p:"She looks alarmed.",q:"Put it fairly:",o:[["Per 1,000 people over 5 years: about 5 fewer heart events, about 6 more serious bleeds","end","Absolute numbers for both sides, same time frame, same denominator."]]},
+   end:{p:"Benefit and harm in the same currency: per 1,000 people, over the same 5 years. Then it’s her call.",done:true}}});
+
+handleDeepLink();
 
 /* ================= TOOLKIT: one search over everything ================= */
 let SEARCH_IX=null;
