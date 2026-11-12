@@ -1,0 +1,14 @@
+{
+  "name": "kumquat",
+  "private": true,
+  "description": "Kumquat: biostatistics, epidemiology and critical appraisal trainer (Dar al-Mizan)",
+  "scripts": {
+    "build": "node tools/build.js",
+    "check": "node tools/build.js --check",
+    "test": "node tests/run.js",
+    "test:quick": "node tests/run.js quick"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

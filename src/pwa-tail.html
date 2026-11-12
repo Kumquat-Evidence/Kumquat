@@ -1,0 +1,11 @@
+<script>
+(function(){if(!("serviceWorker" in navigator))return;let reloading=false;
+ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloading)return;reloading=true;location.reload()});
+ const offer=w=>{if(document.getElementById("upd"))return;const d=document.createElement("div");d.id="upd";d.innerHTML='New version ready <button class="btn primary small" id="upd-go">Update</button>';document.body.appendChild(d);document.getElementById("upd-go").onclick=()=>{d.remove();w.postMessage("skipWaiting")}};
+ navigator.serviceWorker.register("sw.js").then(reg=>{if(reg.waiting&&navigator.serviceWorker.controller)offer(reg.waiting);
+  reg.addEventListener("updatefound",()=>{const w=reg.installing;if(!w)return;w.addEventListener("statechange",()=>{if(w.state==="installed"&&navigator.serviceWorker.controller)offer(w)})});
+  document.addEventListener("visibilitychange",()=>{if(!document.hidden)reg.update().catch(()=>{})})}).catch(()=>{});
+})();
+</script>
+</body>
+</html>

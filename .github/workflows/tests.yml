@@ -1,0 +1,71 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Build is current
+        run: node tools/build.js --check
+      - name: Run all suites
+        run: node tests/run.js
+      - name: Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: tests/shots
+          retention-days: 7
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Is Pages set to deploy from Actions?
+        id: mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          t=$(gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null || echo none)
+          echo "build_type=$t" >> "$GITHUB_OUTPUT"
+          if [ "$t" != "workflow" ]; then echo "::notice::Pages source is '$t', so Pages publishes main directly. Set Settings → Pages → Source to 'GitHub Actions' to publish only tested builds."; fi
+      - uses: actions/checkout@v4
+        if: steps.mode.outputs.build_type == 'workflow'
+      - name: Collect the site
+        if: steps.mode.outputs.build_type == 'workflow'
+        run: mkdir _site && cp -r index.html sw.js manifest.webmanifest icons .nojekyll _site/
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.mode.outputs.build_type == 'workflow'
+        with:
+          path: _site
+      - id: deploy
+        if: steps.mode.outputs.build_type == 'workflow'
+        uses: actions/deploy-pages@v4

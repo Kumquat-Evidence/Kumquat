@@ -1,0 +1,12 @@
+const {chromium}=require('playwright');const http=require('http');const fs=require('fs');const path=require('path');
+let ver=1;const root=path.join(__dirname,'..');
+const srv=http.createServer((q,res)=>{let f=path.join(root,decodeURIComponent(q.url.split('?')[0]));if(f.endsWith('/'))f+='index.html';if(!fs.existsSync(f)){res.statusCode=404;return res.end()}let body=fs.readFileSync(f);if(f.endsWith('sw.js')&&ver===2)body=Buffer.from(body.toString().replace(/kumquat-[0-9a-f]+/,'kumquat-v2test'));res.setHeader('content-type',{'.html':'text/html','.js':'text/javascript','.webmanifest':'application/manifest+json','.png':'image/png'}[path.extname(f)]||'text/plain');res.end(body)}).listen(4310);
+(async()=>{const b=await chromium.launch();const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
+ await p.route(/googleapis|gstatic|accounts\.google/,r=>r.fulfill({status:404,body:''}));
+ await p.goto('http://localhost:4310/');await p.waitForTimeout(1500);await p.reload();await p.waitForTimeout(800);
+ console.log('controlled:',await p.evaluate(()=>!!navigator.serviceWorker.controller));
+ ctx.setOffline(true);await p.reload();await p.waitForTimeout(600);console.log('offline loads:',await p.evaluate(()=>!!document.querySelector('#v-home')));ctx.setOffline(false);
+ ver=2;await p.evaluate(()=>navigator.serviceWorker.getRegistration().then(r=>r.update()));await p.waitForTimeout(1500);
+ console.log('update banner:',await p.evaluate(()=>!!document.getElementById('upd')));
+ await p.click('#upd-go');await p.waitForTimeout(1500);console.log('after update cache:',await p.evaluate(async()=>(await caches.keys()).join(',')));
+ console.log('errors',errs);await b.close();srv.close()})();
