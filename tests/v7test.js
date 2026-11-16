@@ -6,11 +6,12 @@ const drive=async p=>{ // advance whatever is on screen by one action
    const nb=[...sec.querySelectorAll('button[onclick="roundLegDone()"],#e-leg')].find(vis);if(nb){nb.click();return 'nextleg'}
    if(typeof Q!=="undefined"&&Q&&!Q.done&&Q.cur&&location.hash==="#quiz"){if(document.querySelector('#q-type')){document.querySelector('#q-show').click()}if(!Q.answered){answer(Q.cur.ans)}else{advance()}return 'q'}
    const opt=[...sec.querySelectorAll('.opt:not([disabled])')].find(vis);if(opt){opt.click();return 'opt'}
+   const so=[...sec.querySelectorAll('button')].find(b=>vis(b)&&/Show the options instead/.test(b.textContent));if(so){so.click();return 'showopts'}const sk=sec.querySelector('#v11-skip');if(sk&&vis(sk)){sk.click();return 'skippredict'}
    const n=sec.querySelector('#pl-next:not([disabled]),#pp-next:not([disabled]),#rd-next');if(n&&vis(n)){n.click();return 'next'}
    const rb=sec.querySelector('#round-root .btn.primary[onclick]');if(rb){rb.click();return 'rdone'}
    return 'stuck:'+location.hash})};
 /* 1. Round, beginner then regular */
-for(const pre of [null,'regular']){const p=await newPage(b,{port:PORT,init:pre?`localStorage.setItem("kumquat.v1",JSON.stringify({xp:500,lessons:{0:1,1:1},roundsDone:3,log:[{d:1,n:10,score:8,mode:"daily"}],topics:{dx:{c:8,n:10}},lord:7}))`:null});
+for(const pre of [null,'regular']){const p=await newPage(b,{port:PORT,init:pre?`localStorage.setItem("kumquat.v1",JSON.stringify({xp:500,lessons:{0:1,1:1},roundsDone:3,log:[{d:Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5)-1,n:10,score:8,mode:"daily"}],topics:{dx:{c:8,n:10}},lord:7}))`:null});
  await p.click('#hero-btn');await p.waitForTimeout(500);const legs=await p.evaluate(()=>ROUND&&ROUND.legs.map(l=>l.t));R.push('INFO legs '+(pre||'beginner')+': '+legs);
  let g=0,last='',stuckN=0;while(await p.evaluate(()=>!!ROUND)&&g++<400){const leg=await p.evaluate(()=>ROUND.legs[ROUND.i].t);
   if(['concept','derive','dag','design','spotter','tests','links','recall','xray'].includes(leg)){await p.evaluate(()=>roundLegDone());await p.waitForTimeout(600);continue}
@@ -38,7 +39,7 @@ for(const pre of [null,'regular']){const p=await newPage(b,{port:PORT,init:pre?`
  await p.evaluate(()=>startQuiz('myths'));await p.waitForTimeout(200);ok(await p.evaluate(()=>/Myth/i.test(document.querySelector('#v-quiz').innerText)),'myths mode renders');
  const figs=await p.evaluate(()=>POOLS.F.arr.map((_,i)=>{const q=regen('F:'+i);return q&&/<svg/.test(q.prompt)}).every(Boolean));ok(figs,'figure items render svg');
  await p.evaluate(()=>{startQuiz('topic','appraise');Q.cur=regen('F:0');renderQ()});await p.waitForTimeout(200);await p.screenshot({path:'shots/v7-figure.png',fullPage:true});
- const tf=await p.evaluate(()=>{for(let k=0;k<40;k++){startQuiz('topic','risk');if(document.querySelector('#q-type')){const c=Q.cur;document.querySelector('#q-num').value=String(numOf(c.opts[c.ans]));document.querySelector('#q-type').dispatchEvent(new Event('submit',{cancelable:true}));return Q.answered&&Q.typed===true}}return 'none'});ok(tf===true,'type-first calc answer accepted ('+tf+')');
+ const tf=await p.evaluate(()=>{for(let k=0;k<40;k++){startQuiz('topic','risk');if(document.querySelector('#q-type')){const c=Q.cur;document.querySelector('#q-num').value=String(numOf(c.opts[c.ans]));document.querySelector('#q-type').dispatchEvent(new Event('submit',{cancelable:true}));const cf=document.querySelector('#q-conf:not([hidden]) [data-conf="sure"]');if(cf)cf.click();return Q.answered&&Q.typed===true}}return 'none'});ok(tf===true,'type-first calc answer accepted ('+tf+')');
  await p.evaluate(()=>location.hash='settings');await p.waitForTimeout(250);await p.selectOption('#set-budget','15');const mins=await p.evaluate(()=>roundPlan().reduce((a,l)=>a+l.min,0));ok(mins<=18,'budget 15 → plan '+mins+' min');
  await p.selectOption('#set-budget','60');const m2=await p.evaluate(()=>roundPlan().length);ok(m2>=6,'budget 60 → '+m2+' legs');
  const lessonsOK=await p.evaluate(()=>LESSONS.map((L,i)=>L.steps.every(s=>!s.q||(Array.isArray(s.o)&&s.o.length>=2&&s.e))&&PATH[i]).every(Boolean));ok(lessonsOK,'all lesson steps well-formed');

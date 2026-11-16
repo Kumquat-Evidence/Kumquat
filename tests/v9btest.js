@@ -6,7 +6,7 @@ const F=process.argv[2]||path.resolve(__dirname,'../src/kumquat.html');const SH=
  // mastery: 30 answers 90% on one day → not mastered; spread across 3 days → mastered
  const m=await p.evaluate(()=>{st.recent.dx=Array(30).fill(true).map((x,i)=>i%10!==0);st.tdays={dx:[dayNum()]};st.mast={};mastNote('dx');const a=mastState('dx');st.tdays.dx=[dayNum()-5,dayNum()-2,dayNum()];mastNote('dx');const b=mastState('dx');st.mast.dx.check=dayNum()-8;const c=mastState('dx');return [a,b,c,fadingTopics()]});
  console.log('mastery',JSON.stringify(m));ok(m[0]==='none'&&m[1]==='mastered'&&m[2]==='fading','mastery states');
- await p.evaluate(()=>{save();location.hash='home'});await p.waitForTimeout(300);ok(!(await p.$eval('#fade-card',e=>e.hidden)),'fade card');ok(await p.$('#fotd-rev'),'fotd card');
+ await p.evaluate(()=>{save();location.hash='home'});await p.waitForTimeout(300);ok(!(await p.$eval('#fade-card',e=>e.hidden)),'fade card');ok(await p.$('#fotd-rev'),'fotd card');await p.evaluate(()=>{document.querySelector('#today-extras').open=true});
  await p.click('#fotd-rev');ok(await p.$eval('.fotd-a',e=>!e.hidden),'fotd reveal');
  await p.click('#fade-go');await p.waitForTimeout(300);ok(await p.evaluate(()=>Q.recheck&&Q.total===5&&!document.querySelector('#q-hint')),'recheck quiz');
  // answer 5 correctly
@@ -27,12 +27,16 @@ const F=process.argv[2]||path.resolve(__dirname,'../src/kumquat.html');const SH=
  await p.screenshot({path:SH('sprint')});await p.evaluate(()=>{SP.t=1});await p.waitForTimeout(1300);ok(await p.$('#sp-again'),'sprint ends');
  // dag correct all
  await p.evaluate(()=>{DG={i:0,list:DAG.slice(),ze:'',zo:'',done:false,score:0};location.hash='dag'});await p.waitForTimeout(300);
- for(let i=0;i<12;i++){const it=await p.evaluate(()=>DG.list[DG.i]);await p.click(`[data-dk="ze"][data-dv="${it.ze}"]`);await p.click(`[data-dk="zo"][data-dv="${it.zo}"]`);if(i===2)await p.screenshot({path:SH('dag')});await p.click('#dg-chk');await p.waitForTimeout(40);ok(await p.$eval('#dg-fb',e=>/Right/.test(e.textContent)),'dag '+it.e);await p.click('#dg-next');await p.waitForTimeout(40)}
- ok(await p.evaluate(()=>DG.score===12),'dag score');await p.click('#dg-sand');await p.waitForTimeout(100);await p.screenshot({path:SH('dag-sand')});
+ const nDag=await p.evaluate(()=>DAG.length);
+ for(let i=0;i<nDag;i++){const it=await p.evaluate(()=>DG.list[DG.i]);await p.click(`[data-dk="ze"][data-dv="${it.ze}"]`);await p.click(`[data-dk="zo"][data-dv="${it.zo}"]`);if(i===2)await p.screenshot({path:SH('dag')});await p.click('#dg-chk');await p.waitForTimeout(40);ok(await p.$eval('#dg-fb',e=>/Right/.test(e.textContent)),'dag '+it.e);
+  // v11: step 2, adjust or not (keyed from DAG_ADJ)
+  const adj=await p.evaluate(()=>{const it=DG.list[DG.i];const k=DAG_ADJ[it.ze+'|'+it.zo];return k&&k[0]});if(adj){await p.click(`.dg-a[data-adj="${adj}"]`);await p.waitForTimeout(30)}
+  await p.click('#dg-next');await p.waitForTimeout(40)}
+ ok(await p.evaluate(n=>DG.score===n&&DG.adjScore===n,nDag),'dag score');await p.click('#dg-sand');await p.waitForTimeout(100);await p.screenshot({path:SH('dag-sand')});
  // design
  await p.evaluate(()=>{DP={list:DSQ.slice(),i:0,score:0,pick:null};location.hash='design'});await p.waitForTimeout(300);
- for(let i=0;i<12;i++){const a=await p.evaluate(()=>DP.list[DP.i].a[0]);if(i===0){await p.click('.dsg-o[data-k="eco"]');await p.screenshot({path:SH('design-wrong'),fullPage:true});await p.click('#dp-next');continue}await p.click(`.dsg-o[data-k="${a}"]`);await p.waitForTimeout(30);await p.click('#dp-next');await p.waitForTimeout(30)}
- ok(await p.evaluate(()=>DP.score===11),'design score');
+ const nDs=await p.evaluate(()=>DSQ.length);for(let i=0;i<nDs;i++){const a=await p.evaluate(()=>DP.list[DP.i].a[0]);if(i===0){await p.click('.dsg-o[data-k="eco"]');await p.screenshot({path:SH('design-wrong'),fullPage:true});await p.click('#dp-next');continue}await p.click(`.dsg-o[data-k="${a}"]`);await p.waitForTimeout(30);await p.click('#dp-next');await p.waitForTimeout(30)}
+ ok(await p.evaluate(n=>DP.score===n-1,nDs),'design score');
  // spotter
  await p.evaluate(()=>{BS={list:BSP.slice(),i:0,score:0,step:'where',si:null,bi:null};location.hash='spotter'});await p.waitForTimeout(300);
  for(let i=0;i<12;i++){const it=await p.evaluate(()=>DP&&BS.list[BS.i]);await p.click(`.bs-s[data-i="${it.i}"]`);await p.waitForTimeout(30);const bi=await p.evaluate(()=>BS.list[BS.i]._o.indexOf(BS.list[BS.i].b));await p.click(`.bs-b[data-i="${bi}"]`);if(i===0)await p.screenshot({path:SH('spotter'),fullPage:true});await p.click('#bs-next');await p.waitForTimeout(30)}
@@ -55,7 +59,7 @@ const F=process.argv[2]||path.resolve(__dirname,'../src/kumquat.html');const SH=
  await p.route('https://api.anthropic.com/v1/messages',r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({content:[{type:'text',text:'<h4>Design</h4><p>RCT <script>x</script></p>'}]})}));
  await p.evaluate(()=>{localStorage.setItem('kumquat.claude','sk-ant-test');DRAW.realpaper()});await p.waitForTimeout(200);await p.click('#rp-ai');await p.waitForTimeout(500);ok(await p.$eval('#rp-ai-out',e=>/Design/.test(e.textContent)&&!e.querySelector('script')),'claude mocked + sanitized');
  // round includes tool + recheck
- const legs=await p.evaluate(()=>{st.mood='focused';st.moodDay=dayNum();st.lessons={0:1,1:1};st.roundsDone=2;st.mast.dx.check=dayNum()-40;st.budget=60;return roundPlan().map(l=>l.t)});console.log('legs',legs.join(','));ok(legs.includes('recheck'),'recheck leg');
+ const legs=await p.evaluate(()=>{st.mood='focused';st.moodDay=dayNum();st.lessons={0:1,1:1};st.roundsDone=2;st.mast.dx.check=dayNum()-(MAST_GAP[st.mast.dx.lv]||120)-2;st.budget=60;return roundPlan().map(l=>l.t)});console.log('legs',legs.join(','));ok(legs.includes('recheck'),'recheck leg');
  // wide realpaper
  const w=await b.newPage({viewport:{width:1280,height:800}});w.on('pageerror',e=>errs.push(e.message));await w.goto('file://'+F);await w.waitForTimeout(400);await w.evaluate(a=>{RPS={text:a,title:'',ans:{},spin:{}};location.hash='realpaper'},abs);await w.waitForTimeout(400);await w.screenshot({path:SH('realpaper-wide')});
  for(const v of ['derive','sprint','dag','design','spotter','tchoose','realpaper']){await p.evaluate(v=>location.hash=v,v);await p.waitForTimeout(200);ok(!(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1)),'hscroll '+v)}

@@ -19,7 +19,7 @@ const F=process.argv[2]||path.resolve(__dirname,'../src/kumquat.html');
    if(await p.$('#q-show'))await p.click('#q-show');
    // hint
    if(await p.$('#q-hint')){await p.click('#q-hint');ok(await p.$eval('#q-hint-out',e=>e.innerHTML.length>3),'hint shows')}
-   await p.click('.opt');await p.waitForTimeout(80);await p.click('#q-next');await p.waitForTimeout(120);
+   await p.click('.opt');await p.waitForTimeout(80);if(await p.$('#q-conf:not([hidden])'))await p.click('#q-conf [data-conf="think"]');await p.waitForTimeout(60);await p.click('#q-next');await p.waitForTimeout(120);
    if(await p.evaluate(()=>!Q||Q.done))break}
  ok(seenPT>0,'method step appeared');
  ok(await p.evaluate(()=>st.ptype&&st.ptype.n>0),'ptype stats');
@@ -42,15 +42,16 @@ const F=process.argv[2]||path.resolve(__dirname,'../src/kumquat.html');
  for(let k=0;k<6;k++){await p.click('.lkopt');await p.waitForTimeout(60);await p.click('#lk-next');await p.waitForTimeout(80)}
  ok(await p.$('#lk-again'),'links summary');
  // xray all
- for(let xi=0;xi<8;xi++){await p.evaluate(()=>{XS=null;if(location.hash==='#xray')DRAW.xray();else location.hash='xray'});await p.waitForTimeout(250);
+ const XN=await p.evaluate(()=>XR.length);
+ for(let xi=0;xi<XN;xi++){await p.evaluate(()=>{XS=null;if(location.hash==='#xray')DRAW.xray();else location.hash='xray'});await p.waitForTimeout(250);
    const t=await p.$$('[data-x]');await t[xi].click();await p.waitForTimeout(150);
-   for(let sI=0;sI<6;sI++){
+   const SN=await p.evaluate(()=>XS.x.steps.length);for(let sI=0;sI<SN;sI++){
      if(await p.$('.xr-o')){const a=await p.evaluate(()=>XS.x.steps[XS.i].a);await p.click(`.xr-o[data-i="${a}"]`)}
      else if(await p.$('#xr-in')){const a=await p.evaluate(()=>XS.x.steps[XS.i].a);await p.fill('#xr-in',String(a));await p.click('#xr-num button[type=submit]')}
      else{const a=await p.evaluate(()=>XS.x.steps[XS.i].a);for(const k of a)await p.check(`.xr-sp input[data-k="${k}"]`);await p.click('#xr-chk')}
      await p.waitForTimeout(80);ok(await p.$('#xr-next'),`xray ${xi} step ${sI} next`);await p.click('#xr-next');await p.waitForTimeout(80)}
    ok(await p.$('#xr-list'),'xray summary '+xi)}
- const xs=await p.evaluate(()=>st.xray);ok(Object.keys(xs).length===8&&Object.values(xs).every(v=>v===100),'xray perfect scores');
+ const xs=await p.evaluate(()=>st.xray);ok(Object.keys(xs).length===XN&&Object.values(xs).every(v=>v===100),'xray perfect scores');
  // full-score check on last xray: correct answers → 100 for those where mcq first option might be wrong due to shuffle... just log
  console.log('xray scores',JSON.stringify(xs));
  // round with new legs

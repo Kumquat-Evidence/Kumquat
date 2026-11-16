@@ -14,7 +14,7 @@ const F=process.argv[2]||path.resolve(__dirname,'../src/kumquat.html');const SH=
  await p.screenshot({path:SH('today-mood'),fullPage:false});
  // exam leg
  await p.evaluate(()=>{st.mood='exam';st.moodDay=dayNum();startRound()});await p.waitForTimeout(400);
- ok(await p.evaluate(()=>Q&&Q.mode==='step1'&&Q.exam&&Q.total===20),'exam quiz started');ok(!(await p.$('#q-hint')),'no hint in exam');
+ ok(await p.evaluate(()=>Q&&Q.mode==='step1'&&Q.exam&&Q.total===ROUND.legs[0].n&&Q.total<=20),'exam quiz started (sized to the cap)');ok(!(await p.$('#q-hint')),'no hint in exam');
  await p.evaluate(()=>{stopTimer();Q={done:true};ROUND=null;renderRoundBar()});
  // playful legs
  await p.evaluate(()=>{st.mood='playful';st.moodDay=dayNum();ROUND={legs:[{t:'blitz',label:'b',min:2},{t:'boss',topic:'dx',label:'x',min:8}],i:0,cnt:0,started:Date.now(),xp0:0,ans0:0,ok0:0};roundGo()});await p.waitForTimeout(300);
