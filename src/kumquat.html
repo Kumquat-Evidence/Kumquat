@@ -3826,7 +3826,7 @@ TWINCUES.length=0;TWINS.forEach((p,pi)=>p.c.forEach(c=>TWINCUES.push({p:pi,txt:c
 POOLS.W.arr=TWINCUES;
 
 /* ================= CITRUS HUB + GOOGLE DRIVE (per hub-contract.md / google-cloud-setup.md) ================= */
-const APP_VERSION="11.0.0";
+const APP_VERSION="11.1.0";
 const HUB_ROOT="My Apps",HUB_DIR="hub",APP_SLUG="kumquat",CITRUS_ROOT="Citrus Maxima",CITRUS_APPS="Apps";
 const G={tok:null,exp:0,email:null,ids:{},busy:false,line:"",plan:null};
 st.google=st.google||{clientId:"",syncState:true,publish:true};
@@ -3856,7 +3856,17 @@ async function findFile(name,parent){const j=await gfetch(`${DRIVE}/files?q=${en
 async function putJSON(name,parent,obj){const ex=await findFile(name,parent);const b="kumq"+Date.now();const meta=ex?{name}:{name,parents:[parent]};const body=`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(meta)}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${JSON.stringify(obj)}\r\n--${b}--`;
   return gfetch(ex?`${UP}/files/${ex.id}?uploadType=multipart`:`${UP}/files?uploadType=multipart`,{method:ex?"PATCH":"POST",headers:{"Content-Type":`multipart/related; boundary=${b}`},body})}
 async function getJSON(name,parent){const f=await findFile(name,parent);if(!f)return null;const t=await gfetch(`${DRIVE}/files/${f.id}?alt=media`);return{data:typeof t==="string"?JSON.parse(t):t,modifiedTime:f.modifiedTime}}
-async function hubFolder(){const root=await folder(HUB_ROOT,null);const hub=await folder(HUB_DIR,root);return{root,hub,app:await folder(APP_SLUG,hub)}}
+/* Drive by tag (claude/drive-layout.md, 17/11/2026): every app folder carries appProperties.citrusApp=<id>; Citrus moves folders, apps follow the tag.
+   One query per id per app session; several tagged → the oldest; none → the old path, tagged at once. Never rename or move a folder here. */
+const TAG_CHECKED={};
+async function byTag(id){const k="tag:"+id;if(G.ids[k]&&TAG_CHECKED[id])return G.ids[k];
+  const q=`mimeType='application/vnd.google-apps.folder' and trashed=false and appProperties has { key='citrusApp' and value='${qesc(id)}' }`;
+  const j=await gfetch(`${DRIVE}/files?spaces=drive&q=${encodeURIComponent(q)}&fields=files(id,createdTime)`);
+  const f=(j.files||[]).slice().sort((a,b)=>String(a.createdTime||"").localeCompare(String(b.createdTime||"")))[0];TAG_CHECKED[id]=1;
+  if(f){if(G.ids[k]!==f.id){G.ids[k]=f.id;gSave()}return f.id}if(G.ids[k]){delete G.ids[k];gSave()}return null}
+async function tagFolder(fid,id){try{await gfetch(`${DRIVE}/files/${fid}`,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({appProperties:{citrusApp:id}})});G.ids["tag:"+id]=fid;TAG_CHECKED[id]=1;gSave()}catch(e){}}
+async function hubFolder(){const t=await byTag(APP_SLUG);if(t)return{app:t};
+  const root=await folder(HUB_ROOT,null);const hub=await folder(HUB_DIR,root);const app=await folder(APP_SLUG,hub);await tagFolder(app,APP_SLUG);return{root,hub,app}}
 
 /* ---- status (contract shape) + Citrus simple shape ---- */
 function weekBounds(){const dn=dayNum(),dow=(new Date().getDay()+6)%7;const f=n=>new Date(n*864e5).toISOString().slice(0,10);return{start:f(dn-dow),end:f(dn-dow+6),sDay:dn-dow}}
@@ -3877,7 +3887,7 @@ function citrusStatus(s){return{title:"Kumquat",icon:"🍊",color:"#FF6A13",summ
 let lastFp="",lastWrite=0;
 async function writeStatus(force){if(!signedIn()||!st.google.publish)return;const s=hubV2(hubStatus());const fp=JSON.stringify({...s,updatedAt:0});if(!force&&(fp===lastFp||Date.now()-lastWrite<3e5))return;
   const {app}=await hubFolder();await putJSON("status.json",app,s);
-  const croot=await folder(CITRUS_ROOT,null),capps=await folder(CITRUS_APPS,croot);await putJSON("Kumquat.status.json",capps,citrusStatus(s));lastFp=fp;lastWrite=Date.now()}
+  const croot=await folder(CITRUS_ROOT,null,false),capps=croot&&await folder(CITRUS_APPS,croot,false);if(capps)await putJSON("Kumquat.status.json",capps,citrusStatus(s));lastFp=fp;lastWrite=Date.now()}
 /* ---- state sync: Drive is the master copy ---- */
 function stateForDrive(){const {google,...rest}=st;return{...rest,schema:1,savedAt:new Date().toISOString(),device:v11DevName()}}
 async function pullOrPush(opts={}){
@@ -3900,7 +3910,7 @@ async function pullOrPush(opts={}){
   if(localDirty||!R)return push("Progress saved to Drive");
   G.line="Up to date";
 }
-async function readPlan(){if(!signedIn())return;try{const root=await folder(HUB_ROOT,null,false);if(!root)return;const hub=await folder(HUB_DIR,root,false);if(!hub)return;if(await readCitrusDays(root,hub))return;const sch=await folder("scheduler",hub,false);if(!sch)return;const p=await getJSON("plan.json",sch);if(!p)return;const today=isoDay(0);const arr=Array.isArray(p.data)?p.data:(p.data.blocks||p.data.items||p.data.today||[]);
+async function readPlan(){if(!signedIn())return;try{const root=await folder(HUB_ROOT,null,false);const hub=root?await folder(HUB_DIR,root,false):null;if(await readCitrusDays(root,hub))return;if(!hub)return;const sch=await folder("scheduler",hub,false);if(!sch)return;const p=await getJSON("plan.json",sch);if(!p)return;const today=isoDay(0);const arr=Array.isArray(p.data)?p.data:(p.data.blocks||p.data.items||p.data.today||[]);
   const mine=arr.filter(b=>b&&String(b.app||b.title||"").toLowerCase().includes("kumquat")&&(!b.date||b.date===today));G.plan=mine[0]||null}catch(e){}}
 async function syncAll(force){if(!hubCan()||!signedIn()||G.busy)return;G.busy=true;try{await pullOrPush({force});await readPlan();await writeStatus(force);await autoYuzu()}catch(e){G.line=e.message}finally{G.busy=false;renderGoogle();if(current==="home")renderCitrusLine();v11Banner()}}
 /* hooks */
@@ -3920,7 +3930,7 @@ function renderGoogle(){const r=$("#google-root");if(!r)return;const g=st.google
         <div class="row"><button class="btn primary" id="g-connect" ${hubCan()?"":"disabled"}>${ok?"Reconnect":"Connect Google"}</button>${ok?`<button class="btn" id="g-sync">Sync now</button><button class="btn small" id="g-out">Sign out</button>`:""}</div>
     ${v11ConflictCard()}${ok?v11LastSyncCard():""}
     <label class="pico-l">This device’s name <span class="muted" style="font-size:.8rem">(shown on Drive saves and backups)</span><input id="g-dev" value="${((g.deviceName||"")+"").replace(/"/g,"&quot;")}" placeholder="${v11DevGuess()}" autocomplete="off" maxlength="40"></label>
-    <details class="adv"><summary>Advanced</summary><div class="ck" style="margin-top:10px"><label class="ck-item"><p>Keep progress on Drive <span class="sec">My Apps/hub/kumquat/state.json · master copy</span></p><input type="checkbox" id="g-state" ${g.syncState?"checked":""}></label>
+    <details class="adv"><summary>Advanced</summary><div class="ck" style="margin-top:10px"><label class="ck-item"><p>Keep progress on Drive <span class="sec">Kumquat’s Drive folder (found by tag) · state.json · master copy</span></p><input type="checkbox" id="g-state" ${g.syncState?"checked":""}></label>
       <label class="ck-item"><p>Publish status for Citrus <span class="sec">hub/kumquat/status.json + Citrus Maxima/Apps</span></p><input type="checkbox" id="g-pub" ${g.publish?"checked":""}></label></div>
       <label class="pico-l" style="margin-top:10px">Client ID (leave empty for the shared Citrus one)<input id="g-cid" value="${(g.clientId||"").replace(/"/g,"&quot;")}" placeholder="shared Citrus client" autocomplete="off"></label>
       ${hubCan()?`<p class="muted" style="font-size:.85rem;margin-top:10px">This app’s origin: <code id="g-origin">${location.origin}</code> <button class="btn small" id="g-copy-origin" aria-label="Copy origin">Copy</button> · must be in the client’s authorised JavaScript origins · Google script ${window.google&&google.accounts?"loaded":"not loaded yet"} · ${matchMedia("(display-mode: standalone)").matches?"installed app":"browser tab"}</p>`:""}</details>
@@ -5135,7 +5145,7 @@ function shiftLoad(){const td=shiftOn(isoDay(0)),yd=shiftOn(isoDay(-1));const ni
   if(night(td))return{kind:"night",s:td,note:`Night shift tonight (${td.code||td.label||"N"}${td.start?" "+td.start:""}). Light Round.`};
   if(night(yd))return{kind:"postnight",s:yd,note:"Post-night day. Light Round, no new lesson."};
   if(td)return{kind:"day",s:td,note:`On shift today (${td.code||td.label||""}${td.start?" "+td.start+"–"+(td.end||""):""}). Round capped at 15 minutes.`};return null}
-async function readCitrusDays(root,hub){try{for(const dir of ["citrus","scheduler"]){const f=await folder(dir,hub,false);if(!f)continue;const p=await getJSON("plan.json",f);if(p&&p.data){const days=p.data.days||{};const keep={};Object.keys(days).forEach(k=>{if(k>=isoDay(-1)&&k<=isoDay(10))keep[k]={shift:days[k]&&days[k].shift||null}});st.citrusDays=keep;
+async function readCitrusDays(root,hub){try{const cand=[],ct=await byTag("citrus");if(ct)cand.push(ct);else if(hub)for(const dir of ["citrus","scheduler"]){const x=await folder(dir,hub,false);if(x)cand.push(x)}for(const f of cand){const p=await getJSON("plan.json",f);if(p&&p.data){const days=p.data.days||{};const keep={};Object.keys(days).forEach(k=>{if(k>=isoDay(-1)&&k<=isoDay(10))keep[k]={shift:days[k]&&days[k].shift||null}});st.citrusDays=keep;
    const today=isoDay(0);const arr=Array.isArray(p.data)?p.data:(p.data.blocks||[]);const mine=arr.filter(b=>b&&String(b.app||b.title||"").toLowerCase().includes("kumquat")&&(!b.date||b.date===today));if(mine[0])G.plan=mine[0];return true}}}catch(e){}return false}
 
 /* misses → Yuzu: a weekly MCQ pack in My Apps/Yuzu/collection/inbox (Yuzu shows it for review before adding) */
@@ -5144,7 +5154,7 @@ const stripQ=h=>String(h||"").replace(/<br\s*\/?>/gi,"\n").replace(/<\/(p|div|li
 function yuzuMissCards(){const cards=[];
   v11YzKeys().forEach(k=>{if(/^g:/.test(k)){v11YzCalcCards(k).forEach(c=>cards.push(c));return}const q=regen(k);if(!q||/<svg|<table/i.test(q.prompt))return;cards.push(v11YzMcq("kq-"+k.replace(/[^A-Za-z0-9]/g,"-"),q,stripQ(q.prompt)))});return cards}
 function yuzuFormulaCards(){return formulaRows().map(r=>{const t=V11_VAULT_TOPIC[r.g];return{id:"kq-f-"+r.n.toLowerCase().replace(/[^a-z0-9]+/g,"-"),type:"basic",source:"kumquat",front:r.n+" = ?",back:stripQ(r.f)+v11Layout(r.f,t)+"\n\n"+stripQ(r.w),tags:["kumquat","formulas",r.g].concat(t?[v11BpTag(t)]:[])}})}
-async function yuzuInbox(){const root=await folder(HUB_ROOT,null,false);if(!root)throw new Error("No My Apps folder on Drive yet");const y=await folder("Yuzu",root,false);if(!y)throw new Error("Yuzu’s folder isn’t on Drive yet. Connect Yuzu to Google first.");const c=await folder("collection",y,false);if(!c)throw new Error("Yuzu’s collection folder isn’t on Drive yet.");return folder("inbox",c,true)}
+async function yuzuInbox(){let y=await byTag("yuzu-data");if(!y){const root=await folder(HUB_ROOT,null,false);if(!root)throw new Error("No My Apps folder on Drive yet");y=await folder("Yuzu",root,false)}if(!y)throw new Error("Yuzu’s folder isn’t on Drive yet. Connect Yuzu to Google first.");const c=await folder("collection",y,false);if(!c)throw new Error("Yuzu’s collection folder isn’t on Drive yet.");return folder("inbox",c,true)}
 async function sendToYuzu(kind){if(!signedIn())throw new Error("Connect Google first (Settings).");const inbox=await yuzuInbox();
   const sentKeys=kind==="formulas"?[]:v11YzKeys(),cards=kind==="formulas"?yuzuFormulaCards():yuzuMissCards();if(!cards.length)throw new Error((st.yuzuSent||{}).misses?"No new misses since your last pack.":"No missed questions to send yet.");
   const id=kind==="formulas"?"kumquat-formulas":"kumquat-misses-"+isoWeek();
@@ -5163,7 +5173,7 @@ function renderYuzuCard(){const el=$("#yuzu-card");if(!el)return;const s=st.yuzu
 const CITRUS_URL="https://amaerys.github.io/Citrus-Maxima/";
 function hubV2(s){const ms=masteryScore(),due=dueKeys().length,ks=Object.keys(TOPICS),mast=ks.filter(topicMastered).length,fd=fadingTopics(),wk=isoWeek(),today=isoDay(0),url=location.origin+location.pathname;
   const legs=roundPlan(),mins=legs.reduce((a,l)=>a+l.min,0),doneToday=st.lastRound===dayNum(),sl=shiftLoad();
-  const v2={contract:2,title:"Kumquat",icon:"🍊",color:"#FF6A13",url,due:due+fd.length,estimatedMinutes:v11RoundMins(),streak:liveStreak(),nextDue:doneToday?"tomorrow":"today",
+  const v2={contract:2,drive:{byTag:true},title:"Kumquat",icon:"🍊",color:"#FF6A13",url,due:due+fd.length,estimatedMinutes:v11RoundMins(),streak:liveStreak(),nextDue:doneToday?"tomorrow":"today",
    metrics:[{key:"mastery",label:"Mastery",value:ms.total,goal:100,unit:"%",date:today},{key:"topics-mastered",label:"Topics mastered",value:mast,goal:ks.length,unit:"topics",date:today},{key:"cards-due",label:"Review cards due",value:due,goal:0,unit:"cards",date:today},{key:"rounds",label:"Round done today",value:doneToday?1:0,goal:1,unit:"round",date:today}],
    progress:[{key:"mastery",label:"Epi & biostat mastery",pct:ms.total,date:today},{key:"campaign",label:"Astrolabe jumps",pct:Math.round(v11Jumps()[0]/Math.max(1,v11Jumps()[1])*100),date:today},{key:"lessons",label:"Lessons",pct:Math.round(Object.keys(st.lessons).length/LESSONS.length*100),date:today}],
    inbox:fd.slice(0,2).map(t=>({id:`recheck-${t}-${wk}`,type:"task",title:`Kumquat: re-check ${TOPICS[t].label} (5 Q)`,minutes:3,pri:2,url:url+"?from=citrus&do=recheck-"+t})).concat(doneToday?[]:[{id:`round-${today}`,type:"task",title:`Kumquat: today’s Round (${MOODS[moodNow()].n.toLowerCase()}, ~${mins} min)`,minutes:mins,pri:1,url:url+"?from=citrus&do=round"}]),

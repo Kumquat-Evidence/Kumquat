@@ -1,11 +1,12 @@
 const {chromium}=require('playwright');const http=require('http');const fs=require('fs');
 // fake Drive
-const files={};let nid=1;const mk=(o)=>{const id="f"+(nid++);files[id]={id,...o,modifiedTime:new Date().toISOString()};return files[id]};
+const files={};let nid=1;const mk=(o)=>{const id="f"+(nid++);files[id]={id,...o,modifiedTime:new Date().toISOString(),createdTime:new Date(Date.now()+nid).toISOString()};return files[id]};
 function route(page,errs){
  return page.route(/googleapis\.com|gstatic\.com|accounts\.google\.com/,async r=>{const u=new URL(r.request().url()),m=r.request().method();
   if(/fonts\.(googleapis|gstatic)\.com/.test(u.hostname))return r.fulfill({contentType:"text/css",body:""});if(u.hostname==="accounts.google.com"){return r.fulfill({contentType:"text/javascript",body:`window.google={accounts:{oauth2:{initTokenClient:(o)=>({requestAccessToken:()=>o.callback({access_token:"tok",expires_in:3600})})}}}`})}
   if(u.pathname.endsWith("/userinfo"))return r.fulfill({json:{email:"amro@test"}});
-  if(u.pathname==="/drive/v3/files"&&m==="GET"){const q=u.searchParams.get("q")||"";const name=/name='([^']+)'/.exec(q),parent=/'([^']+)' in parents/.exec(q);const out=Object.values(files).filter(f=>(!name||f.name===name[1])&&(!parent||f.parent===parent[1])&&(!/folder/.test(q)||f.folder));return r.fulfill({json:{files:out.map(f=>({id:f.id,name:f.name,modifiedTime:f.modifiedTime}))}})}
+  if(u.pathname==="/drive/v3/files"&&m==="GET"){const q=u.searchParams.get("q")||"";const name=/name='([^']+)'/.exec(q),parent=/'([^']+)' in parents/.exec(q);const tag=/key='citrusApp' and value='([^']+)'/.exec(q);const out=Object.values(files).filter(f=>!f.trashed&&(!name||f.name===name[1])&&(!parent||f.parent===parent[1])&&(!/folder/.test(q)||f.folder)&&(!tag||(f.appProperties&&f.appProperties.citrusApp===tag[1])));return r.fulfill({json:{files:out.map(f=>({id:f.id,name:f.name,modifiedTime:f.modifiedTime,createdTime:f.createdTime}))}})}
+  if(/^\/drive\/v3\/files\/\w+$/.test(u.pathname)&&m==="PATCH"){const f=files[u.pathname.split("/").pop()];if(!f)return r.fulfill({status:404,body:"{}"});const b=JSON.parse(r.request().postData()||"{}");if(b.appProperties)f.appProperties={...(f.appProperties||{}),...b.appProperties};return r.fulfill({json:{id:f.id}})}
   if(u.pathname==="/drive/v3/files"&&m==="POST"){const b=JSON.parse(r.request().postData());return r.fulfill({json:mk({name:b.name,parent:(b.parents||["root"])[0],folder:true})})}
   if(/^\/drive\/v3\/files\/\w+$/.test(u.pathname)&&m==="GET"){const f=files[u.pathname.split("/").pop()];if(!f)return r.fulfill({status:404,body:"{}"});if(u.searchParams.get("alt")==="media")return r.fulfill({contentType:"application/json",body:f.body});return r.fulfill({json:{id:f.id,trashed:false}})}
   if(u.pathname.startsWith("/upload/drive/v3/files")){const body=r.request().postData();const parts=body.split(/--kumq\d+\r?\n/);const meta=JSON.parse(parts[1].split(/\r?\n\r?\n/)[1]);const content=parts[2].split(/\r?\n\r?\n/)[1].replace(/\r?\n--kumq\d+--$/,"").trim();
@@ -26,7 +27,6 @@ function route(page,errs){
  await idle(A);await A.evaluate(()=>syncAll(true));await A.waitForTimeout(800);
  const names=Object.values(files).map(f=>f.name);console.log("drive files:",names.join(", "));
  const stateF=Object.values(files).find(f=>f.name==="state.json");console.log("state xp:",JSON.parse(stateF.body).xp,"status summary:",JSON.parse(Object.values(files).find(f=>f.name==="status.json").body).summary);
- console.log("citrus status:",Object.values(files).find(f=>f.name==="Kumquat.status.json").body.slice(0,140));
  // plan.json from scheduler
  const hub=Object.values(files).find(f=>f.name==="hub");const sch=mk({name:"scheduler",parent:hub.id,folder:true});mk({name:"plan.json",parent:sch.id,body:JSON.stringify([{app:"kumquat",date:new Date().toISOString().slice(0,10),start:"19:30",minutes:40,title:"Kumquat · drills"}])});
  const td=(()=>{const t=new Date();return t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0")})();
@@ -126,6 +126,19 @@ function route(page,errs){
  await N.addInitScript(`(()=>{const base=${Date.UTC(2026,10,13,22,30)},real=Date.now(),R=Date;const off=()=>base+(R.now()-real);class FD extends R{constructor(...a){if(a.length)super(...a);else super(off())}static now(){return off()}}FD.UTC=R.UTC;FD.parse=R.parse;window.Date=FD})()`);
  await N.goto(url+'#home');await N.waitForTimeout(400);const ns=await N.evaluate(()=>{const s=hubStatus();return{t:s.today.date,ws:s.week.start,we:s.week.end,d0:s.week.days[0].date,d6:s.week.days[6].date}});
  ok(ns.t==="2026-11-14"&&ns.ws===ns.d0&&ns.we===ns.d6&&ns.ws==="2026-11-09","status dates are local at 01:30 Riyadh: "+JSON.stringify(ns));
+ const own=Object.values(files).find(f=>f.name==="kumquat"&&f.folder);ok(own&&own.appProperties&&own.appProperties.citrusApp==="kumquat","own folder found at the old path is tagged citrusApp=kumquat");
+ ok(!Object.values(files).some(f=>f.name==="Citrus Maxima"),"the old Citrus Maxima folder is not created");
+ ok(JSON.parse(Object.values(files).find(f=>f.name==="status.json").body).drive.byTag===true,"status.json says drive.byTag");
+ // Citrus moves the folders (tag first, move later): Kumquat follows the tags, creates nothing by path
+ {const ownF=Object.values(files).find(f=>f.name==="kumquat"&&f.folder);const root2=mk({name:"Citrus",parent:"root",folder:true});const sci=mk({name:"Science",parent:root2.id,folder:true});ownF.parent=sci.id;ownF.name="Biostatistics - Kumquat";
+  const hubC=mk({name:"Citrus",parent:root2.id,folder:true,appProperties:{citrusApp:"citrus"}});mk({name:"plan.json",parent:hubC.id,body:JSON.stringify({app:"citrus",days:{"2030-01-01":{shift:null}},blocks:[{app:"kumquat",date:td,start:"06:15",minutes:20,title:"Moved plan"}]})});
+  const yzF=Object.values(files).find(f=>f.name==="Yuzu"&&f.folder);yzF.appProperties={citrusApp:"yuzu-data"};yzF.parent=root2.id;yzF.name="collection & media";
+  const M=await dev("M");await M.click('#g-connect');await M.waitForTimeout(1200);await idle(M);
+  await M.evaluate(async()=>{st.google.publish=true;await writeStatus(true)});await M.evaluate(()=>readPlan());await M.waitForTimeout(300);
+  const sts=Object.values(files).filter(f=>f.name==="status.json");ok(sts.length===1&&sts[0].parent===ownF.id,"status.json written into the moved, renamed folder ("+sts.map(f=>f.parent).join(",")+")");
+  ok(Object.values(files).filter(f=>f.name==="kumquat"&&f.folder).length===0,"no new My Apps/hub/kumquat after the move");
+  ok(await M.evaluate(()=>G.plan&&G.plan.title)==="Moved plan","plan.json read from the citrus-tagged folder");
+  const yr=await M.evaluate(async()=>{st.miss={"M:1":2,"M:2":2};try{return await sendToYuzu("misses")}catch(e){return "ERR "+e.message}});const inb=Object.values(files).filter(f=>f.name==="inbox");ok(inb.length===1&&inb[0].parent===Object.values(files).find(f=>f.name==="collection").id&&!String(yr).startsWith("ERR"),"Yuzu pack goes to the yuzu-data folder after the move ("+yr+")");}
  console.log("FAILS "+F);
  await B.screenshot({path:'shot-settings.png'});await A.goto(url+'#settings');await A.waitForTimeout(300);await A.screenshot({path:'shot-settings-a.png'});
  console.log("errors:",errs);await b.close();srv.close()})();
