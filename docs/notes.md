@@ -131,3 +131,11 @@ World bible: project doc `claude/kumquat-world.md`. Code `v10.js` + patch `v12.p
 - **How it shipped.** All 20 agents hit the usage limit near the end; their working copies were saved as patches, merged in order with a 3-way merge (union for same-point inserts, character-level merge for shared long lines, 4 hunks resolved by hand), smoke-tested after each patch, then the full suite. Unfinished bits: d12's fifth figure; some dev reports missing (d01–d06, d08–d11, d13–d16, d18, d20).
 - **Merge fixes worth remembering.** (1) Two packages both used `Q.items` (d05 blocks, d16 duels) → scoped duel path to `Q.camp`. (2) A regex `[₀-₉]` broke the page when served without a charset → use `₀-₉` escapes for non-ASCII ranges. (3) The double-tap guard (d04) now blocks only same-spot taps within 300/350 ms, and skips `navigator.webdriver` unless `window.KQ_GUARD=1`. (4) Sanitize key list must stay ONE line; merges duplicate it.
 - **Tests updated for deliberate changes:** v8 answers the confidence prompt; v7 driver taps "Show the options instead" and "Just show me"; audit drives exam blocks; v9b recheck uses a date inside the fading window; hubtest closes a leftover hold sheet.
+
+## 11.1.0 (17/11/2026): Drive folders by tag (claude/drive-layout.md)
+- `byTag(id)`: folder with `appProperties.citrusApp=<id>`, oldest by createdTime, cached in `G.ids["tag:<id>"]`, checked once per session (`TAG_CHECKED`).
+- `hubFolder()` uses the `kumquat` tag; no tag → old `My Apps/hub/kumquat`, then `tagFolder()` tags it. Kumquat never renames or moves its folder; Citrus does.
+- `readCitrusDays` reads plan.json from the `citrus` tag first (old hub/citrus, hub/scheduler as fallback). `yuzuInbox` uses `yuzu-data` (old My Apps/Yuzu as fallback).
+- `Kumquat.status.json` in the old "Citrus Maxima/Apps" is written only while that folder exists (never re-created once Citrus archives it).
+- status.json carries `drive:{byTag:true}`, so Citrus can move Kumquat's folder to `Citrus/Learning/Science/Biostatistics - Kumquat`.
+- hubtest: the fake Drive answers tag queries and metadata PATCH; a moved-folder scenario checks status, state, plan and Yuzu follow the tags and nothing is created by path.
